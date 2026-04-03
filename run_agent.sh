@@ -129,14 +129,13 @@ if [[ "$STAGES" == *"collect"* ]]; then
     if [ "$COLLECT_USE_SERVER" = "false" ]; then
         CONFIG_FILE="$SCRIPT_DIR/collector/pipeline_config/paid_api_config.yaml"
         if [ -f "$CONFIG_FILE" ]; then
-            LLM_MODEL=$(python3 -c "import yaml; print(yaml.safe_load(open('$CONFIG_FILE'))['codegen_llm_model'])")
-            JUDGE_MODEL=$(python3 -c "import yaml; print(yaml.safe_load(open('$CONFIG_FILE'))['judge_vlm_model'])")
-            JUDGE_TIMEOUT=$(python3 -c "import yaml; print(yaml.safe_load(open('$CONFIG_FILE'))['judge_timeout'])")
-        else
-            LLM_MODEL="gemini-3.1-flash-lite-preview"
-            JUDGE_MODEL="gemini-2.5-flash"
-            JUDGE_TIMEOUT="0.5"
+            LLM_MODEL=$(grep 'codegen_llm_model:' "$CONFIG_FILE" | head -1 | sed 's/.*: *"\?\([^"]*\)"\?.*/\1/')
+            JUDGE_MODEL=$(grep 'judge_vlm_model:' "$CONFIG_FILE" | head -1 | sed 's/.*: *"\?\([^"]*\)"\?.*/\1/')
+            JUDGE_TIMEOUT=$(grep 'judge_timeout:' "$CONFIG_FILE" | head -1 | sed 's/.*: *"\?\([^"]*\)"\?.*/\1/')
         fi
+        LLM_MODEL="${LLM_MODEL:-gemini-3.1-flash-lite-preview}"
+        JUDGE_MODEL="${JUDGE_MODEL:-gemini-2.5-flash}"
+        JUDGE_TIMEOUT="${JUDGE_TIMEOUT:-0.5}"
     else
         COLLECT_ARGS="$COLLECT_ARGS --use-server"
         LLM_MODEL="${CODEGEN_MODEL_NAME:-Qwen/Qwen2.5-Coder-7B-Instruct}"
