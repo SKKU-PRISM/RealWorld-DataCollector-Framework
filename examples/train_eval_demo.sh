@@ -33,19 +33,17 @@ if [ ! -f "$DEMO_DATA/metadata.json" ]; then
     echo "[Setup] Example data not found. Downloading from HuggingFace..."
     mkdir -p "$DEMO_DATA"
 
-    # Download only CloseDrawer subset from acs-demo-data
+    # Download small example data (~13MB) from acs-example-data
     if command -v huggingface-cli &> /dev/null; then
-        huggingface-cli download skkuprism/acs-demo-data \
+        huggingface-cli download skkuprism/acs-example-data \
             --repo-type dataset \
-            --include "CloseDrawer/**" \
             --local-dir "$DEMO_DATA"
     elif command -v python &> /dev/null; then
         python -c "
 from huggingface_hub import snapshot_download
 snapshot_download(
-    'skkuprism/acs-demo-data',
+    'skkuprism/acs-example-data',
     repo_type='dataset',
-    allow_patterns='CloseDrawer/**',
     local_dir='$DEMO_DATA',
 )
 print('Download complete.')
