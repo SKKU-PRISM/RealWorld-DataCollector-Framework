@@ -192,20 +192,18 @@ GOOGLE_API_KEY="your-key" ./run_agent.sh --stage collect
 ```bash
 docker build -t acs .
 
-docker run --rm --gpus all \
-    -v $(pwd)/outputs:/app/outputs \
-    -e GOOGLE_API_KEY="your-key" \
-    acs
-
-# Training only
-docker run --rm --gpus all \
-    -v $(pwd)/outputs:/app/outputs \
-    acs ./run_agent.sh --stage train
-
-# Interactive shell
+# Enter interactive shell
 docker run --rm --gpus all -it \
     -e GOOGLE_API_KEY="your-key" \
-    acs /bin/bash
+    -v $(pwd)/outputs:/app/outputs \
+    --entrypoint /bin/bash \
+    acs
+
+# Inside the container, run commands manually:
+./run_agent.sh                     # Full pipeline (collect → train)
+./run_agent.sh --stage collect     # Data collection only
+./run_agent.sh --stage train       # VLA training only
+./examples/train_eval_demo.sh      # Quick demo with example data
 ```
 
 ### 6. Configuration via Environment Variables
