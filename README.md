@@ -200,8 +200,15 @@ GOOGLE_API_KEY="your-key" ./run_agent.sh --stage collect
 # Build the image
 docker build -t acs .
 
-# Launch interactive shell
+# Launch interactive shell (CPU only, for data collection)
 docker run --rm --privileged -it \
+    -e GOOGLE_API_KEY="your-key" \
+    -v $(pwd)/outputs:/app/outputs \
+    --entrypoint /bin/bash \
+    acs
+
+# Launch with GPU (required for VLA training and evaluation)
+docker run --rm --privileged --gpus all -it \
     -e GOOGLE_API_KEY="your-key" \
     -v $(pwd)/outputs:/app/outputs \
     --entrypoint /bin/bash \
