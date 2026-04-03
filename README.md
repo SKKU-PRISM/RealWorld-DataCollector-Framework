@@ -376,55 +376,7 @@ RealWorld-DataCollector-Framework/
 
 Run a quick training + evaluation demo using real RoboCasa CloseDrawer data (~13MB).
 
-### 1. Run Training + Evaluation (Inside Docker Container)
-
-```bash
-# Step 1: Fix flash attention compatibility
-sed -i 's/flash_attention_2/eager/g' /opt/conda/lib/python3.10/site-packages/lerobot/policies/groot/eagle2_hg_model/{modeling_eagle2_5_vl.py,configuration_eagle2_5_vl.py} && rm -f /opt/conda/lib/python3.10/site-packages/lerobot/policies/groot/eagle2_hg_model/__pycache__/*.pyc
-
-# Step 2: Download example data from HuggingFace
-python -c "from huggingface_hub import snapshot_download; snapshot_download('skkuprism/acs-example-data', repo_type='dataset', local_dir='examples/demo_data')"
-
-# Step 3: Train GROOT LoRA (20 steps, ~2 min)
-cd bridge/scripts/train
-python train_lora_movegrip.py \
-    --config configs/models/groot.yaml \
-    --processed-dir /app/examples/demo_data \
-    --output-base-dir /app/examples/demo_output/adapters \
-    --max-steps 20 --batch-size 1 --grad-accum 1 --lora-rank 8 \
-    --lr 1e-4 --epochs 1 --task CloseDrawer
-cd /app
-
-# Step 4: Evaluate (RoboCasa simulation, requires robocasa installed)
-python bridge/scripts/eval/eval_vla_robocasa.py \
-    --model groot \
-    --adapter-dir examples/demo_output/adapters/CloseDrawer/move_adapter \
-    --checkpoint best \
-    --tasks CloseDrawer \
-    --num-episodes 2 \
-    --output-dir examples/demo_output/eval_results \
-    --stats-file examples/demo_output/adapters/CloseDrawer/move_adapter/data_stats.json
-```
-
-> **Local (without Docker):** Use `./examples/train_eval_demo.sh` which automates all steps above.
-
-### 2. Demo Data Structure
-
-```
-examples/demo_data/           # Auto-downloaded from HuggingFace
-├── metadata.json               # Action normalization statistics
-├── metadata_extended.json      # State statistics (for GROOT/SmolVLA/PI0.5)
-├── train/
-│   ├── CloseDrawer_demo32.npz  # Images (128x128) + state (12D) + action (7D)
-│   ├── CloseDrawer_demo32.json # Instruction + task metadata
-│   ├── CloseDrawer_demo47.npz
-│   └── CloseDrawer_demo47.json
-└── val/
-    ├── CloseDrawer_demo20.npz
-    └── CloseDrawer_demo20.json
-```
-
-### 3. Installing RoboCasa / LIBERO for Simulation Evaluation
+### 1. Install RoboCasa / LIBERO (Inside Docker Container)
 
 To run simulation-based evaluation, RoboCasa and LIBERO must be installed separately.
 
@@ -446,6 +398,54 @@ python -m robocasa.scripts.download_kitchen_assets
 # (Optional) LIBERO
 git clone https://github.com/Lifelong-Robot-Learning/LIBERO.git
 cd LIBERO && pip install -e . && cd ..
+```
+
+### 2. Run Training + Evaluation
+
+```bash
+# Step 1: Fix flash attention compatibility
+sed -i 's/flash_attention_2/eager/g' /opt/conda/lib/python3.10/site-packages/lerobot/policies/groot/eagle2_hg_model/{modeling_eagle2_5_vl.py,configuration_eagle2_5_vl.py} && rm -f /opt/conda/lib/python3.10/site-packages/lerobot/policies/groot/eagle2_hg_model/__pycache__/*.pyc
+
+# Step 2: Download example data from HuggingFace
+python -c "from huggingface_hub import snapshot_download; snapshot_download('skkuprism/acs-example-data', repo_type='dataset', local_dir='examples/demo_data')"
+
+# Step 3: Train GROOT LoRA (20 steps, ~2 min)
+cd bridge/scripts/train
+python train_lora_movegrip.py \
+    --config configs/models/groot.yaml \
+    --processed-dir /app/examples/demo_data \
+    --output-base-dir /app/examples/demo_output/adapters \
+    --max-steps 20 --batch-size 1 --grad-accum 1 --lora-rank 8 \
+    --lr 1e-4 --epochs 1 --task CloseDrawer
+cd /app
+
+# Step 4: Evaluate (RoboCasa simulation)
+python bridge/scripts/eval/eval_vla_robocasa.py \
+    --model groot \
+    --adapter-dir examples/demo_output/adapters/CloseDrawer/move_adapter \
+    --checkpoint best \
+    --tasks CloseDrawer \
+    --num-episodes 2 \
+    --output-dir examples/demo_output/eval_results \
+    --stats-file examples/demo_output/adapters/CloseDrawer/move_adapter/data_stats.json
+```
+
+> **Local (without Docker):** Use `./examples/train_eval_demo.sh` which automates all steps above.
+
+### 3. Demo Data Structure
+
+```
+examples/demo_data/           # Auto-downloaded from HuggingFace
+├── metadata.json               # Action normalization statistics
+├── metadata_extended.json      # State statistics (for GROOT/SmolVLA/PI0.5)
+├── train/
+│   ├── CloseDrawer_demo32.npz  # Images (128x128) + state (12D) + action (7D)
+│   ├── CloseDrawer_demo32.json # Instruction + task metadata
+│   ├── CloseDrawer_demo47.npz
+│   └── CloseDrawer_demo47.json
+└── val/
+    ├── CloseDrawer_demo20.npz
+    └── CloseDrawer_demo20.json
 ```
 
 ### 4. Training with Custom Data
