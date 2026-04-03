@@ -135,6 +135,13 @@ python -c "from huggingface_hub import snapshot_download; snapshot_download('skk
 
 # Download pretrained models (~18GB)
 python -c "from huggingface_hub import snapshot_download; snapshot_download('skkuprism/acs-demo-models', local_dir='demo_models')"
+
+# Download pix2robot calibration data (required for pixel→robot coordinate transform)
+python -c "
+from huggingface_hub import hf_hub_download
+for f in ['robot2_pix2robot_data.npz', 'robot3_pix2robot_data.npz']:
+    hf_hub_download('skkuprism/pix2robot-calibration', f'robot_configs/pix2robot_matrices/{f}', repo_type='dataset', local_dir='collector')
+"
 ```
 
 After downloading, the directory structure should look like:
