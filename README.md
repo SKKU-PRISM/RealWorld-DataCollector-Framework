@@ -122,7 +122,29 @@ git clone https://github.com/SKKU-PRISM/RealWorld-DataCollector-Framework.git
 cd RealWorld-DataCollector-Framework
 ```
 
-### 2. Run
+### 2. Install Simulation Environments (for Evaluation)
+
+```bash
+# MuJoCo (required)
+pip install mujoco==3.3.1
+
+# robosuite (RoboCasa-compatible fork)
+git clone https://github.com/robocasa/robosuite.git
+cd robosuite && pip install -e . && cd ..
+
+# RoboCasa
+git clone https://github.com/robocasa/robocasa.git
+cd robocasa && pip install -e . && cd ..
+
+# Download RoboCasa kitchen assets
+python -m robocasa.scripts.download_kitchen_assets
+
+# (Optional) LIBERO
+git clone https://github.com/Lifelong-Robot-Learning/LIBERO.git
+cd LIBERO && pip install -e . && cd ..
+```
+
+### 3. Run
 
 ```bash
 # Full pipeline (collect → train)
@@ -135,7 +157,7 @@ GOOGLE_API_KEY="your-key" ./run_agent.sh --stage collect
 ./run_agent.sh --stage train
 ```
 
-### 3. Run with Docker
+### 4. Run with Docker
 
 ```bash
 docker build -t acs .
@@ -156,7 +178,7 @@ docker run --rm --gpus all -it \
     acs /bin/bash
 ```
 
-### 4. Configuration via Environment Variables
+### 5. Configuration via Environment Variables
 
 #### Data Collection
 
