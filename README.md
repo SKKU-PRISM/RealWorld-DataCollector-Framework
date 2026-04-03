@@ -160,8 +160,10 @@ demo_models/
 ### 3. Install Simulation Environments (for Evaluation, Optional)
 
 ```bash
-# MuJoCo (required)
+# MuJoCo + rendering dependencies
 pip install mujoco==3.3.1
+apt-get update && apt-get install -y libosmesa6-dev
+export MUJOCO_GL=osmesa
 
 # robosuite + RoboCasa
 pip install robosuite lxml
@@ -381,8 +383,10 @@ Run a quick training + evaluation demo using real RoboCasa CloseDrawer data (~13
 To run simulation-based evaluation, RoboCasa and LIBERO must be installed separately.
 
 ```bash
-# MuJoCo (required)
+# MuJoCo + rendering dependencies
 pip install mujoco==3.3.1
+apt-get update && apt-get install -y libosmesa6-dev
+export MUJOCO_GL=osmesa
 
 # robosuite + RoboCasa
 pip install robosuite lxml
