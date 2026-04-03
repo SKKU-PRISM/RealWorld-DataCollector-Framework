@@ -218,6 +218,9 @@ docker run --rm --privileged --gpus all -it \
 Once inside the container:
 
 ```bash
+# (Required) Fix flash attention compatibility for GROOT training
+sed -i 's/flash_attention_2/eager/g' /opt/conda/lib/python3.10/site-packages/lerobot/policies/groot/eagle2_hg_model/{modeling_eagle2_5_vl.py,configuration_eagle2_5_vl.py} && rm -f /opt/conda/lib/python3.10/site-packages/lerobot/policies/groot/eagle2_hg_model/__pycache__/*.pyc
+
 # Run full pipeline (collect → train)
 ./run_agent.sh
 
