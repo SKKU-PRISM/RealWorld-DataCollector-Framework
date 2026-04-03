@@ -365,8 +365,7 @@ def create_bedrock_bearer_chat(
 
     Returns None if no bearer token is available.
     """
-    _DEFAULT_TOKEN = "REDACTED"
-    token = bearer_token or os.environ.get("AWS_BEARER_TOKEN_BEDROCK", "") or _DEFAULT_TOKEN
+    token = bearer_token or os.environ.get("AWS_BEARER_TOKEN_BEDROCK", "")
     if not token:
         logger.error("No AWS_BEARER_TOKEN_BEDROCK set")
         return None
