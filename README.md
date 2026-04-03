@@ -160,35 +160,7 @@ demo_models/
 └── groot_spatial_9d_r128/          # GROOT LoRA adapter for LIBERO Spatial
 ```
 
-### 3. Install Simulation Environments (for Evaluation, Optional)
-
-```bash
-# MuJoCo + rendering dependencies
-pip install mujoco==3.3.1
-apt-get update && apt-get install -y libosmesa6-dev
-export MUJOCO_GL=osmesa
-
-# robosuite (MUST use GitHub master, NOT PyPI)
-git clone https://github.com/ARISE-Initiative/robosuite /opt/robosuite
-pip install -e /opt/robosuite
-
-# RoboCasa
-pip install lxml
-git clone https://github.com/robocasa/robocasa.git /opt/robocasa
-pip install --no-deps -e /opt/robocasa/
-
-# Patch version checks (Docker has different numpy/lerobot versions)
-sed -i '/assert numpy.__version__/,/Please install this version/d' /opt/robocasa/robocasa/__init__.py
-
-# Download RoboCasa kitchen assets
-python -m robocasa.scripts.download_kitchen_assets
-
-# (Optional) LIBERO
-git clone https://github.com/Lifelong-Robot-Learning/LIBERO.git
-cd LIBERO && pip install -e . && cd ..
-```
-
-### 4. Run
+### 3. Run
 
 ```bash
 # Full pipeline (collect → train)
@@ -201,7 +173,7 @@ GOOGLE_API_KEY="your-key" ./run_agent.sh --stage collect
 ./run_agent.sh --stage train
 ```
 
-### 5. Run with Docker
+### 4. Run with Docker
 
 > **Note:** Make sure you have downloaded demo data and models (Step 2) before building the Docker image.
 
@@ -258,7 +230,35 @@ INSTRUCTION="fold the towel" NUM_EPISODES=50 ./run_agent.sh --stage collect
 TRAIN_LR=1e-4 TRAIN_MAX_STEPS=25000 ./run_agent.sh --stage train
 ```
 
-### 6. Configuration via Environment Variables
+### 6. Install Simulation Environments (Inside Docker, for Evaluation)
+
+```bash
+# MuJoCo + rendering dependencies
+pip install mujoco==3.3.1
+apt-get update && apt-get install -y libosmesa6-dev
+export MUJOCO_GL=osmesa
+
+# robosuite (MUST use GitHub master, NOT PyPI)
+git clone https://github.com/ARISE-Initiative/robosuite /opt/robosuite
+pip install -e /opt/robosuite
+
+# RoboCasa
+pip install lxml
+git clone https://github.com/robocasa/robocasa.git /opt/robocasa
+pip install --no-deps -e /opt/robocasa/
+
+# Patch version checks (Docker has different numpy/lerobot versions)
+sed -i '/assert numpy.__version__/,/Please install this version/d' /opt/robocasa/robocasa/__init__.py
+
+# Download RoboCasa kitchen assets
+python -m robocasa.scripts.download_kitchen_assets
+
+# (Optional) LIBERO
+git clone https://github.com/Lifelong-Robot-Learning/LIBERO.git
+cd LIBERO && pip install -e . && cd ..
+```
+
+### 7. Configuration via Environment Variables
 
 All settings in `run_agent.sh` can be overridden via environment variables. No code modification needed.
 
