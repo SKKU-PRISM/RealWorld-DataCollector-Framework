@@ -120,6 +120,9 @@ flowchart LR
 ```bash
 git clone https://github.com/SKKU-PRISM/RealWorld-DataCollector-Framework.git
 cd RealWorld-DataCollector-Framework
+
+conda create -n datacollector python=3.10
+conda activate datacollector
 ```
 
 ### 2. Download Demo Data & Pretrained Models
