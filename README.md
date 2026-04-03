@@ -208,26 +208,52 @@ docker run --rm --gpus all -it \
 
 ### 6. Configuration via Environment Variables
 
+All settings in `run_agent.sh` can be overridden via environment variables. No code modification needed.
+
 #### Data Collection
 
 | Variable | Description | Default |
 |---|---|---|
-| `GOOGLE_API_KEY` | Gemini API key (required for collection) | - |
+| `GOOGLE_API_KEY` | Gemini API key (required) | - |
 | `INSTRUCTION` | Task instruction in natural language | `pick up the red block...` |
+| `RESET_INSTRUCTION` | Reset instruction (empty = auto) | - |
 | `ROBOT_IDS` | Robot IDs to use | `2 3` |
 | `NUM_EPISODES` | Number of episodes to collect | `30` |
+| `NUM_RANDOM_SEEDS` | Number of random object placements | `15` |
 | `MULTI_TURN` | Enable VLM multi-turn code generation | `true` |
+| `COLLECT_USE_SERVER` | Use self-hosted vLLM server | `false` |
+| `RECORD_DATASET` | Record LeRobot dataset | `true` |
+| `SKIP_TURN_TEST` | Skip waypoint trajectory test | `true` |
 
 #### VLA Training
 
 | Variable | Description | Default |
 |---|---|---|
-| `TRAIN_MODEL_BACKEND` | VLA model backend | `groot_n1.5` |
+| `TRAIN_CONFIG` | YAML config file path (overrides all below) | auto-selected |
+| `TRAIN_MODEL_BACKEND` | VLA model: `groot_n1.5`, `smolvla`, `pi05` | `groot_n1.5` |
 | `TRAIN_LR` | Learning rate | `5e-5` |
 | `TRAIN_EPOCHS` | Training epochs | `500` |
 | `TRAIN_BATCH_SIZE` | Micro batch size | `2` |
 | `TRAIN_GRAD_ACCUM` | Gradient accumulation steps | `16` |
 | `TRAIN_LORA_RANK` | LoRA rank | `64` |
+| `TRAIN_MAX_STEPS` | Max optimizer steps (overrides epochs) | - |
+| `TRAIN_SCHEDULER` | LR scheduler: `cosine`, `onecycle`, `constant` | `cosine` |
+| `TRAIN_TASK` | Train on specific task only | all tasks |
+| `TRAIN_PROCESSED_DIR` | Path to preprocessed NPZ data | - |
+| `TRAIN_HDF5_DIR` | Path to raw HDF5 data (skips preprocessing) | - |
+| `TRAIN_OUTPUT_DIR` | Output directory for adapters | `./outputs/vla_adapters` |
+
+#### Example Usage
+
+```bash
+# Collect 50 episodes of towel folding
+INSTRUCTION="fold the towel" NUM_EPISODES=50 ./run_agent.sh --stage collect
+
+# Train GROOT on CloseDrawer with custom settings
+TRAIN_TASK=CloseDrawer TRAIN_LR=1e-4 TRAIN_MAX_STEPS=25000 \
+TRAIN_PROCESSED_DIR=./demo_data/CloseDrawer \
+./run_agent.sh --stage train
+```
 
 ---
 
