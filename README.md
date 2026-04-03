@@ -364,22 +364,40 @@ RealWorld-DataCollector-Framework/
 
 ## Quick Demo: Training + Evaluation
 
-Run a quick training + evaluation demo using real RoboCasa CloseDrawer data (~13MB, auto-downloaded from HuggingFace if not present).
+Run a quick training + evaluation demo using real RoboCasa CloseDrawer data (~13MB).
 
-### 1. Run Training + Evaluation
+### 1. Run Training + Evaluation (Inside Docker Container)
 
 ```bash
-# Inside the Docker container (see Step 5 above):
-./examples/train_eval_demo.sh              # Train (20 steps) + evaluation
+# Step 1: Download example data from HuggingFace
+python -c "from huggingface_hub import snapshot_download; snapshot_download('skkuprism/acs-example-data', repo_type='dataset', local_dir='examples/demo_data')"
 
-./examples/train_eval_demo.sh --train      # Training only
-./examples/train_eval_demo.sh --eval       # Evaluation only (requires trained adapter)
+# Step 2: Train GROOT LoRA (20 steps, ~2 min)
+cd bridge/scripts/train
+python train_lora_movegrip.py \
+    --config configs/models/groot.yaml \
+    --processed-dir /app/examples/demo_data \
+    --output-base-dir /app/examples/demo_output/adapters \
+    --max-steps 20 --batch-size 1 --grad-accum 1 --lora-rank 8 \
+    --lr 1e-4 --epochs 1 --task CloseDrawer
+cd /app
+
+# Step 3: Evaluate (RoboCasa simulation, requires robocasa installed)
+python bridge/scripts/eval/eval_vla_robocasa.py \
+    --model groot \
+    --move-adapter examples/demo_output/adapters/CloseDrawer/move_adapter/checkpoint-best \
+    --tasks CloseDrawer \
+    --num-episodes 2 \
+    --output-dir examples/demo_output/eval_results \
+    --action-stats examples/demo_data/metadata.json
 ```
+
+> **Local (without Docker):** Use `./examples/train_eval_demo.sh` which automates all steps above.
 
 ### 2. Demo Data Structure
 
 ```
-examples/demo_data/
+examples/demo_data/           # Auto-downloaded from HuggingFace
 ├── metadata.json               # Action normalization statistics
 ├── metadata_extended.json      # State statistics (for GROOT/SmolVLA/PI0.5)
 ├── train/
