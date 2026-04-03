@@ -190,12 +190,22 @@ python scripts/train/train_lora_movegrip.py \
 Evaluates the VLA model directly without the full pipeline:
 
 ```bash
+# Dual adapter mode (move + grip)
 python scripts/eval/eval_vla_robocasa.py --mode direct \
     --model groot \
     --move-adapter outputs/groot_libero/<task>/move_adapter/checkpoint-best \
     --grip-adapter outputs/groot_libero/<task>/grip_adapter/checkpoint-best \
     --tasks <task_name> --num-episodes 25
+
+# Single adapter mode (move only)
+python scripts/eval/eval_vla_robocasa.py --mode direct \
+    --model groot \
+    --adapter-dir outputs/groot_libero/<task>/move_adapter \
+    --checkpoint best \
+    --tasks <task_name> --num-episodes 25
 ```
+
+> **Note:** `--move-adapter` requires `--grip-adapter` to be specified together. For a single adapter, use `--adapter-dir` instead.
 
 ### Pipeline Mode (Perception → Planner → Controller)
 
