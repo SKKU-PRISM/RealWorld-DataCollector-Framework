@@ -27,7 +27,7 @@ An end-to-end real-world robotics framework that autonomously collects manipulat
 ```bash
 git clone https://github.com/SKKU-PRISM/RealWorld-DataCollector-Framework.git && cd RealWorld-DataCollector-Framework
 docker build -t acs .
-docker run --gpus all -e GOOGLE_API_KEY="your-key" acs
+docker run --privileged -it -e GOOGLE_API_KEY="your-key" --entrypoint /bin/bash acs
 ```
 
 ---
@@ -190,20 +190,33 @@ GOOGLE_API_KEY="your-key" ./run_agent.sh --stage collect
 > **Note:** Make sure you have downloaded demo data and models (Step 2) before building the Docker image.
 
 ```bash
+# Build the image
 docker build -t acs .
 
-# Enter interactive shell
-docker run --rm --gpus all -it \
+# Launch interactive shell
+docker run --rm --privileged -it \
     -e GOOGLE_API_KEY="your-key" \
     -v $(pwd)/outputs:/app/outputs \
     --entrypoint /bin/bash \
     acs
+```
 
-# Inside the container, run commands manually:
-./run_agent.sh                     # Full pipeline (collect → train)
+Once inside the container:
+
+```bash
+# Run full pipeline (collect → train)
+./run_agent.sh
+
+# Run individual stages
 ./run_agent.sh --stage collect     # Data collection only
 ./run_agent.sh --stage train       # VLA training only
-./examples/train_eval_demo.sh      # Quick demo with example data
+
+# Quick demo with example data (auto-downloads ~13MB)
+./examples/train_eval_demo.sh
+
+# Override settings via environment variables
+INSTRUCTION="fold the towel" NUM_EPISODES=50 ./run_agent.sh --stage collect
+TRAIN_LR=1e-4 TRAIN_MAX_STEPS=25000 ./run_agent.sh --stage train
 ```
 
 ### 6. Configuration via Environment Variables
@@ -255,13 +268,14 @@ TRAIN_TASK=CloseDrawer TRAIN_LR=1e-4 TRAIN_MAX_STEPS=25000 \
 TRAIN_PROCESSED_DIR=./demo_data/CloseDrawer \
 ./run_agent.sh --stage train
 
-# Docker (pass with -e flags)
-docker run --rm --gpus all \
-    -e INSTRUCTION="fold the towel" \
-    -e NUM_EPISODES=50 \
+# Docker (set variables inside the interactive shell)
+docker run --rm --privileged -it \
     -e GOOGLE_API_KEY="your-key" \
     -v $(pwd)/outputs:/app/outputs \
-    acs ./run_agent.sh --stage collect
+    --entrypoint /bin/bash \
+    acs
+# Then inside the container:
+INSTRUCTION="fold the towel" NUM_EPISODES=50 ./run_agent.sh --stage collect
 ```
 
 #### Method 2: Edit YAML Config Files
