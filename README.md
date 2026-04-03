@@ -163,7 +163,8 @@ demo_models/
 # MuJoCo (required)
 pip install mujoco==3.3.1
 
-# RoboCasa (includes robosuite)
+# robosuite + RoboCasa
+pip install robosuite
 git clone https://github.com/robocasa/robocasa.git
 pip install --no-deps -e robocasa/
 
@@ -428,7 +429,8 @@ To run simulation-based evaluation, RoboCasa and LIBERO must be installed separa
 # MuJoCo (required)
 pip install mujoco==3.3.1
 
-# RoboCasa (includes robosuite)
+# robosuite + RoboCasa
+pip install robosuite
 git clone https://github.com/robocasa/robocasa.git
 pip install --no-deps -e robocasa/
 
