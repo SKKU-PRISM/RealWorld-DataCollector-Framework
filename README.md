@@ -398,7 +398,8 @@ cd /app
 # Step 4: Evaluate (RoboCasa simulation, requires robocasa installed)
 python bridge/scripts/eval/eval_vla_robocasa.py \
     --model groot \
-    --move-adapter examples/demo_output/adapters/CloseDrawer/move_adapter/checkpoint-best \
+    --adapter-dir examples/demo_output/adapters/CloseDrawer/move_adapter \
+    --checkpoint best \
     --tasks CloseDrawer \
     --num-episodes 2 \
     --output-dir examples/demo_output/eval_results \
