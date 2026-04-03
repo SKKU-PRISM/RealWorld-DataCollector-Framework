@@ -115,7 +115,7 @@ def _call_vlm_server(
 def _call_openai_vlm(
     prompt: str,
     images_b64: List[str],
-    model: str = "gpt-4o",
+    model: str = "gemini-2.5-flash",
     max_tokens: int = 1000,
     temperature: float = 0.0,
     check_time: bool = True,
@@ -277,7 +277,7 @@ def _call_gemini_vlm(
 def vlm_response(
     prompt: str,
     images_b64: List[str],
-    model: str = "gpt-4o",
+    model: str = "gemini-2.5-flash",
     max_tokens: int = 1000,
     temperature: float = 0.0,
     check_time: bool = True,
@@ -356,7 +356,7 @@ if __name__ == "__main__":
         response = vlm_response(
             prompt="Describe this image briefly.",
             images_b64=[dummy_image],
-            model="gpt-4o-mini",
+            model="gemini-2.5-flash",
             use_server=False,
         )
         print(f"Response: {response}")

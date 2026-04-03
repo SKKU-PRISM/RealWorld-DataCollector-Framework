@@ -43,7 +43,7 @@ class TaskJudge:
 
     def __init__(
         self,
-        model: str = "gpt-4o",
+        model: str = "gemini-2.5-flash",
         temperature: float = 0.0,
         verbose: bool = True,
         use_server: bool = False,

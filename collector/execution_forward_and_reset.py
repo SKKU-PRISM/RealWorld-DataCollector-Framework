@@ -127,8 +127,8 @@ class ForwardAndResetPipeline(BasePipeline):
     def __init__(
         self,
         robot_id: int = 3,
-        llm_model: str = "gpt-4o-mini",
-        judge_model: str = "gpt-4o",
+        llm_model: str = "gemini-3.1-flash-lite-preview",
+        judge_model: str = "gemini-2.5-flash",
         judge_timeout_ms: int = 5000,
         num_random_seeds: int = 1,
         verbose: bool = True,
@@ -3289,15 +3289,15 @@ def main():
     parser.add_argument(
         "--llm",
         type=str,
-        default="gpt-4o-mini",
-        help="LLM model for code generation (default: gpt-4o-mini)"
+        default="gemini-3.1-flash-lite-preview",
+        help="LLM model for code generation (default: gemini-3.1-flash-lite-preview)"
     )
 
     parser.add_argument(
         "--judge-model",
         type=str,
-        default="gpt-4o",
-        help="Judge VLM model (default: gpt-4o)"
+        default="gemini-2.5-flash",
+        help="Judge VLM model (default: gemini-2.5-flash)"
     )
 
     parser.add_argument(

@@ -497,8 +497,8 @@ def main():
     parser.add_argument(
         "--judge-model",
         type=str,
-        default="gpt-4o",
-        help="Judge VLM model (default: gpt-4o)"
+        default="gemini-2.5-flash",
+        help="Judge VLM model (default: gemini-2.5-flash)"
     )
 
     parser.add_argument(
