@@ -127,19 +127,13 @@ cd RealWorld-DataCollector-Framework
 Demo data and pretrained LoRA adapters are hosted on HuggingFace (~19GB total). These are required for Docker builds and evaluation.
 
 ```bash
-pip install huggingface-hub
+pip install --upgrade huggingface-hub httpx
 
 # Download demo data (~718MB)
-python -c "
-from huggingface_hub import snapshot_download
-snapshot_download('skkuprism/acs-demo-data', repo_type='dataset', local_dir='demo_data')
-"
+python -c "from huggingface_hub import snapshot_download; snapshot_download('skkuprism/acs-demo-data', repo_type='dataset', local_dir='demo_data')"
 
 # Download pretrained models (~18GB)
-python -c "
-from huggingface_hub import snapshot_download
-snapshot_download('skkuprism/acs-demo-models', local_dir='demo_models')
-"
+python -c "from huggingface_hub import snapshot_download; snapshot_download('skkuprism/acs-demo-models', local_dir='demo_models')"
 ```
 
 After downloading, the directory structure should look like:
