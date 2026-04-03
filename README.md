@@ -122,7 +122,35 @@ git clone https://github.com/SKKU-PRISM/RealWorld-DataCollector-Framework.git
 cd RealWorld-DataCollector-Framework
 ```
 
-### 2. Install Simulation Environments (for Evaluation)
+### 2. Download Demo Data & Pretrained Models
+
+Demo data and pretrained LoRA adapters are hosted on HuggingFace (~19GB total). These are required for Docker builds and evaluation.
+
+```bash
+# Install HuggingFace CLI (if not installed)
+pip install huggingface-hub
+
+# Download demo data (~718MB)
+huggingface-cli download skkuprism/acs-demo-data --repo-type dataset --local-dir demo_data
+
+# Download pretrained models (~18GB)
+huggingface-cli download skkuprism/acs-demo-models --local-dir demo_models
+```
+
+After downloading, the directory structure should look like:
+
+```
+demo_data/
+├── CloseDrawer/                    # RoboCasa task (NPZ format)
+└── SO101-single-pick_redblock.../  # SO-101 task (LeRobot v3.0 format)
+
+demo_models/
+├── groot_direction_CloseDrawer/    # GROOT LoRA adapter for CloseDrawer
+├── groot_so101_joint6d_aug_10hz/   # GROOT LoRA adapter for SO-101
+└── groot_spatial_9d_r128/          # GROOT LoRA adapter for LIBERO Spatial
+```
+
+### 3. Install Simulation Environments (for Evaluation, Optional)
 
 ```bash
 # MuJoCo (required)
@@ -144,7 +172,7 @@ git clone https://github.com/Lifelong-Robot-Learning/LIBERO.git
 cd LIBERO && pip install -e . && cd ..
 ```
 
-### 3. Run
+### 4. Run
 
 ```bash
 # Full pipeline (collect → train)
@@ -157,7 +185,9 @@ GOOGLE_API_KEY="your-key" ./run_agent.sh --stage collect
 ./run_agent.sh --stage train
 ```
 
-### 4. Run with Docker
+### 5. Run with Docker
+
+> **Note:** Make sure you have downloaded demo data and models (Step 2) before building the Docker image.
 
 ```bash
 docker build -t acs .
@@ -178,7 +208,7 @@ docker run --rm --gpus all -it \
     acs /bin/bash
 ```
 
-### 5. Configuration via Environment Variables
+### 6. Configuration via Environment Variables
 
 #### Data Collection
 
