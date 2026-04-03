@@ -42,8 +42,8 @@ training:
   early_stopping_patience: 10
 
 data:
-  processed_dir: "/data/robobridge/robocasa_repo/datasets/v0.1_processed"
+  processed_dir: "./data/processed"
   # no task filter → all 25 tasks
 
 output:
-  base_dir: "/data/robobridge/vla_adapters_multitask"
+  base_dir: "./outputs/vla_adapters_multitask"

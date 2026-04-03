@@ -1,0 +1,15 @@
+{
+  "initial_state_normalized": [
+    4.635108470916748,
+    -100.0,
+    99.91019439697266,
+    57.313941955566406,
+    -0.02442002482712269
+  ],
+  "gripper_normalized": -99.86927795410156,
+  "recorded_at": "2026-03-17T15:18:22.811023",
+  "robot_id": "robot2",
+  "config_file": "robot_configs/robot/so101_robot2.yaml",
+  "state_type": "free_state",
+  "description": "Safe free/parking state. Robot moves here when idle to clear workspace."
+}

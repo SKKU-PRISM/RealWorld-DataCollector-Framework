@@ -22,14 +22,14 @@ GROOT VLA에 11D state를 전달합니다.
 Usage:
     # VLM 플래너 모드 (권장):
     python so101_client.py --port /dev/ttyACM0 \
-        --server http://192.168.1.100:8002 \
+        --server http://<INFERENCE_SERVER_IP>:8002 \
         --instruction "pick red block and place on blue dish" \
         --planner-provider bedrock \
         --planner-model anthropic.claude-sonnet-4-20250514-v1:0
 
     # 고정 direction 모드 (레거시, 단일 세그먼트):
     python so101_client.py --port /dev/ttyACM0 \
-        --server http://192.168.1.100:8002 \
+        --server http://<INFERENCE_SERVER_IP>:8002 \
         --task pick_redblock_place_bluedish \
         --no-planner
 """

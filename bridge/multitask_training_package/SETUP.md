@@ -45,15 +45,15 @@ cp patches/lerobot/policies/pi05/modeling_pi05.py $SITE/lerobot/policies/pi05/
 Copy the processed NPZ data (39GB):
 ```bash
 # On source server:
-rsync -avP /data/robobridge/robocasa_repo/datasets/v0.1_processed/ TARGET:/path/to/data/
+rsync -avP ./data/processed/ TARGET:/path/to/data/
 
 # Then update configs if data path differs:
-sed -i 's|/data/robobridge/robocasa_repo/datasets/v0.1_processed|/your/data/path|g' configs/multitask_*.yaml
+sed -i 's|./data/processed|/your/data/path|g' configs/multitask_*.yaml
 ```
 
 ### 4. Update Output Path
 ```bash
-sed -i 's|/data/robobridge/vla_adapters_multitask|/your/output/path|g' configs/multitask_*.yaml
+sed -i 's|./outputs/vla_adapters_multitask|/your/output/path|g' configs/multitask_*.yaml
 ```
 
 ## Training Commands

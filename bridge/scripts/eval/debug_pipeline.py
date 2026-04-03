@@ -492,7 +492,7 @@ def main():
     parser.add_argument("--instruction", "-i", type=str, 
                         help="Natural language instruction")
     parser.add_argument("--dataset", "-d", type=str,
-                        default="/home/franka/robocasa/datasets/v0.1/single_stage/kitchen_pnp/PnPCounterToCab/2024-04-24/demo_gentex_im128_randcams.hdf5",
+                        default="./data/demo_gentex_im128_randcams.hdf5",
                         help="Path to HDF5 dataset")
     parser.add_argument("--demo", type=int, default=0,
                         help="Demo index in dataset")

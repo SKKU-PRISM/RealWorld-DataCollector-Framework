@@ -4,7 +4,7 @@
     "vla_backend": "groot_n1.5",
     "planner": "openai/gpt-5.2",
     "monitor": "openai/gpt-5.2",
-    "dataset": "/data/craf/robocasa_data/v0.1/single_stage/kitchen_pnp/PnPCounterToCab/2024-04-24/demo.hdf5",
+    "dataset": "./data/robocasa/v0.1/single_stage/kitchen_pnp/PnPCounterToCab/2024-04-24/demo.hdf5",
     "num_demos": 15
   },
   "summary": {

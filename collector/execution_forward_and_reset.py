@@ -2267,7 +2267,7 @@ class ForwardAndResetPipeline(BasePipeline):
                 with open(free_state_path) as f:
                     free_norm = np.array(json.load(f)["initial_state_normalized"])
                 _cl = _load_cl(
-                    str(Path(__file__).parent / "calibration" / "so101" / f"robot{self.robot_id}_calibration.json"),
+                    str(Path(__file__).parent / "robot_configs" / "motor_calibration" / "so101" / f"robot{self.robot_id}_calibration.json"),
                     joint_names=["shoulder_pan", "shoulder_lift", "elbow_flex", "wrist_flex", "wrist_roll"],
                 )
                 free_rad = _cl.normalized_to_radians(free_norm)

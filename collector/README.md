@@ -98,18 +98,83 @@ Each episode produces a complete LeRobot dataset with synchronized multi-camera 
 
 ## Quick Start
 
+### 1. Install
+
 ```bash
-# 1. Clone & install
 git clone https://github.com/SKKU-PRISM/AutoDataCollector.git
 cd AutoDataCollector
-pip install -e ".[all]"
-conda install -c conda-forge pinocchio
 
-# 2. Configure
-cp pipeline_config/paid_api_config.yaml.example pipeline_config/paid_api_config.yaml
-# Edit: set your Gemini API key, robot IDs, camera devices
+# Option A: pip (Pinocchio requires conda-forge for best results)
+pip install -e .
 
-# 3. Run
+# Option B: conda (recommended)
+conda env create -f environment.yaml
+conda activate lerobot_cap
+pip install -e .
+```
+
+> LeRobot is bundled in the `lerobot/` directory — no separate clone needed.
+
+### 2. Configure
+
+**API Keys** — Set via environment variables (recommended) or JSON files:
+```bash
+# Environment variables (Docker / production)
+export GOOGLE_API_KEY="your-google-api-key"
+export OPENAI_API_KEY="your-openai-api-key"       # Optional: for GPT-based judge
+
+# Or create JSON files in project root (local development)
+# google_aistudio_key.json: {"api_key": "your-key"}
+# openai_api_key.json: {"openai_api_key": "your-key"}
+```
+
+**Robot Calibration** — Pre-configured calibration files are included:
+- Motor calibration: `robot_configs/motor_calibration/so101/`
+- Initial/free states: `robot_configs/initial_state/`, `robot_configs/free_state/`
+- Customize these if your robot setup differs.
+
+**`pipeline_config/paid_api_config.yaml`** — VLM/LLM models for each pipeline stage:
+```yaml
+codegen_llm_model: "gemini-3.1-flash-lite-preview"      # Scene understanding & object detection (Turn 0~2)
+codegen_session2_model: "gemini-3.1-flash-lite-preview"  # Code generation from context summary (Turn 3)
+detect_objects_model: "gemini-3.1-flash-lite-preview"    # Runtime object re-detection during execution
+judge_vlm_model: "gemini-2.5-flash"                      # Before/after image comparison for task success
+judge_timeout: 0.5                                       # Auto-judge delay (seconds), 0 = wait for manual input
+```
+
+**`pipeline_config/recording_config.yaml`** — Camera devices and dataset settings:
+```yaml
+dataset_repo_id: "local/my_dataset"    # Output dataset name (HuggingFace format)
+recording_fps: 30                      # Recording frame rate
+
+cameras:
+  shared:                              # Workspace overview camera (shared across all arms)
+    - name: "top"
+      type: "realsense"
+      serial_number: "YOUR_REALSENSE_SERIAL"   # rs-enumerate-devices to find this
+  left_arm:                            # Left arm wrist camera
+    - name: "wrist"
+      type: "opencv"
+      index_or_path: "/dev/video6"     # ls /dev/video* to find your device
+  right_arm:                           # Right arm wrist camera
+    - name: "wrist"
+      type: "opencv"
+      index_or_path: "/dev/video8"
+```
+
+### 3. Run
+
+Edit `run_forward_and_reset.sh` to set your task and robot configuration:
+```bash
+ROBOT_IDS=(2 3)          # Robot IDs — order determines arm mapping: [0]=left, [1]=right
+INSTRUCTION="pick up the red block and place it on the blue plate"  # Natural language task
+NUM_EPISODES=10          # Number of forward-reset cycles to run
+NUM_RANDOM_SEEDS=5       # Number of unique object layouts (episodes divided evenly)
+RECORD_DATASET=true      # Enable LeRobot dataset recording
+```
+
+Then launch:
+```bash
 bash run_forward_and_reset.sh
 ```
 

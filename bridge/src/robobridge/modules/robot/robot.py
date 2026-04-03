@@ -64,7 +64,7 @@ class Robot(BaseModule):
                self._robot = frankx.Robot(self.robot_ip)
            # ... implement other methods
 
-       my_interface = MyFrankaInterface(robot_ip="172.16.0.2")
+       my_interface = MyFrankaInterface(robot_ip="<ROBOT_IP>")
        robot = Robot(
            custom_interface=my_interface,
            link_mode="socket",

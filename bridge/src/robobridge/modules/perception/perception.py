@@ -246,8 +246,8 @@ class Perception(BaseModule):
             if ":" in model_path and not model_path.startswith("/"):
                 config_path, checkpoint_path = model_path.split(":", 1)
             else:
-                config_path = getattr(self, '_dino_config_path', None) or (
-                    "/home/orin/.local/lib/python3.10/site-packages/"
+                config_path = getattr(self, '_dino_config_path', None) or os.environ.get(
+                    "DINO_CONFIG_PATH",
                     "groundingdino/config/GroundingDINO_SwinT_OGC.py"
                 )
                 checkpoint_path = model_path or (

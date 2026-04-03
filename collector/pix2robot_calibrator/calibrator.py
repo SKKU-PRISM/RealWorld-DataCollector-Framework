@@ -111,6 +111,16 @@ class Pix2RobotCalibrator:
         with open(config_path, 'r') as f:
             config = yaml.safe_load(f)
 
+        # YAML 내 상대경로를 YAML 파일 위치 기준으로 resolve
+        yaml_dir = config_path.parent
+        for key in ("calibration_file", "compensation_file"):
+            val = config.get(key)
+            if val and not Path(val).is_absolute():
+                config[key] = str((yaml_dir / val).resolve())
+        kin_cfg = config.get("kinematics", {})
+        if kin_cfg.get("urdf_path") and not Path(kin_cfg["urdf_path"]).is_absolute():
+            kin_cfg["urdf_path"] = str((yaml_dir / kin_cfg["urdf_path"]).resolve())
+
         # 모터 컨트롤러
         calibration_path = Path(config['calibration_file'])
         with open(calibration_path, 'r') as f:

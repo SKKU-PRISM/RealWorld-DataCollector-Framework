@@ -6,20 +6,20 @@
 # Code Gen LLM 서버 (텍스트 생성)
 # ===========================================
 codegen:
-  server_host: "115.145.175.11"
+  server_host: "${CODEGEN_SERVER_HOST:-localhost}"
   server_port: 8001
   ssh_port: 22           # SSH 접속 포트 (기본: 22, 다르면 SSH 터널 사용)
-  ssh_user: "hscho"      # SSH 사용자
+  ssh_user: "${CODEGEN_SSH_USER:-user}"
   model_name: "Qwen/Qwen2.5-Coder-7B-Instruct"
 
 # ===========================================
 # Judge VLM 서버 (이미지 평가)
 # ===========================================
 judge:
-  server_host: "115.145.173.248"
+  server_host: "${JUDGE_SERVER_HOST:-localhost}"
   server_port: 8002
-  ssh_port: 10001        # SSH 접속 포트 (기본: 22, 다르면 SSH 터널 사용)
-  ssh_user: "guest"      # SSH 사용자
+  ssh_port: 22           # SSH 접속 포트 (기본: 22, 다르면 SSH 터널 사용)
+  ssh_user: "${JUDGE_SSH_USER:-user}"
   model_name: "nvidia/Cosmos-Reason1-7B"
 
 # Judge UI 타임아웃 (초)

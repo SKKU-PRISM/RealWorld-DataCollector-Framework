@@ -20,7 +20,7 @@ quantization:
   compute_dtype: "bfloat16"
 
 data:
-  processed_dir: "/data/craf/processed"
+  processed_dir: "./data/processed"
   cameras: ["robot0_agentview_left_image"]
   max_samples: null
   task: null
@@ -51,4 +51,4 @@ adapter:
   loss_weights: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.1]
 
 output:
-  base_dir: "/data/craf/vla_adapters"
+  base_dir: "./outputs/vla_adapters"

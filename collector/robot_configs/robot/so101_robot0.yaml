@@ -46,14 +46,14 @@ joint_names:
 
 # Kinematics configuration
 kinematics:
-  urdf_path: /home/csi/AutoDataCollector/assets/urdf/so101_robot2.urdf
+  urdf_path: ../../assets/urdf/so101_robot0.urdf
   end_effector_frame: gripper_frame_link
 
 # Calibration file (absolute path)
-calibration_file: /home/csi/AutoDataCollector/robot_configs/motor_calibration/so101/robot0_calibration.json
+calibration_file: ../motor_calibration/so101/robot0_calibration.json
 
 # Compensation file (robot-specific compensation parameters)
-compensation_file: /home/csi/AutoDataCollector/robot_configs/motor_calibration/so101/robot0_compensation.json
+compensation_file: ../motor_calibration/so101/robot0_compensation.json
 
 # Safety limits (normalized -100 to +100)
 safety:

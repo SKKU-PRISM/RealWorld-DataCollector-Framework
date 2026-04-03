@@ -10,6 +10,7 @@ SSH 서버 추론 모드:
 
 import base64
 import json
+import os
 import re
 import time
 from pathlib import Path
@@ -24,14 +25,17 @@ from ..image_capture import image_to_base64
 ObjectPositions = Dict[str, Union[List[float], Tuple[float, float, float], Dict, None]]
 
 
-# API 키 로드
+# API 키 로드 (환경변수 우선 → JSON 파일 fallback)
 def _load_api_keys():
+    keys = {}
     # judge/forward_execution/judge.py → forward_execution/ → judge/ → root/
     key_file = Path(__file__).parent.parent.parent / "openai_api_key.json"
     if key_file.exists():
         with open(key_file, "r") as f:
-            return json.load(f)
-    return {}
+            keys = json.load(f)
+    if os.getenv("OPENAI_API_KEY"):
+        keys["openai_api_key"] = os.getenv("OPENAI_API_KEY")
+    return keys
 
 
 class TaskJudge:

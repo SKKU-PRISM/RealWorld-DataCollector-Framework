@@ -28,7 +28,7 @@ quantization:
 
 # Data
 data:
-  processed_dir: "/data/robobridge/robocasa_repo/datasets/v0.1_processed"
+  processed_dir: "./data/processed"
   cameras: ["robot0_agentview_left_image"]
   max_samples: null               # null = use all data
   task: null                      # null = all tasks, or specific task name
@@ -62,4 +62,4 @@ adapter:
 
 # Output
 output:
-  base_dir: "/data/robobridge/vla_adapters"
+  base_dir: "./outputs/vla_adapters"

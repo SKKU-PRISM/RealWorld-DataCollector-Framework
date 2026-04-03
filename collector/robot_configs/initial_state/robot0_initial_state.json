@@ -1,0 +1,15 @@
+{
+  "initial_state_normalized": [
+    2.865468740463257,
+    -53.45332717895508,
+    41.903472900390625,
+    67.49694061279297,
+    -3.8339438438415527
+  ],
+  "gripper_normalized": -100.0,
+  "recorded_at": "2026-04-02T03:17:49.742745",
+  "robot_id": "robot0",
+  "config_file": "robot_configs/robot/so101_robot0.yaml",
+  "state_type": "initial_state",
+  "description": "Safe initial state for IK solving. Robot moves here before computing IK to target."
+}

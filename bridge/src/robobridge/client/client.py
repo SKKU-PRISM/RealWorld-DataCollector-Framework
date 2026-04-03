@@ -2580,7 +2580,7 @@ class RoboBridgeClient:
                     self._robot = frankx.Robot(self.robot_ip)
                 # ... other methods
 
-            robot.set_robot_interface(MyFrankaInterface(robot_ip="172.16.0.2"))
+            robot.set_robot_interface(MyFrankaInterface(robot_ip="<ROBOT_IP>"))
         """
         if "robot" not in self._modules:
             return ExecutionResult(

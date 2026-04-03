@@ -40,7 +40,7 @@ training:
   early_stopping_patience: 10
 
 data:
-  hdf5_dir: "/data/craf/robocasa_data/v0.1/single_stage"
+  hdf5_dir: "./data/robocasa/v0.1/single_stage"
 
 output:
-  base_dir: "/data/craf/vla_adapters/pi05"
+  base_dir: "./outputs/vla_adapters/pi05"

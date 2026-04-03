@@ -3,32 +3,37 @@
 <head>
   <meta charset="utf-8">
   <meta name="description"
-        content="RAPIDS: Robot AI Agents Pipeline for Intelligent Data Collection & Skill Learning. An end-to-end system that converts natural language instructions into executable robot code with automatic evaluation.">
-  <meta name="keywords" content="robot manipulation, code-as-policies, LLM, VLM, skill learning, data collection, SO-101, LeRobot">
+        content="RAPIDS: Robot AI Agents Pipeline for Intelligent Data Collection & Skill Learning. A multi-agent system automating the full robot learning pipeline from natural language to VLA fine-tuning.">
+  <meta name="keywords" content="RAPIDS, robot manipulation, code-as-policies, LLM, VLM, VLA, skill learning, data collection, IsaacLab, LeRobot, SO-101, Franka, UR7e, simulation, sim-to-real">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>RAPIDS - Robot AI Agents Pipeline for Intelligent Data Collection & Skill Learning</title>
 
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
-        rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="./static/css/style.css">
 </head>
 <body>
 
 
-<!-- ==================== HERO ==================== -->
+<!-- ============================================================ -->
+<!--  1. HERO                                                      -->
+<!-- ============================================================ -->
 <section class="hero">
   <div class="hero-body">
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column has-text-centered">
+
+          <div style="margin-bottom: 1.5rem;">
+            <img src="./assets/image (6).png" alt="PRISM Logo" style="max-width: 220px; height: auto;">
+          </div>
+
           <h1 class="title is-1 publication-title">
             RAPIDS: Robot AI Agents Pipeline for<br>Intelligent Data Collection & Skill Learning
           </h1>
+
           <div class="is-size-5 publication-authors">
             <span class="author-block">Minjong Yu<sup>*</sup>,</span>
             <span class="author-block">Wookyung Kim<sup>*</sup>,</span>
@@ -42,49 +47,49 @@
           <div class="is-size-5 publication-authors">
             <span class="author-block">PRISM (Physical Robot Intelligence & Simulation)</span>
           </div>
-
           <div class="is-size-5 publication-authors">
             <span class="author-block">Sungkyunkwan University</span>
           </div>
-
           <div class="is-size-6 publication-authors" style="margin-top: 0.5rem;">
             <span class="author-block"><b>2026 AI Co-Scientist Challenge Korea</b> | Track 2</span>
           </div>
 
+          <!-- Links -->
           <div class="column has-text-centered">
             <div class="publication-links">
-              <!-- GitHub Link -->
               <span class="link-block">
-                <a href="https://github.com/PRISM-RAPIDS/AutoDataCollector"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fab fa-github"></i>
-                  </span>
-                  <span>Code</span>
+                <a href="https://github.com/SKKU-PRISM/Simulation-Generation-Agent" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fab fa-github"></i></span>
+                  <span>Simulation</span>
                 </a>
               </span>
-              <!-- Paper Link (placeholder) -->
               <span class="link-block">
-                <a href="#"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fas fa-file-pdf"></i>
-                  </span>
+                <a href="https://github.com/SKKU-PRISM/AutoDataCollector" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fab fa-github"></i></span>
+                  <span>Collector</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://github.com/SKKU-PRISM/robobridge" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fab fa-github"></i></span>
+                  <span>RoboBridge</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://huggingface.co/skkuprism" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">&#129303;</span>
+                  <span>Dataset</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="#" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-file-pdf"></i></span>
                   <span>Report</span>
-                </a>
-              </span>
-              <!-- Video Link (placeholder) -->
-              <span class="link-block">
-                <a href="#"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fab fa-youtube"></i>
-                  </span>
-                  <span>Video</span>
                 </a>
               </span>
             </div>
           </div>
+
         </div>
       </div>
     </div>
@@ -92,7 +97,9 @@
 </section>
 
 
-<!-- ==================== ABSTRACT ==================== -->
+<!-- ============================================================ -->
+<!--  2. ABSTRACT                                                  -->
+<!-- ============================================================ -->
 <section class="section">
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
@@ -100,52 +107,88 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            Collecting high-quality robot manipulation data at scale remains a critical bottleneck for training generalizable robot policies.
-            We present <b>RAPIDS</b>, an end-to-end multi-agent system that <b>fully automates</b> the robot data collection pipeline &mdash;
-            from natural language task specification to physical execution, evaluation, and dataset recording.
+            High-quality demonstration data is the primary bottleneck in robot learning research.
+            Teleoperation-based collection yields only 10&ndash;20 episodes per hour, requires skilled operators,
+            and suffers from quality variance due to operator fatigue and proficiency differences.
           </p>
           <p>
-            Our system leverages <b>Code-as-Policies (CaP)</b> to translate natural language instructions into executable robot control code
-            via large language models (LLMs). Combined with <b>zero-shot visual grounding</b> (Grounding DINO + RealSense RGB-D),
-            <b>vision-language model (VLM) based task evaluation</b>, and <b>automatic reset execution</b>,
-            RAPIDS enables continuous, autonomous data collection without human intervention.
+            We present <b>RAPIDS</b>, a multi-agent system that <b>fully automates</b> the robot data collection
+            and learning pipeline. From a single natural language instruction, RAPIDS autonomously
+            converts the task into a structured specification (<b>A-1</b>),
+            generates a simulation environment in IsaacLab (<b>A-2</b>),
+            collects demonstration data via LLM-generated code in both simulation and the real world (<b>A-3</b>),
+            validates quality through dual pre/post verification (<b>A-4</b>),
+            executes on heterogeneous robots via a unified control framework (<b>B-1</b>),
+            and fine-tunes VLA models with LoRA adapters (<b>B-2</b>).
           </p>
           <p>
-            The system supports both <b>single-arm and bimanual manipulation</b> on SO-101 robot arms,
-            records full trajectories with skill-level subgoal labels in the <b>LeRobot dataset format</b>,
-            and provides a foundation for <b>VLA (Vision-Language-Action) model fine-tuning</b> and sim-to-real transfer.
+            RAPIDS produced <b>57 GB</b> of simulation data across <b>13 tasks</b> (78% episode success rate)
+            and <b>8 GB</b> of real-world data on 3 robot platforms (SO-101, UR7e),
+            reducing new-task pipeline time from <b>4&ndash;8 weeks to 17 minutes</b>.
           </p>
         </div>
       </div>
     </div>
 
 
-    <!-- ==================== KEY STATS ==================== -->
+<!-- ============================================================ -->
+<!--  3. DEMO                                                      -->
+<!-- ============================================================ -->
+    <div class="columns is-centered" style="margin-top: 1.5rem;">
+      <div class="column is-four-fifths">
+        <div class="has-text-centered">
+          <!-- TODO: Replace with full pipeline demo video -->
+          <figure class="teaser-figure">
+            <img src="./assets/demo.gif" alt="RAPIDS Demo" style="max-width: 100%; height: auto;">
+          </figure>
+          <p class="has-text-grey is-size-6" style="margin-top: 0.75rem;">
+            End-to-end autonomous pipeline: natural language &rarr; simulation &rarr; data collection &rarr; verification &rarr; VLA learning.
+          </p>
+        </div>
+      </div>
+    </div>
+
+
+<!-- ============================================================ -->
+<!--  4. KEY NUMBERS                                               -->
+<!-- ============================================================ -->
     <div class="columns is-centered" style="margin-top: 1rem;">
-      <div class="column is-10">
-        <div class="columns is-mobile is-multiline">
-          <div class="column is-3-desktop is-6-mobile">
+      <div class="column is-12">
+        <div class="columns is-mobile is-multiline has-text-centered">
+          <div class="column is-2-desktop is-4-mobile">
             <div class="stat-box">
               <span class="stat-number">6</span>
               <span class="stat-label">AI Agents</span>
             </div>
           </div>
-          <div class="column is-3-desktop is-6-mobile">
+          <div class="column is-2-desktop is-4-mobile">
             <div class="stat-box">
-              <span class="stat-number">5-DOF</span>
-              <span class="stat-label">SO-101 Robot Arms</span>
+              <span class="stat-number">82</span>
+              <span class="stat-label">Task YAMLs</span>
             </div>
           </div>
-          <div class="column is-3-desktop is-6-mobile">
+          <div class="column is-2-desktop is-4-mobile">
             <div class="stat-box">
-              <span class="stat-number">Bi-Arm</span>
-              <span class="stat-label">Synchronized Control</span>
+              <span class="stat-number">65 GB</span>
+              <span class="stat-label">Collected Data</span>
             </div>
           </div>
-          <div class="column is-3-desktop is-6-mobile">
+          <div class="column is-2-desktop is-4-mobile">
             <div class="stat-box">
-              <span class="stat-number">Zero-Shot</span>
-              <span class="stat-label">Object Detection</span>
+              <span class="stat-number">4</span>
+              <span class="stat-label">Robot Types</span>
+            </div>
+          </div>
+          <div class="column is-2-desktop is-4-mobile">
+            <div class="stat-box">
+              <span class="stat-number">146K+</span>
+              <span class="stat-label">Lines of Code</span>
+            </div>
+          </div>
+          <div class="column is-2-desktop is-4-mobile">
+            <div class="stat-box">
+              <span class="stat-number">17 min</span>
+              <span class="stat-label">New Task E2E</span>
             </div>
           </div>
         </div>
@@ -153,96 +196,37 @@
     </div>
 
 
-    <!-- ==================== SYSTEM PIPELINE ==================== -->
+<!-- ============================================================ -->
+<!--  5. SYSTEM OVERVIEW                                           -->
+<!-- ============================================================ -->
     <div class="columns is-centered">
       <div class="column is-full-width">
-        <h2 class="title is-3">System Pipeline</h2>
+        <h2 class="title is-3">System Overview</h2>
         <div class="content has-text-justified">
           <p>
-            RAPIDS operates as a closed-loop pipeline that transforms natural language instructions into physical robot actions,
-            automatically evaluates task completion, and resets the workspace for the next episode.
+            RAPIDS consists of 6 specialized agents orchestrated in an end-to-end pipeline.
+            The system operates across two tracks: <b>Simulation</b> (A-1 &rarr; A-2 &rarr; A-3 &rarr; A-4)
+            for scalable data production in IsaacLab, and <b>Real-World</b> (A-3 &rarr; B-1 &rarr; B-2)
+            for physical robot execution and VLA model deployment.
           </p>
         </div>
 
-        <div class="pipeline-diagram">
-          <div class="columns is-vcentered is-mobile is-multiline">
-            <!-- Step 1: Object Detection -->
-            <div class="column is-12-mobile is-narrow-tablet">
-              <div class="pipeline-step">
-                <span class="step-number">1</span>
-                <div class="step-icon">
-                  <i class="fas fa-eye" style="color: #3273dc;"></i>
-                </div>
-                <h4>Object Detection</h4>
-                <p>VLM / Grounding DINO<br>+ RealSense RGB-D</p>
-              </div>
-            </div>
-            <div class="column is-narrow pipeline-arrow is-hidden-mobile">
-              <i class="fas fa-arrow-right"></i>
-            </div>
-            <!-- Step 2: Code Generation -->
-            <div class="column is-12-mobile is-narrow-tablet">
-              <div class="pipeline-step">
-                <span class="step-number">2</span>
-                <div class="step-icon">
-                  <i class="fas fa-code" style="color: #9b59b6;"></i>
-                </div>
-                <h4>Code Generation</h4>
-                <p>LLM converts NL<br>to executable Python</p>
-              </div>
-            </div>
-            <div class="column is-narrow pipeline-arrow is-hidden-mobile">
-              <i class="fas fa-arrow-right"></i>
-            </div>
-            <!-- Step 3: Execution -->
-            <div class="column is-12-mobile is-narrow-tablet">
-              <div class="pipeline-step">
-                <span class="step-number">3</span>
-                <div class="step-icon">
-                  <i class="fas fa-robot" style="color: #27ae60;"></i>
-                </div>
-                <h4>Robot Execution</h4>
-                <p>Skill primitives<br>+ IK/FK Control</p>
-              </div>
-            </div>
-            <div class="column is-narrow pipeline-arrow is-hidden-mobile">
-              <i class="fas fa-arrow-right"></i>
-            </div>
-            <!-- Step 4: Task Judge -->
-            <div class="column is-12-mobile is-narrow-tablet">
-              <div class="pipeline-step">
-                <span class="step-number">4</span>
-                <div class="step-icon">
-                  <i class="fas fa-check-circle" style="color: #e74c3c;"></i>
-                </div>
-                <h4>Task Judge</h4>
-                <p>VLM compares<br>before/after images</p>
-              </div>
-            </div>
-            <div class="column is-narrow pipeline-arrow is-hidden-mobile">
-              <i class="fas fa-arrow-right"></i>
-            </div>
-            <!-- Step 5: Auto Reset -->
-            <div class="column is-12-mobile is-narrow-tablet">
-              <div class="pipeline-step">
-                <span class="step-number">5</span>
-                <div class="step-icon">
-                  <i class="fas fa-undo" style="color: #f39c12;"></i>
-                </div>
-                <h4>Auto Reset</h4>
-                <p>LLM-generated<br>reset code</p>
-              </div>
-            </div>
-          </div>
+        <!-- Architecture Diagram Placeholder -->
+        <div class="placeholder placeholder-wide" style="margin: 2rem 0;">
+          <i class="fas fa-project-diagram"></i>
+          <span class="placeholder-label">System Architecture Diagram</span>
+          <span class="placeholder-hint">PLACEHOLDER: 6-Agent pipeline overview with Sim/Real-World tracks</span>
         </div>
 
-        <!-- Pipeline text description -->
         <div class="highlight-box">
           <p>
-            <strong>Closed-Loop Autonomy:</strong>
-            A natural language instruction (e.g., <em>"Pick up the red cup and place it in the blue box"</em>)
-            is processed through the full pipeline. The VLM-based judge determines success/failure,
-            and the auto-reset module restores the workspace for continuous data collection &mdash;
+            <strong>Pipeline Flow:</strong>
+            A natural language command (e.g., <em>"Stack the blocks inside the tray"</em>) is processed by
+            <b>A-1</b> into a YAML task spec, <b>A-2</b> generates an IsaacLab simulation environment,
+            <b>A-3</b> collects demonstrations via LLM-generated code (in both sim and real),
+            <b>A-4</b> validates code and data quality through dual verification,
+            <b>B-1</b> provides unified heterogeneous robot control, and
+            <b>B-2</b> fine-tunes VLA models with LoRA adapters &mdash;
             all <strong>without human intervention</strong>.
           </p>
         </div>
@@ -250,148 +234,46 @@
     </div>
 
 
-    <!-- ==================== ARCHITECTURE ==================== -->
+<!-- ============================================================ -->
+<!--  6. KEY DIFFERENTIATORS                                       -->
+<!-- ============================================================ -->
     <div class="columns is-centered">
       <div class="column is-full-width">
-        <h2 class="title is-3">System Architecture</h2>
-        <div class="content has-text-justified">
-          <p>
-            The system is organized into four hierarchical layers, from high-level skill abstractions
-            down to direct hardware control. This layered design enables modularity and easy extension
-            to new robots and tasks.
-          </p>
-        </div>
+        <h2 class="title is-3">Key Differentiators</h2>
 
-        <div class="arch-layer layer-application">
-          <span class="layer-label"><i class="fas fa-layer-group"></i>&nbsp; Application</span>
-          <div class="layer-modules">
-            <span class="module-tag">Code Generation (LLM)</span>
-            <span class="module-tag">Task Judge (VLM)</span>
-            <span class="module-tag">Dataset Recording</span>
-            <span class="module-tag">Auto Reset</span>
-          </div>
-        </div>
-
-        <div class="arch-layer layer-planning">
-          <span class="layer-label"><i class="fas fa-project-diagram"></i>&nbsp; Planning</span>
-          <div class="layer-modules">
-            <span class="module-tag">Pinocchio FK/IK</span>
-            <span class="module-tag">Multi-IK Trajectory</span>
-            <span class="module-tag">Frame Transform</span>
-            <span class="module-tag">Workspace Validation</span>
-          </div>
-        </div>
-
-        <div class="arch-layer layer-control">
-          <span class="layer-label"><i class="fas fa-sliders-h"></i>&nbsp; Control</span>
-          <div class="layer-modules">
-            <span class="module-tag">Gravity Compensation</span>
-            <span class="module-tag">Backlash Compensation</span>
-            <span class="module-tag">Safety Limits</span>
-            <span class="module-tag">Velocity Saturation</span>
-          </div>
-        </div>
-
-        <div class="arch-layer layer-hardware">
-          <span class="layer-label"><i class="fas fa-microchip"></i>&nbsp; Hardware</span>
-          <div class="layer-modules">
-            <span class="module-tag">Feetech STS3215</span>
-            <span class="module-tag">Motor Calibration</span>
-            <span class="module-tag">RealSense D435</span>
-            <span class="module-tag">Grounding DINO</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-    <!-- ==================== KEY FEATURES ==================== -->
-    <div class="columns is-centered">
-      <div class="column is-full-width">
-        <h2 class="title is-3">Key Features</h2>
-
-        <div class="columns is-multiline" style="margin-top: 1rem;">
-          <!-- Feature 1: Code-as-Policies -->
+        <div class="columns" style="margin-top: 1rem;">
+          <!-- E2E Autonomy -->
           <div class="column is-4">
-            <div class="feature-card">
-              <span class="feature-icon"><i class="fas fa-code" style="color: #9b59b6;"></i></span>
-              <h4>Code-as-Policies</h4>
-              <ul>
-                <li>Natural language to executable code</li>
-                <li>Multi-LLM support (GPT-4o, Gemini, LLaMA)</li>
-                <li>Skill-based code templates</li>
-                <li>Multi-turn VLM reasoning</li>
-              </ul>
+            <div class="diff-card diff-1">
+              <h4><i class="fas fa-infinity"></i>&ensp;End-to-End Autonomy</h4>
+              <p>
+                From a single natural language input, the Orchestrator coordinates all 6 agents
+                to produce trained VLA models &mdash; no manual environment setup, data collection,
+                or quality review required. Reduces pipeline time from <b>4&ndash;8 weeks to 17 minutes</b>.
+              </p>
             </div>
           </div>
-
-          <!-- Feature 2: Zero-Shot Detection -->
+          <!-- Closed-Loop Quality -->
           <div class="column is-4">
-            <div class="feature-card">
-              <span class="feature-icon"><i class="fas fa-search" style="color: #3273dc;"></i></span>
-              <h4>Zero-Shot Perception</h4>
-              <ul>
-                <li>Grounding DINO object detection</li>
-                <li>RealSense D435 RGB-D sensing</li>
-                <li>Pixel-to-robot coordinate transform</li>
-                <li>VLM-based scene understanding</li>
-              </ul>
+            <div class="diff-card diff-2">
+              <h4><i class="fas fa-sync-alt"></i>&ensp;Closed-Loop Quality</h4>
+              <p>
+                Dual pre/post verification with automatic feedback loops:
+                A-2 self-refinement (up to 5 retries), A-3 3-tier success validation
+                (geometric &rarr; VLM Judge &rarr; environment flag), A-4 AST static analysis + VLM visual scoring,
+                and B-1 real-time 10Hz monitoring.
+              </p>
             </div>
           </div>
-
-          <!-- Feature 3: Autonomous Evaluation -->
+          <!-- Physical World -->
           <div class="column is-4">
-            <div class="feature-card">
-              <span class="feature-icon"><i class="fas fa-check-double" style="color: #27ae60;"></i></span>
-              <h4>Autonomous Evaluation</h4>
-              <ul>
-                <li>VLM before/after comparison</li>
-                <li>TRUE / FALSE / UNCERTAIN output</li>
-                <li>Automatic workspace reset</li>
-                <li>Continuous episode collection</li>
-              </ul>
-            </div>
-          </div>
-
-          <!-- Feature 4: Bimanual Control -->
-          <div class="column is-4">
-            <div class="feature-card">
-              <span class="feature-icon"><i class="fas fa-hands" style="color: #e67e22;"></i></span>
-              <h4>Bimanual Manipulation</h4>
-              <ul>
-                <li>Synchronized dual-arm control</li>
-                <li>Per-arm wait semantics</li>
-                <li>12-axis ALOHA-format recording</li>
-                <li>Parallel thread execution</li>
-              </ul>
-            </div>
-          </div>
-
-          <!-- Feature 5: Hardware Control -->
-          <div class="column is-4">
-            <div class="feature-card">
-              <span class="feature-icon"><i class="fas fa-cogs" style="color: #e74c3c;"></i></span>
-              <h4>Precision Control</h4>
-              <ul>
-                <li>Pinocchio-based FK/IK solver</li>
-                <li>Multi-IK trajectory planning</li>
-                <li>Adaptive gravity compensation</li>
-                <li>Direction-aware backlash correction</li>
-              </ul>
-            </div>
-          </div>
-
-          <!-- Feature 6: Dataset Recording -->
-          <div class="column is-4">
-            <div class="feature-card">
-              <span class="feature-icon"><i class="fas fa-database" style="color: #8e44ad;"></i></span>
-              <h4>LeRobot Dataset</h4>
-              <ul>
-                <li>LeRobot-compatible format</li>
-                <li>Multi-camera synchronized recording</li>
-                <li>Skill-level subgoal labels</li>
-                <li>HuggingFace Hub integration</li>
-              </ul>
+            <div class="diff-card diff-3">
+              <h4><i class="fas fa-cogs"></i>&ensp;Physical World Design</h4>
+              <p>
+                Physics-aware at every level: Pinocchio 6-DOF IK with reachability verification,
+                PhysX 5 stability checks, automatic Domain Randomization for sim-to-real transfer,
+                and low-level safety limits (Trajectory/Joint/Cartesian + gripper control).
+              </p>
             </div>
           </div>
         </div>
@@ -399,302 +281,514 @@
     </div>
 
 
-    <!-- ==================== MULTI-AGENT SYSTEM ==================== -->
+<!-- ============================================================ -->
+<!--  7. AGENT DETAILS                                             -->
+<!-- ============================================================ -->
     <div class="columns is-centered">
       <div class="column is-full-width">
-        <h2 class="title is-3">Multi-Agent System</h2>
+        <h2 class="title is-3">Agents</h2>
         <div class="content has-text-justified">
           <p>
-            RAPIDS is composed of 6 specialized AI agents, each responsible for a distinct stage of the
-            autonomous data collection pipeline. The agents communicate through a centralized orchestrator
-            that manages the end-to-end workflow.
+            Each agent is a specialized module with its own AI models, inputs/outputs, and verification mechanisms.
+            Together they form a fully automated pipeline spanning task specification to model deployment.
           </p>
         </div>
 
         <div class="columns is-multiline" style="margin-top: 1rem;">
-          <div class="column is-4">
-            <div class="agent-card agent-1">
-              <h5><i class="fas fa-comment-dots"></i>&nbsp; Agent 1: Task Definition</h5>
-              <p>Converts natural language instructions into structured task specifications with physical feasibility validation.</p>
+
+          <!-- A-1: Task Definition -->
+          <div class="column is-6">
+            <div class="agent-detail">
+              <div class="agent-header agent-header-a1">
+                <i class="fas fa-comment-dots"></i>
+                <div>
+                  <h4>Task Definition Agent <span class="agent-id">[A-1]</span></h4>
+                </div>
+              </div>
+              <div class="agent-body">
+                <p class="agent-purpose">
+                  Converts natural language task descriptions into structured YAML specifications
+                  via RAG-powered LLM pipeline with a library of 82 indexed tasks.
+                </p>
+                <div class="agent-meta">
+                  <span class="meta-tag">GPT-5</span>
+                  <span class="meta-tag">GPT-5-mini</span>
+                  <span class="meta-tag">all-MiniLM-L6-v2</span>
+                  <span class="meta-tag">RAG</span>
+                </div>
+                <div class="agent-io">
+                  <strong>Input:</strong> Natural language task description<br>
+                  <strong>Output:</strong> Structured YAML task specification
+                </div>
+                <ul class="agent-techs">
+                  <li>LLM-based NL parsing and task decomposition</li>
+                  <li>Vector search RAG (82 task library indexed)</li>
+                  <li>Structured YAML spec generation with constraints</li>
+                </ul>
+                <!-- Placeholder for A-1 demo -->
+                <div class="placeholder placeholder-small" style="margin-bottom: 1rem;">
+                  <i class="fas fa-image"></i>
+                  <span class="placeholder-hint">PLACEHOLDER: A-1 demo image</span>
+                </div>
+                <div class="agent-results">
+                  <strong>Result:</strong> 82 task specs generated across 8 categories, 4 robot types
+                </div>
+              </div>
             </div>
           </div>
-          <div class="column is-4">
-            <div class="agent-card agent-2">
-              <h5><i class="fas fa-cube"></i>&nbsp; Agent 2: Sim Generation</h5>
-              <p>Dynamically configures simulation environments from task specs with VLM-based suitability verification.</p>
+
+          <!-- A-2: Simulation Generation -->
+          <div class="column is-6">
+            <div class="agent-detail">
+              <div class="agent-header agent-header-a2">
+                <i class="fas fa-cube"></i>
+                <div>
+                  <h4>Simulation Generation Agent <span class="agent-id">[A-2]</span></h4>
+                </div>
+              </div>
+              <div class="agent-body">
+                <p class="agent-purpose">
+                  Automatically generates complete IsaacLab simulation environment code from YAML task specs,
+                  with physics-aware placement and adaptive Domain Randomization.
+                </p>
+                <div class="agent-meta">
+                  <span class="meta-tag">GPT-5</span>
+                  <span class="meta-tag">GPT-5-mini</span>
+                  <span class="meta-tag">Gemini</span>
+                  <span class="meta-tag">IsaacLab</span>
+                </div>
+                <div class="agent-io">
+                  <strong>Input:</strong> YAML task specification<br>
+                  <strong>Output:</strong> IsaacLab ManagerBasedRLEnv Python code
+                </div>
+                <ul class="agent-techs">
+                  <li>LLM code generation with 668-line system prompt</li>
+                  <li>Self-refinement loop (up to 5 auto-corrections)</li>
+                  <li>Adaptive Domain Randomization (YAML &rarr; EventTermCfg)</li>
+                  <li>VLM-based visual environment verification</li>
+                </ul>
+                <!-- Placeholder for A-2 demo -->
+                <div class="placeholder placeholder-small" style="margin-bottom: 1rem;">
+                  <i class="fas fa-image"></i>
+                  <span class="placeholder-hint">PLACEHOLDER: A-2 simulation screenshot</span>
+                </div>
+                <div class="agent-results">
+                  <strong>Result:</strong> Code Runnability 87/100 &bull; 4 robot types &bull; 8 task categories
+                </div>
+              </div>
             </div>
           </div>
-          <div class="column is-4">
-            <div class="agent-card agent-3">
-              <h5><i class="fas fa-terminal"></i>&nbsp; Agent 3: Code Generation</h5>
-              <p>Generates executable robot control code using Code-as-Policies with self-correction via feedback loops.</p>
+
+          <!-- A-3: Data Collection -->
+          <div class="column is-6">
+            <div class="agent-detail">
+              <div class="agent-header agent-header-a3">
+                <i class="fas fa-database"></i>
+                <div>
+                  <h4>Data Collection Agent <span class="agent-id">[A-3]</span></h4>
+                </div>
+              </div>
+              <div class="agent-body">
+                <p class="agent-purpose">
+                  Collects robot demonstration data in both simulation (IsaacLab) and real-world environments
+                  using LLM-generated control code with automatic Forward-Reset loops.
+                </p>
+                <div class="agent-meta">
+                  <span class="meta-tag">Gemini 3.1 Flash</span>
+                  <span class="meta-tag">GPT-5.2</span>
+                  <span class="meta-tag">Pinocchio IK</span>
+                  <span class="meta-tag">LeRobot v3.0</span>
+                </div>
+                <div class="agent-io">
+                  <strong>Input:</strong> Task instruction + environment/scene + primitive skills<br>
+                  <strong>Output:</strong> LeRobot v3.0 demonstration dataset
+                </div>
+                <ul class="agent-techs">
+                  <li>6-DOF IK (Pinocchio + DifferentialIK fallback)</li>
+                  <li>3-tier success validation (Geometric &rarr; VLM &rarr; Env flag)</li>
+                  <li>Forward-Reset loop for continuous unattended collection</li>
+                  <li>Bi-arm coordination + multi-camera recording</li>
+                  <li>Random seed placement for data diversity</li>
+                </ul>
+                <!-- Placeholder for A-3 demo -->
+                <div class="placeholder placeholder-small" style="margin-bottom: 1rem;">
+                  <i class="fas fa-image"></i>
+                  <span class="placeholder-hint">PLACEHOLDER: A-3 data collection demo (sim + real)</span>
+                </div>
+                <div class="agent-results">
+                  <strong>Sim:</strong> 13 tasks, 57 GB, 78% success &bull;
+                  <strong>Real:</strong> 13 tasks, 8 GB, 68&ndash;92% success
+                </div>
+              </div>
             </div>
           </div>
-          <div class="column is-4">
-            <div class="agent-card agent-4">
-              <h5><i class="fas fa-robot"></i>&nbsp; Agent 4: Robot Control</h5>
-              <p>Heterogeneous robot control framework with ROS integration and robot-specific plugins.</p>
+
+          <!-- A-4: Verification -->
+          <div class="column is-6">
+            <div class="agent-detail">
+              <div class="agent-header agent-header-a4">
+                <i class="fas fa-shield-alt"></i>
+                <div>
+                  <h4>Pre &amp; Post Validator <span class="agent-id">[A-4]</span></h4>
+                </div>
+              </div>
+              <div class="agent-body">
+                <p class="agent-purpose">
+                  Dual verification system: pre-execution static code analysis (AST-based)
+                  and post-execution visual validation (VLM-based) with 100-point scoring.
+                </p>
+                <div class="agent-meta">
+                  <span class="meta-tag">GPT-5</span>
+                  <span class="meta-tag">GPT-5-mini</span>
+                  <span class="meta-tag">AST Parser</span>
+                  <span class="meta-tag">VLM Evaluator</span>
+                </div>
+                <div class="agent-io">
+                  <strong>Input:</strong> LLM-generated code + YAML task spec<br>
+                  <strong>Output:</strong> Score (0&ndash;100) + violation feedback
+                </div>
+                <ul class="agent-techs">
+                  <li>Scene Fidelity: asset completeness, physics, robot config</li>
+                  <li>MDP Correctness: observation/reward/termination validity</li>
+                  <li>Task Alignment: goal condition mapping, threshold check</li>
+                  <li>Runtime Validity: env creation, physics stability, NaN/Inf</li>
+                  <li>VLM visual scoring on front/top screenshots</li>
+                </ul>
+                <!-- Placeholder for A-4 demo -->
+                <div class="placeholder placeholder-small" style="margin-bottom: 1rem;">
+                  <i class="fas fa-image"></i>
+                  <span class="placeholder-hint">PLACEHOLDER: A-4 verification pipeline image</span>
+                </div>
+                <div class="agent-results">
+                  <strong>Result:</strong> Static + visual dual verification with auto-correction feedback loop
+                </div>
+              </div>
             </div>
           </div>
-          <div class="column is-4">
-            <div class="agent-card agent-5">
-              <h5><i class="fas fa-shield-alt"></i>&nbsp; Agent 5: Dual Verification</h5>
-              <p>Neuro-symbolic pre-verification and QA-based post-verification for data quality assurance.</p>
+
+          <!-- B-1: Robot Control -->
+          <div class="column is-6">
+            <div class="agent-detail">
+              <div class="agent-header agent-header-b1">
+                <i class="fas fa-robot"></i>
+                <div>
+                  <h4>Robot Control Framework <span class="agent-id">[B-1]</span></h4>
+                </div>
+              </div>
+              <div class="agent-body">
+                <p class="agent-purpose">
+                  Hierarchical heterogeneous robot control pipeline with ROS2 communication,
+                  plugin-based robot adapters, and real-time VLM monitoring.
+                </p>
+                <div class="agent-meta">
+                  <span class="meta-tag">GR00T N1.5</span>
+                  <span class="meta-tag">OpenVLA</span>
+                  <span class="meta-tag">LeRobot</span>
+                  <span class="meta-tag">ROS2 Humble</span>
+                  <span class="meta-tag">LangChain</span>
+                </div>
+                <div class="agent-io">
+                  <strong>Input:</strong> NL command + RGB/RGBD image + model selection<br>
+                  <strong>Output:</strong> Robot trajectory / joint control commands
+                </div>
+                <ul class="agent-techs">
+                  <li>5-stage pipeline: Perception &rarr; Planner &rarr; Controller &rarr; Robot &rarr; Monitor</li>
+                  <li>Plugin adapter system (CustomRobot/RobotBackend abstraction)</li>
+                  <li>Trajectory/Joint/Cartesian command types + gripper control</li>
+                  <li>Real-time 10Hz monitoring with VLM visual judgment</li>
+                </ul>
+                <!-- Placeholder for B-1 demo -->
+                <div class="placeholder placeholder-small" style="margin-bottom: 1rem;">
+                  <i class="fas fa-image"></i>
+                  <span class="placeholder-hint">PLACEHOLDER: B-1 multi-robot control demo</span>
+                </div>
+                <div class="agent-results">
+                  <strong>Result:</strong> RoboCasa 16 tasks + LIBERO 10 tasks &bull; Franka & UR7e validated
+                </div>
+              </div>
             </div>
           </div>
-          <div class="column is-4">
-            <div class="agent-card agent-6">
-              <h5><i class="fas fa-brain"></i>&nbsp; Agent 6: Sim-to-Real</h5>
-              <p>Image-based reward functions and VLA fine-tuning for transferring skills from simulation to real robots.</p>
+
+          <!-- B-2: VLA Training -->
+          <div class="column is-6">
+            <div class="agent-detail">
+              <div class="agent-header agent-header-b2">
+                <i class="fas fa-brain"></i>
+                <div>
+                  <h4>VLA Fine-Tuning <span class="agent-id">[B-2]</span></h4>
+                </div>
+              </div>
+              <div class="agent-body">
+                <p class="agent-purpose">
+                  Fine-tunes pre-trained VLA models with LoRA adapters using demonstration data
+                  collected by A-3, enabling task-specific adapter switching in under 10ms.
+                </p>
+                <div class="agent-meta">
+                  <span class="meta-tag">GR00T N1.5</span>
+                  <span class="meta-tag">SmolVLA</span>
+                  <span class="meta-tag">Pi0.5</span>
+                  <span class="meta-tag">LoRA</span>
+                </div>
+                <div class="agent-io">
+                  <strong>Input:</strong> A-3 demonstration data + pre-trained VLA model<br>
+                  <strong>Output:</strong> Fine-tuned VLA model with task-specific LoRA adapter
+                </div>
+                <ul class="agent-techs">
+                  <li>LoRA adapter-based VLA fine-tuning pipeline</li>
+                  <li>LeRobot v3.0 data preprocessing (80/20 train/val split)</li>
+                  <li>Task-specific adapter hot-swapping (&lt; 10ms)</li>
+                  <li>3 VLA backend support (GR00T, SmolVLA, Pi0.5)</li>
+                </ul>
+                <!-- Placeholder for B-2 demo -->
+                <div class="placeholder placeholder-small" style="margin-bottom: 1rem;">
+                  <i class="fas fa-image"></i>
+                  <span class="placeholder-hint">PLACEHOLDER: B-2 VLA training results</span>
+                </div>
+                <div class="agent-results">
+                  <strong>Result:</strong> LIBERO 73.5% &bull; RoboCasa 14.7% (+8.5%) &bull; 2h training on H100x4
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+
+        </div><!-- /columns -->
       </div>
     </div>
 
 
-    <!-- ==================== SKILL PRIMITIVES ==================== -->
+<!-- ============================================================ -->
+<!--  8. RESULTS                                                   -->
+<!-- ============================================================ -->
     <div class="columns is-centered">
       <div class="column is-full-width">
-        <h2 class="title is-3">Skill Primitives</h2>
-        <div class="content has-text-justified">
-          <p>
-            The LLM-generated code calls high-level skill primitives that abstract away low-level motor control.
-            These primitives handle IK solving, trajectory planning, compensation, and safety checks internally.
-          </p>
+        <h2 class="title is-3">Results</h2>
+
+        <!-- Sub: Environment Generation (A-1, A-2) -->
+        <h4 class="title is-5" style="margin-top: 1.5rem;">Environment Generation [A-1, A-2]</h4>
+        <div class="columns is-multiline is-mobile">
+          <div class="column is-4-desktop is-6-mobile">
+            <div class="result-metric">
+              <span class="metric-value" style="color: #3273dc;">87 / 100</span>
+              <span class="metric-label">Code Runnability</span>
+              <span class="metric-detail">GPT-5-mini, 16 trials</span>
+            </div>
+          </div>
+          <div class="column is-4-desktop is-6-mobile">
+            <div class="result-metric">
+              <span class="metric-value" style="color: #3273dc;">2.2</span>
+              <span class="metric-label">Avg. Code Gen Attempts</span>
+              <span class="metric-detail">Self-refinement loop</span>
+            </div>
+          </div>
+          <div class="column is-4-desktop is-6-mobile">
+            <div class="result-metric">
+              <span class="metric-value" style="color: #3273dc;">4</span>
+              <span class="metric-label">Robot Types Supported</span>
+              <span class="metric-detail">Franka, UR10e, OpenARM, SO-101</span>
+            </div>
+          </div>
         </div>
 
+        <!-- Sub: Data Collection (A-3) -->
+        <h4 class="title is-5" style="margin-top: 1.5rem;">Data Collection [A-3]</h4>
+        <div class="columns is-multiline">
+          <div class="column is-6">
+            <h6 class="title is-6" style="margin-bottom: 0.5rem;">Simulation</h6>
+            <table class="styled-table">
+              <tbody>
+                <tr><td>Tasks completed</td><td><b>13</b></td></tr>
+                <tr><td>Total raw data</td><td><b>57 GB</b> (LeRobot v3.0)</td></tr>
+                <tr><td>Episode success rate</td><td><b>78%</b> (401/514)</td></tr>
+                <tr><td>Avg. episodes / task</td><td>30.8</td></tr>
+                <tr><td>Batch time</td><td>3 days (13 tasks)</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="column is-6">
+            <h6 class="title is-6" style="margin-bottom: 0.5rem;">Real-World</h6>
+            <table class="styled-table">
+              <tbody>
+                <tr><td>Tasks (single / dual / UR7e)</td><td><b>6 / 3 / 4</b></td></tr>
+                <tr><td>Total raw data</td><td><b>2.5 / 3.4 / 1.4 GB</b></td></tr>
+                <tr><td>Episode success rate</td><td><b>68% / 71% / 92%</b></td></tr>
+                <tr><td>Avg. episodes / task</td><td>33.2 / 30.3 / 34</td></tr>
+                <tr><td>Batch time</td><td>5.1 / 3.8 / 5.5 hours</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Sub: VLA Learning (B-1, B-2) -->
+        <h4 class="title is-5" style="margin-top: 1.5rem;">VLA Learning &amp; Robot Control [B-1, B-2]</h4>
+        <div class="columns is-multiline is-mobile">
+          <div class="column is-3-desktop is-6-mobile">
+            <div class="result-metric">
+              <span class="metric-value" style="color: #845ef7;">73.5%</span>
+              <span class="metric-label">LIBERO Success Rate</span>
+              <span class="metric-detail">+1.1% vs. baseline</span>
+            </div>
+          </div>
+          <div class="column is-3-desktop is-6-mobile">
+            <div class="result-metric">
+              <span class="metric-value" style="color: #845ef7;">14.7%</span>
+              <span class="metric-label">RoboCasa Success Rate</span>
+              <span class="metric-detail">+8.5% vs. baseline</span>
+            </div>
+          </div>
+          <div class="column is-3-desktop is-6-mobile">
+            <div class="result-metric">
+              <span class="metric-value" style="color: #845ef7;">&lt; 10ms</span>
+              <span class="metric-label">LoRA Adapter Swap</span>
+              <span class="metric-detail">Task-specific switching</span>
+            </div>
+          </div>
+          <div class="column is-3-desktop is-6-mobile">
+            <div class="result-metric">
+              <span class="metric-value" style="color: #845ef7;">2h</span>
+              <span class="metric-label">Fine-tuning Time</span>
+              <span class="metric-detail">H100 x 4 GPUs</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Results chart placeholder -->
+        <div class="placeholder placeholder-medium" style="margin: 2rem 0;">
+          <i class="fas fa-chart-bar"></i>
+          <span class="placeholder-label">Quantitative Results Comparison</span>
+          <span class="placeholder-hint">PLACEHOLDER: Comparison chart (RAPIDS vs. baselines)</span>
+        </div>
+
+        <!-- Sub: System Efficiency -->
+        <h4 class="title is-5" style="margin-top: 1.5rem;">System Efficiency</h4>
         <table class="styled-table">
           <thead>
             <tr>
-              <th>Skill</th>
-              <th>Description</th>
-              <th>Key Parameters</th>
+              <th>Metric</th>
+              <th>Conventional</th>
+              <th>RAPIDS</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td><code>move_to_position(pos)</code></td>
-              <td>Move end-effector to target [x, y, z] position</td>
-              <td><code>position</code>, <code>apply_gripper_offset</code></td>
+              <td>Task definition time</td>
+              <td>Days ~ weeks (manual reward/env code)</td>
+              <td><b>1 min</b> (NL &rarr; YAML)</td>
             </tr>
             <tr>
-              <td><code>gripper_open()</code></td>
-              <td>Open the gripper</td>
-              <td>&mdash;</td>
+              <td>Environment setup time</td>
+              <td>1&ndash;2 weeks (manual sim authoring)</td>
+              <td><b>9 min</b> (LLM generation + self-refinement)</td>
             </tr>
             <tr>
-              <td><code>gripper_close()</code></td>
-              <td>Close the gripper to grasp an object</td>
-              <td>&mdash;</td>
+              <td>Data collection throughput</td>
+              <td>10&ndash;20 episodes/hr (teleop)</td>
+              <td><b>~8.5 episodes/hr</b> (fully autonomous)</td>
             </tr>
             <tr>
-              <td><code>execute_pick(pos)</code></td>
-              <td>Full pick sequence: approach, descend, grasp, lift</td>
-              <td><code>position</code>, <code>approach_height</code></td>
+              <td>Full pipeline (new task)</td>
+              <td>4&ndash;8 weeks</td>
+              <td><b>17 minutes</b></td>
             </tr>
             <tr>
-              <td><code>execute_place(pos)</code></td>
-              <td>Full place sequence: approach, descend, release, retract</td>
-              <td><code>position</code>, <code>approach_height</code></td>
-            </tr>
-            <tr>
-              <td><code>rotate_90degree(dir)</code></td>
-              <td>Rotate wrist 90 degrees CW or CCW</td>
-              <td><code>direction</code>: 1 (CW), -1 (CCW)</td>
-            </tr>
-            <tr>
-              <td><code>move_to_initial_state()</code></td>
-              <td>Return to calibrated home position</td>
-              <td>&mdash;</td>
+              <td>Cost per episode</td>
+              <td>$10&ndash;50 (operator labor)</td>
+              <td><b>~$0.02</b> (API cost only)</td>
             </tr>
           </tbody>
         </table>
+      </div>
+    </div>
 
-        <!-- Code example -->
-        <div class="code-example" style="margin-top: 1.5rem;">
-          <pre><code><span class="comment"># Example: LLM-generated code for "Pick up the red cup and place it on the tray"</span>
 
-<span class="keyword">from</span> skills.skills_lerobot <span class="keyword">import</span> LeRobotSkills
+<!-- ============================================================ -->
+<!--  9. HARDWARE & SOFTWARE                                       -->
+<!-- ============================================================ -->
+    <div class="columns is-centered" style="margin-top: 2rem;">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Hardware &amp; Software</h2>
 
-skills = LeRobotSkills(robot_config=<span class="string">"robot_configs/robot/so101_robot3.yaml"</span>)
-skills.connect()
-skills.move_to_initial_state()
-skills.rotate_90degree(direction=<span class="number">1</span>)
+        <div class="columns">
+          <div class="column is-6">
+            <h4 class="title is-5">Hardware</h4>
+            <table class="styled-table">
+              <tbody>
+                <tr><td><i class="fas fa-server"></i>&ensp;GPU Server</td><td>NVIDIA H100 80GB x 4</td></tr>
+                <tr><td><i class="fas fa-desktop"></i>&ensp;GPU Workstation</td><td>RTX 5090 / RTX 3090</td></tr>
+                <tr><td><i class="fas fa-robot"></i>&ensp;SO-101 Arms</td><td>5+1 DOF x 4 units</td></tr>
+                <tr><td><i class="fas fa-robot"></i>&ensp;UR7e Arm</td><td>6+1 DOF x 1 unit</td></tr>
+                <tr><td><i class="fas fa-camera"></i>&ensp;Cameras</td><td>Intel RealSense D435 x 4</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="column is-6">
+            <h4 class="title is-5">Software</h4>
+            <table class="styled-table">
+              <tbody>
+                <tr><td>OS</td><td>Ubuntu 22.04 LTS</td></tr>
+                <tr><td>Simulator</td><td>Isaac Sim 5.1.0 + IsaacLab v2.3.2</td></tr>
+                <tr><td>Robot Framework</td><td>ROS2 Humble</td></tr>
+                <tr><td>ML Framework</td><td>PyTorch 2.7.0</td></tr>
+                <tr><td>Data Format</td><td>LeRobot v3.0 (OXE compatible)</td></tr>
+                <tr><td>Container</td><td>Docker (CUDA 12.1)</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
 
-<span class="comment"># PICK the red cup</span>
-skills.gripper_open()
-skills.move_to_position([<span class="number">0.15</span>, <span class="number">0.05</span>, <span class="number">0.07</span>], apply_gripper_offset=<span class="keyword">True</span>)
-skills.move_to_position([<span class="number">0.15</span>, <span class="number">0.05</span>, <span class="number">0.02</span>], apply_gripper_offset=<span class="keyword">True</span>)
-skills.gripper_close()
-skills.move_to_position([<span class="number">0.15</span>, <span class="number">0.05</span>, <span class="number">0.07</span>])
-
-<span class="comment"># PLACE on the tray</span>
-skills.move_to_position([<span class="number">0.22</span>, <span class="number">-0.03</span>, <span class="number">0.07</span>])
-skills.move_to_position([<span class="number">0.22</span>, <span class="number">-0.03</span>, <span class="number">0.03</span>])
-skills.gripper_open()
-skills.move_to_position([<span class="number">0.22</span>, <span class="number">-0.03</span>, <span class="number">0.07</span>])
-
-skills.move_to_initial_state()
-skills.disconnect()</code></pre>
+        <!-- Hardware photo placeholder -->
+        <div class="placeholder placeholder-medium" style="margin-top: 1.5rem;">
+          <i class="fas fa-camera-retro"></i>
+          <span class="placeholder-label">Hardware Setup Photo</span>
+          <span class="placeholder-hint">PLACEHOLDER: Lab photo showing robot arms, cameras, and compute setup</span>
         </div>
       </div>
     </div>
 
 
-    <!-- ==================== HARDWARE ==================== -->
-    <div class="columns is-centered">
+<!-- ============================================================ -->
+<!--  10. OPEN SOURCE & DATA                                       -->
+<!-- ============================================================ -->
+    <div class="columns is-centered" style="margin-top: 2rem;">
       <div class="column is-full-width">
-        <h2 class="title is-3">Hardware Setup</h2>
+        <h2 class="title is-3">Open Source &amp; Data</h2>
 
-        <table class="styled-table">
-          <thead>
-            <tr>
-              <th>Component</th>
-              <th>Model</th>
-              <th>Specification</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><i class="fas fa-robot"></i>&nbsp; Robot Arm</td>
-              <td>SO-101 (Feetech STS3215)</td>
-              <td>5-DOF manipulator + gripper, 1MHz serial</td>
-            </tr>
-            <tr>
-              <td><i class="fas fa-camera"></i>&nbsp; Camera</td>
-              <td>Intel RealSense D435</td>
-              <td>RGB-D @ 30 FPS, 640x480</td>
-            </tr>
-            <tr>
-              <td><i class="fas fa-microchip"></i>&nbsp; Compute</td>
-              <td>NVIDIA GPU</td>
-              <td>Grounding DINO + VLM inference</td>
-            </tr>
-            <tr>
-              <td><i class="fas fa-brain"></i>&nbsp; LLM Backend</td>
-              <td>GPT-4o / Gemini / LLaMA / vLLM</td>
-              <td>Multi-provider support with auto-routing</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div class="highlight-box" style="margin-top: 1.5rem;">
-          <p>
-            <strong>Bimanual Configuration:</strong>
-            For dual-arm tasks, two SO-101 arms (Robot 2 &amp; Robot 3) are coordinated through
-            <code>MultiArmSkills</code>, which provides synchronized parallel execution with
-            per-arm wait semantics. A shared RealSense camera captures the workspace
-            between both arms.
-          </p>
-        </div>
-      </div>
-    </div>
-
-
-    <!-- ==================== RESULTS GALLERY ==================== -->
-    <div class="columns is-centered">
-      <div class="column is-full-width">
-        <h2 class="title is-3">Example Results</h2>
-        <div class="content has-text-justified">
-          <p>
-            Below are example outputs from the RAPIDS pipeline showing the complete flow:
-            workspace detection, object localization, task execution, and VLM-based evaluation.
-          </p>
-        </div>
-
-        <!-- Result row 1: Detection -->
-        <div class="columns is-multiline is-centered" style="margin-top: 1rem;">
-          <div class="column is-4">
-            <div class="result-image-container">
-              <img src="./static/images/results/initial_state.jpg"
-                   alt="Initial workspace state"
-                   onerror="this.parentElement.innerHTML='<div style=&quot;background:#f0f0f0;padding:3rem;text-align:center;color:#888;&quot;><i class=&quot;fas fa-image fa-3x&quot;></i><br>Initial State</div>'"
-            </div>
-            <p class="has-text-centered"><b>Initial State</b><br>
-            <span class="is-size-7 has-text-grey">Workspace before execution</span></p>
+        <div class="columns is-multiline" style="margin-top: 1rem;">
+          <div class="column is-6">
+            <a href="https://github.com/SKKU-PRISM/Simulation-Generation-Agent" class="repo-card" style="text-decoration:none; color:inherit;">
+              <i class="fab fa-github"></i>
+              <div class="repo-info">
+                <h5>Simulation-Generation-Agent</h5>
+                <p>A-1 Task Spec + A-2 Sim Generation + A-4 Evaluator<br>214 files &bull; 62,533 LOC</p>
+              </div>
+            </a>
           </div>
-          <div class="column is-4">
-            <div class="result-image-container">
-              <img src="./static/images/results/turn1_detection.jpg"
-                   alt="Object detection result"
-                   onerror="this.parentElement.innerHTML='<div style=&quot;background:#f0f0f0;padding:3rem;text-align:center;color:#888;&quot;><i class=&quot;fas fa-image fa-3x&quot;></i><br>Detection</div>'"
-            </div>
-            <p class="has-text-centered"><b>Object Detection</b><br>
-            <span class="is-size-7 has-text-grey">VLM-based object localization</span></p>
+          <div class="column is-6">
+            <a href="https://github.com/SKKU-PRISM/AutoDataCollector" class="repo-card" style="text-decoration:none; color:inherit;">
+              <i class="fab fa-github"></i>
+              <div class="repo-info">
+                <h5>AutoDataCollector</h5>
+                <p>A-3 Real-World Data Collection Pipeline<br>Forward-Reset loop, multi-arm, skill recording</p>
+              </div>
+            </a>
           </div>
-          <div class="column is-4">
-            <div class="result-image-container">
-              <img src="./static/images/results/turn2_grasp_points.jpg"
-                   alt="Grasp point estimation"
-                   onerror="this.parentElement.innerHTML='<div style=&quot;background:#f0f0f0;padding:3rem;text-align:center;color:#888;&quot;><i class=&quot;fas fa-image fa-3x&quot;></i><br>Grasp Points</div>'"
-            </div>
-            <p class="has-text-centered"><b>Grasp Points</b><br>
-            <span class="is-size-7 has-text-grey">Spatial reasoning &amp; pointing</span></p>
+          <div class="column is-6">
+            <a href="https://github.com/SKKU-PRISM/robobridge" class="repo-card" style="text-decoration:none; color:inherit;">
+              <i class="fab fa-github"></i>
+              <div class="repo-info">
+                <h5>RoboBridge</h5>
+                <p>B-1 Robot Control + B-2 VLA Training<br>308 files &bull; 83,794 LOC</p>
+              </div>
+            </a>
           </div>
-        </div>
-
-        <!-- Result row 2: Execution -->
-        <div class="columns is-multiline is-centered">
-          <div class="column is-4">
-            <div class="result-image-container">
-              <img src="./static/images/results/workspace_left_arm.jpg"
-                   alt="Left arm workspace"
-                   onerror="this.parentElement.innerHTML='<div style=&quot;background:#f0f0f0;padding:3rem;text-align:center;color:#888;&quot;><i class=&quot;fas fa-image fa-3x&quot;></i><br>Left Arm</div>'"
-            </div>
-            <p class="has-text-centered"><b>Left Arm Workspace</b><br>
-            <span class="is-size-7 has-text-grey">Robot 2 operation area</span></p>
+          <div class="column is-6">
+            <a href="https://huggingface.co/skkuprism" class="repo-card" style="text-decoration:none; color:inherit;">
+              <i class="fas fa-database"></i>
+              <div class="repo-info">
+                <h5>HuggingFace Datasets</h5>
+                <p>Open demonstration datasets<br>LeRobot v3.0 format (OXE compatible)</p>
+              </div>
+            </a>
           </div>
-          <div class="column is-4">
-            <div class="result-image-container">
-              <img src="./static/images/results/workspace_right_arm.jpg"
-                   alt="Right arm workspace"
-                   onerror="this.parentElement.innerHTML='<div style=&quot;background:#f0f0f0;padding:3rem;text-align:center;color:#888;&quot;><i class=&quot;fas fa-image fa-3x&quot;></i><br>Right Arm</div>'"
-            </div>
-            <p class="has-text-centered"><b>Right Arm Workspace</b><br>
-            <span class="is-size-7 has-text-grey">Robot 3 operation area</span></p>
-          </div>
-          <div class="column is-4">
-            <div class="result-image-container">
-              <img src="./static/images/results/final_state.jpg"
-                   alt="Final state after execution"
-                   onerror="this.parentElement.innerHTML='<div style=&quot;background:#f0f0f0;padding:3rem;text-align:center;color:#888;&quot;><i class=&quot;fas fa-image fa-3x&quot;></i><br>Final State</div>'"
-            </div>
-            <p class="has-text-centered"><b>Final State</b><br>
-            <span class="is-size-7 has-text-grey">Workspace after execution</span></p>
-          </div>
-        </div>
-
-        <div class="content has-text-centered" style="margin-top: 10px;">
-          <p class="has-text-grey is-size-6">
-            The VLM-based task judge compares initial and final states to determine task success,
-            providing detailed reasoning for its TRUE / FALSE / UNCERTAIN verdict.
-          </p>
-        </div>
-      </div>
-    </div>
-
-
-    <!-- ==================== QUICK START ==================== -->
-    <div class="columns is-centered">
-      <div class="column is-full-width">
-        <h2 class="title is-3">Quick Start</h2>
-
-        <div class="code-example">
-          <pre><code><span class="comment"># Run the full pipeline with a single command</span>
-python3 execution_forward_and_reset.py \
-  --instruction <span class="string">"Pick up the green towel and place it in the white container"</span> \
-  --robot 2 3 \
-  --llm gemini \
-  --record \
-  --episodes <span class="number">10</span>
-
-<span class="comment"># Or run detection + code generation + judge separately</span>
-python3 run_code_gen_with_judge.py \
-  --instruction <span class="string">"Stack the red block on top of the blue block"</span> \
-  --objects <span class="string">"red block"</span> <span class="string">"blue block"</span> \
-  --robot <span class="number">3</span> \
-  --llm openai</code></pre>
         </div>
       </div>
     </div>
@@ -703,66 +797,82 @@ python3 run_code_gen_with_judge.py \
 </section>
 
 
-<!-- ==================== TEAM ==================== -->
+<!-- ============================================================ -->
+<!--  11. TEAM                                                     -->
+<!-- ============================================================ -->
 <section class="section" style="background: #f9f9f9;">
   <div class="container is-max-desktop">
     <div class="columns is-centered">
       <div class="column is-full-width">
         <h2 class="title is-3 has-text-centered">Team</h2>
 
-        <table class="styled-table" style="max-width: 700px; margin: 1.5rem auto;">
+        <table class="styled-table" style="max-width: 800px; margin: 1.5rem auto;">
           <thead>
             <tr>
               <th>Name</th>
               <th>Role</th>
+              <th>Expertise</th>
               <th>Affiliation</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td><b>Minjong Yu</b></td>
-              <td>Team Lead, Agent 6</td>
-              <td>SKKU Software</td>
+              <td>Team Lead</td>
+              <td>Framework design, RL &amp; embodied agents (7+ yrs)</td>
+              <td>SKKU Software (Ph.D.)</td>
             </tr>
             <tr>
               <td><b>Wookyung Kim</b></td>
               <td>Integration Lead</td>
-              <td>SKKU Software</td>
+              <td>RL &amp; embodied agents (5+ yrs)</td>
+              <td>SKKU Software (Ph.D.)</td>
             </tr>
             <tr>
               <td>Soyoung Kim</td>
-              <td>Agent 2, 6</td>
-              <td>SKKU AI Systems Eng.</td>
+              <td>A-1, A-2</td>
+              <td>Simulation-based embodied agents</td>
+              <td>SKKU AI Systems Eng. (M.S.)</td>
             </tr>
             <tr>
               <td>Hyeonseok Cho</td>
-              <td>Agent 3, 5</td>
-              <td>SKKU AI</td>
+              <td>A-3</td>
+              <td>Embodied agents &amp; computer vision</td>
+              <td>SKKU AI (M.S./Ph.D.)</td>
             </tr>
             <tr>
               <td>Sihyeong Yoon</td>
-              <td>Agent 1, 4</td>
-              <td>SKKU Software</td>
+              <td>B-1, B-2</td>
+              <td>RL &amp; embodied agents</td>
+              <td>SKKU Software (M.S./Ph.D.)</td>
             </tr>
             <tr>
               <td>Sanghyeon An</td>
-              <td>Agent 4, 5</td>
-              <td>SKKU Software</td>
+              <td>B-1, B-2</td>
+              <td>Embodied agents (2+ yrs)</td>
+              <td>SKKU Software (M.S.)</td>
             </tr>
             <tr>
               <td>Seungchan An</td>
-              <td>Agent 2, 6</td>
-              <td>SKKU AI</td>
+              <td>A-1, A-2</td>
+              <td>Embodied agents</td>
+              <td>SKKU AI (M.S./Ph.D.)</td>
             </tr>
           </tbody>
         </table>
+
+        <p class="has-text-centered has-text-grey" style="margin-top: 0.5rem;">
+          14 top-tier publications in embodied agents and reinforcement learning over the past 3 years
+        </p>
       </div>
     </div>
   </div>
 </section>
 
 
-<!-- ==================== CITATION ==================== -->
+<!-- ============================================================ -->
+<!--  12. CITATION + FOOTER                                        -->
+<!-- ============================================================ -->
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
     <h2 class="title">Citation</h2>
@@ -773,13 +883,11 @@ python3 run_code_gen_with_judge.py \
                and Skill Learning},
   year      = {2026},
   note      = {2026 AI Co-Scientist Challenge Korea, Track 2},
-  institution = {Sungkyunkwan University}
+  institution = {Sungkyunkwan University, PRISM Lab}
 }</code></pre>
   </div>
 </section>
 
-
-<!-- ==================== FOOTER ==================== -->
 <footer class="footer">
   <div class="container">
     <div class="columns is-centered">
@@ -792,10 +900,8 @@ python3 run_code_gen_with_judge.py \
             Sungkyunkwan University &bull; 2026
           </p>
           <p style="margin-top: 15px;">
-            This website template is based on <a href="https://nerfies.github.io/">Nerfies</a>,
-            licensed under a <a rel="license"
-            href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
-            Commons Attribution-ShareAlike 4.0 International License</a>.
+            Website template based on <a href="https://nerfies.github.io/">Nerfies</a>,
+            licensed under <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.
           </p>
         </div>
       </div>

@@ -29,7 +29,7 @@ def get_world_object_position(env, obj_name: str = "obj") -> np.ndarray:
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--dataset", "-d",
-                        default="/home/franka/robocasa/datasets/v0.1/single_stage/kitchen_pnp/PnPCounterToCab/2024-04-24/demo_gentex_im128_randcams.hdf5")
+                        default="./data/demo_gentex_im128_randcams.hdf5")
     parser.add_argument("--demo", type=int, default=0)
     parser.add_argument("--verbose", "-v", action="store_true")
     args = parser.parse_args()

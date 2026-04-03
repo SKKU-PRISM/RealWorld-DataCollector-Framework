@@ -222,6 +222,16 @@ class LeRobotSkills:
         with open(self.robot_config_path, 'r') as f:
             self.config = yaml.safe_load(f)
 
+        # YAML 내 상대경로를 YAML 파일 위치 기준으로 resolve
+        yaml_dir = self.robot_config_path.parent
+        for key in ("calibration_file", "compensation_file"):
+            val = self.config.get(key)
+            if val and not Path(val).is_absolute():
+                self.config[key] = str((yaml_dir / val).resolve())
+        kin_cfg = self.config.get("kinematics", {})
+        if kin_cfg.get("urdf_path") and not Path(kin_cfg["urdf_path"]).is_absolute():
+            kin_cfg["urdf_path"] = str((yaml_dir / kin_cfg["urdf_path"]).resolve())
+
         # Initialize kinematics
         urdf_path = self.config.get("kinematics", {}).get("urdf_path", "assets/urdf/so101.urdf")
         ee_frame = self.config.get("kinematics", {}).get("end_effector_frame", "gripper_frame_link")

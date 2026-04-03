@@ -150,6 +150,13 @@ def main():
     print(f"Loading config: {config_path}")
     config = load_config(str(config_path))
 
+    # YAML 내 상대경로를 YAML 파일 위치 기준으로 resolve
+    yaml_dir = config_path.parent
+    for key in ("calibration_file", "compensation_file"):
+        val = config.get(key)
+        if val and not Path(val).is_absolute():
+            config[key] = str((yaml_dir / val).resolve())
+
     # Extract robot_id from config path
     robot_id = extract_robot_id(str(config_path))
     state_type = f"{args.type}_state"

@@ -3,7 +3,7 @@
 RoboCasa evaluation script for trained multitask VLA LoRA adapters.
 
 Evaluates PI0.5 and GROOT N1.5 models on RoboCasa single-stage tasks.
-Works with the multitask adapter structure in /data/craf/vla_adapters/.
+Works with the multitask adapter structure in ./outputs/vla_adapters/.
 
 Usage:
     # Evaluate PI0.5 on a single task
@@ -58,8 +58,8 @@ warnings.filterwarnings("ignore", message=".*Fetching.*files.*")
 # Paths
 # ---------------------------------------------------------------------------
 
-ADAPTER_BASE = Path("/data/craf/vla_adapters")
-METADATA_DIR = Path("/data/craf/multitask_training_package/data")
+ADAPTER_BASE = Path(os.environ.get("ADAPTER_BASE", "./outputs/vla_adapters"))
+METADATA_DIR = Path(os.environ.get("METADATA_DIR", "./bridge/multitask_training_package/data"))
 
 # ---------------------------------------------------------------------------
 # Task instructions (all 25 single-stage RoboCasa tasks)
@@ -1190,7 +1190,7 @@ def main():
         help="Checkpoint to load: 'best', 'final', or step number like '15000' (default: best)",
     )
     parser.add_argument(
-        "--output-dir", type=str, default="/data/craf/eval_results",
+        "--output-dir", type=str, default="./outputs/eval_results",
         help="Directory to save results JSON",
     )
     parser.add_argument(
@@ -1203,7 +1203,7 @@ def main():
     )
     parser.add_argument(
         "--adapter-dir", type=str, default=None,
-        help="Override adapter directory (e.g. /data/craf/vla_adapters/pi05_lr1e-5/general/lora_adapter)",
+        help="Override adapter directory (e.g. ./outputs/vla_adapters/pi05_lr1e-5/general/lora_adapter)",
     )
     parser.add_argument("--dry-run", action="store_true", help="Test model + env loading only")
     parser.add_argument("--device", type=str, default="cuda")

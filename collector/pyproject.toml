@@ -14,27 +14,39 @@ authors = [
 ]
 
 dependencies = [
-    # Hardware Control (from lerobot_ros2)
+    # Hardware Control
     "feetech-servo-sdk>=1.0.0",
     "dynamixel-sdk>=3.7.0",
     "opencv-python>=4.8.0",
     "pyrealsense2>=2.50.0",
 
-    # Kinematics (from LeRobot)
+    # Kinematics
     "pin>=2.6.0",                # Pinocchio
 
     # Planning
     "scipy>=1.11.0",             # Optimization, interpolation
     "trimesh>=4.0.0",            # Mesh processing
 
-    # Learning (from LeRobot)
-    "torch>=2.0.0",
-    "torchvision>=0.15.0",
-    "huggingface-hub>=0.20.0",
+    # Learning (lerobot compatible)
+    "torch>=2.2.1,<2.11.0",
+    "torchvision>=0.21.0,<0.26.0",
+    "huggingface-hub>=1.0.0,<2.0.0",
     "safetensors>=0.4.0",
 
+    # VLM/LLM API
+    "google-genai>=1.0.0",        # Gemini API (google.genai)
+    "openai>=1.0.0",              # OpenAI / DeepSeek API
+
+    # Object Detection
+    "transformers>=4.35.0",
+    "Pillow>=10.0.0",
+
+    # Data & Visualization
+    "pandas>=2.0.0",
+    "matplotlib>=3.5.0",
+
     # Utilities
-    "numpy>=1.24.0",
+    "numpy>=2.0.0,<2.3.0",       # lerobot requires numpy 2.0+
     "pyyaml>=6.0",
     "tqdm>=4.65.0",
 ]

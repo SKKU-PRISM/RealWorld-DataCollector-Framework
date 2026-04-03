@@ -27,12 +27,15 @@ VLM_MODEL_NAME = os.getenv("JUDGE_MODEL_NAME") or os.getenv("VLM_MODEL_NAME", "Q
 
 
 def _load_api_keys():
-    """API 키 로드"""
+    """API 키 로드 (환경변수 우선 → JSON 파일 fallback)"""
+    keys = {}
     key_file = Path(__file__).parent.parent / "openai_api_key.json"
     if key_file.exists():
         with open(key_file, "r") as f:
-            return json.load(f)
-    return {}
+            keys = json.load(f)
+    if os.getenv("OPENAI_API_KEY"):
+        keys["openai_api_key"] = os.getenv("OPENAI_API_KEY")
+    return keys
 
 
 def _should_use_server(use_server: bool = None) -> bool:

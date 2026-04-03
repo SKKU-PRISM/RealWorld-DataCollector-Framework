@@ -1,9 +1,52 @@
-.git
-collector/.git
-bridge/.git
-__pycache__
+# Git
+.git/
+.gitignore
+
+# Old collector (replaced)
+collector_old/
+
+# IDE / Editor
+.claude/
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Python cache
+__pycache__/
 *.pyc
-*.egg-info
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# Secrets (NEVER include in image)
 .env
-.vscode
-.idea
+*.env
+openai_api_key.json
+google_aistudio_key.json
+*_api_key*.json
+*credentials*.json
+
+# Outputs / Results (mount at runtime)
+outputs/
+results/
+*.log
+
+# Demo data/models (optional)
+demo_data/
+demo_models/
+
+# Documentation (reduce image size)
+*.md
+!collector/README.md
+!bridge/README.md
+
+# Data files (mount at runtime)
+data/
+*.hdf5
+*.npz
+
+# OS files
+.DS_Store
+Thumbs.db

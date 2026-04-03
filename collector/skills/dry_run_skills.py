@@ -39,6 +39,8 @@ class DryRunSkills:
                 with open(config_path) as f:
                     config = yaml.safe_load(f)
                 urdf_path = config.get("kinematics", {}).get("urdf_path", "")
+                if urdf_path and not Path(urdf_path).is_absolute():
+                    urdf_path = str((config_path.parent / urdf_path).resolve())
                 if Path(urdf_path).exists():
                     self.kinematics = KinematicsEngine(
                         str(urdf_path),

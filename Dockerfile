@@ -2,11 +2,11 @@
 # ACS Docker Image: AutoDataCollector + RoboBridge 통합 환경
 #
 # 빌드:   docker build -t acs .
-# 실행:   docker run --gpus all -it acs bash
+# 실행:   docker run --gpus all -it -e GOOGLE_API_KEY="your-key" acs
+# 셸:     docker run --gpus all -it -e GOOGLE_API_KEY="your-key" acs /bin/bash
 # =============================================================================
 
-ARG CUDA_VERSION=12.4.1
-FROM nvidia/cuda:${CUDA_VERSION}-devel-ubuntu22.04
+FROM nvidia/cuda:12.1.0-cudnn8-devel-ubuntu22.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PYTHONUNBUFFERED=1
@@ -31,52 +31,57 @@ RUN wget -q https://github.com/conda-forge/miniforge/releases/latest/download/Mi
     && bash /tmp/miniforge.sh -b -p /opt/conda \
     && rm /tmp/miniforge.sh
 ENV PATH="/opt/conda/bin:$PATH"
-RUN conda install -y -n base python=3.10 pinocchio hpp-fcl meshcat-python \
+RUN conda install -y -n base python=3.10 pinocchio hpp-fcl \
     && conda clean -afy
 
-# ----- PyTorch (CUDA 12.4) + flash-attn -----
-RUN pip install --no-cache-dir torch torchvision --index-url https://download.pytorch.org/whl/cu124
-RUN pip install --no-cache-dir flash-attn --no-build-isolation 2>/dev/null \
-    || pip install --no-cache-dir https://github.com/Dao-AILab/flash-attention/releases/download/v2.7.4.post1/flash_attn-2.7.4.post1+cu12torch2.6cxx11abiFALSE-cp310-cp310-linux_x86_64.whl 2>/dev/null \
-    || echo "WARN: flash-attn install failed, will use eager attention"
+# ----- PyTorch (CUDA 12.1) -----
+RUN pip install --no-cache-dir torch torchvision --index-url https://download.pytorch.org/whl/cu121
 
-# ----- Python 의존성 -----
-COPY requirements.docker.txt /tmp/requirements.txt
-RUN pip install --no-cache-dir -r /tmp/requirements.txt && rm /tmp/requirements.txt
+# ----- Python 의존성 (collector) -----
+COPY collector/requirements.txt /tmp/collector_requirements.txt
+RUN pip install --no-cache-dir -r /tmp/collector_requirements.txt \
+    && rm /tmp/collector_requirements.txt
+
+# ----- Python 의존성 (bridge) -----
+COPY requirements.docker.txt /tmp/bridge_requirements.txt
+RUN pip install --no-cache-dir -r /tmp/bridge_requirements.txt \
+    && rm /tmp/bridge_requirements.txt
 
 # ----- 소스 코드 복사 -----
-COPY bridge/ /app/bridge/
 COPY collector/ /app/collector/
+COPY bridge/ /app/bridge/
 COPY pipeline/ /app/pipeline/
 COPY configs/ /app/configs/
 COPY scripts/ /app/scripts/
-COPY pyproject.toml requirements.docker.txt /app/
+COPY run_agent.sh /app/
+COPY pyproject.toml /app/
 
 # ----- 패키지 설치 -----
-RUN pip install --no-cache-dir -e /app/bridge && \
-    pip install --no-cache-dir -e /app/collector && \
-    pip install --no-cache-dir -e /app
+RUN pip install --no-cache-dir -e /app/bridge 2>/dev/null || true && \
+    pip install --no-cache-dir -e /app 2>/dev/null || true
 
-# ----- 시연용 데이터 -----
-# RoboCasa CloseDrawer (NPZ)
-COPY demo_data/CloseDrawer/ /app/data/CloseDrawer/
-# SO101 pick_redblock (LeRobot v3.0 원본 - 변환 시연용)
-COPY demo_data/SO101-single-pick_redblock_place_bluedish/ /app/data/SO101-single-pick_redblock_place_bluedish/
+# ----- LeRobot 번들 (collector에 포함) -----
+ENV PYTHONPATH="/app/collector/lerobot/src:${PYTHONPATH}"
 
-# ----- 시연용 학습된 모델 -----
-# SO101 어댑터 (joint6d, augmented, 10hz)
-COPY demo_models/groot_so101_joint6d_aug_10hz/ /app/models/groot_so101_joint6d_aug_10hz/
-# RoboCasa CloseDrawer 어댑터
-COPY demo_models/groot_direction_CloseDrawer/ /app/models/groot_direction_CloseDrawer/
-# LIBERO Spatial 어댑터
-COPY demo_models/groot_spatial_9d_r128/ /app/models/groot_spatial_9d_r128/
+# ----- RoboCasa 정규화 통계 -----
+RUN mkdir -p /app/data && \
+    if [ -f /app/bridge/multitask_training_package/data/metadata.json ]; then \
+        cp /app/bridge/multitask_training_package/data/metadata.json /app/data/; \
+    fi && \
+    if [ -f /app/bridge/multitask_training_package/data/metadata_extended.json ]; then \
+        cp /app/bridge/multitask_training_package/data/metadata_extended.json /app/data/; \
+    fi
 
-# ----- 학습 스크립트 configs 심볼릭 링크 -----
-RUN ln -s /app/bridge/configs /app/bridge/scripts/train/configs
+# ----- 실행 권한 -----
+RUN chmod +x /app/run_agent.sh
 
-# ----- RoboCasa 정규화 통계 (eval에 필요) -----
-RUN mkdir -p /data/craf/multitask_training_package/data && \
-    cp /app/bridge/multitask_training_package/data/metadata.json /data/craf/multitask_training_package/data/ && \
-    cp /app/bridge/multitask_training_package/data/metadata_extended.json /data/craf/multitask_training_package/data/
+# ----- API Key는 빌드 시 넣지 않음 — 실행 시 환경변수로 주입 -----
+ENV GOOGLE_API_KEY=""
+ENV OPENAI_API_KEY=""
+ENV DEEPSEEK_API_KEY=""
 
-CMD ["bash"]
+# ----- 출력 디렉토리 -----
+RUN mkdir -p /app/outputs /app/results
+
+ENTRYPOINT ["./run_agent.sh"]
+CMD []

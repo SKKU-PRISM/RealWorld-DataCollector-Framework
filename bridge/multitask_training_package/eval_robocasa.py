@@ -965,13 +965,13 @@ def main():
     parser.add_argument(
         "--adapter-base",
         type=str,
-        default="/data/robobridge/raw_lora_results",
+        default="./outputs/raw_lora_results",
         help="Base directory for adapter checkpoints",
     )
     parser.add_argument(
         "--output-dir",
         type=str,
-        default="/data/robobridge/eval_results",
+        default="./outputs/eval_results",
         help="Directory to save evaluation results",
     )
     parser.add_argument(

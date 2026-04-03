@@ -9,15 +9,15 @@ Two execution modes:
 Usage:
     # Direct mode (default): GROOT with move/grip adapters
     python eval_vla_robocasa.py --model groot \
-        --move-adapter /data/craf/vla_adapters/groot_move_grip/general/move_adapter_lr1e-4/checkpoint-best \
-        --grip-adapter /data/craf/vla_adapters/groot_move_grip/general/grip_adapter_lr1e-4/checkpoint-best \
+        --move-adapter ./outputs/vla_adapters/groot_move_grip/general/move_adapter_lr1e-4/checkpoint-best \
+        --grip-adapter ./outputs/vla_adapters/groot_move_grip/general/grip_adapter_lr1e-4/checkpoint-best \
         --tasks PnPCounterToCab --num-episodes 10
 
     # Pipeline mode: RoboBridgeClient with planner + perception + monitor
     python eval_vla_robocasa.py --mode pipeline \
         --vla-backend groot_n1.5 --vla-model nvidia/GR00T-N1.5-3B \
         --move-adapter /path/to/move_adapter --grip-adapter /path/to/grip_adapter \
-        --action-stats /data/craf/multitask_training_package/data/metadata.json \
+        --action-stats ./bridge/multitask_training_package/data/metadata.json \
         --dataset /path/to/demo.hdf5 --num-episodes 10
 
     # List all available tasks
@@ -59,8 +59,8 @@ warnings.filterwarnings("ignore", message=".*Fetching.*files.*")
 # Paths
 # ---------------------------------------------------------------------------
 
-ADAPTER_BASE = Path("/data/craf/vla_adapters")
-METADATA_DIR = Path("/data/craf/multitask_training_package/data")
+ADAPTER_BASE = Path(os.environ.get("ADAPTER_BASE", "./outputs/vla_adapters"))
+METADATA_DIR = Path(os.environ.get("METADATA_DIR", "./bridge/multitask_training_package/data"))
 
 # ---------------------------------------------------------------------------
 # Task instructions (all 25 single-stage RoboCasa tasks)

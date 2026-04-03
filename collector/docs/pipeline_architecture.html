@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutoDataCollector Pipeline</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<style>
+  :root {
+    --bg: #0d1117;
+    --card: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --muted: #8b949e;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--bg); color: var(--text);
+    padding: 2.5rem 3rem;
+  }
+  h1 {
+    text-align: center; font-size: 1.8rem; margin-bottom: 0.3rem;
+    background: linear-gradient(135deg, #58a6ff, #bc8cff);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .subtitle { text-align: center; color: var(--muted); margin-bottom: 2.5rem; font-size: 0.9rem; }
+  .diagram {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 2rem; margin-bottom: 2rem;
+  }
+  .diagram h2 {
+    font-size: 1.15rem; margin-bottom: 1.2rem;
+    padding-bottom: 0.5rem; border-bottom: 1px solid var(--border);
+    color: #58a6ff;
+  }
+  .mermaid { display: flex; justify-content: center; margin: 0.5rem 0; }
+  .mermaid svg { max-width: 100%; height: auto; }
+</style>
+</head>
+<body>
+
+<h1>AutoDataCollector Pipeline</h1>
+<p class="subtitle">Forward + Reset Integrated Data Collection Pipeline</p>
+
+<!-- ====== 1. 전체 파이프라인 흐름 ====== -->
+<div class="diagram">
+  <h2>Overall Pipeline Flow (per Episode)</h2>
+  <pre class="mermaid">
+%%{init: {'theme': 'dark', 'themeVariables': {'fontSize': '14px'}}}%%
+flowchart LR
+    %% Inputs
+    IN_IMG["Overhead<br/>Camera Image"]:::input
+    IN_INST["Task<br/>Instruction"]:::input
+
+    %% Modules
+    VLM["Multi-Turn VLM<br/>Code Generation<br/><small>code_gen_lerobot/</small>"]:::mod_green
+    VERIFY["Code<br/>Verification<br/><small>verification/</small>"]:::mod_blue
+    EXEC["Robot<br/>Execution<br/><small>skills/ + pipeline/task_runner</small>"]:::mod_orange
+    JUDGE_F["Forward<br/>Judge<br/><small>judge/forward_execution</small>"]:::mod_purple
+    RESET_GEN["Reset Code<br/>Generation<br/><small>code_gen_lerobot/reset_execution</small>"]:::mod_green
+    EXEC_R["Reset<br/>Execution<br/><small>skills/ + pipeline/task_runner</small>"]:::mod_orange
+    JUDGE_R["Reset<br/>Judge<br/><small>judge/reset_execution</small>"]:::mod_purple
+    REC["Dataset<br/>Recorder<br/><small>record_dataset/</small>"]:::mod_cyan
+
+    %% Data flow
+    IN_IMG --> VLM
+    IN_INST --> VLM
+    VLM -->|"Python Code<br/>+ Object Positions"| VERIFY
+    VERIFY -->|"Verified Code"| EXEC
+    EXEC -->|"Initial + Final<br/>Images"| JUDGE_F
+
+    JUDGE_F -->|"TRUE → save<br/>FALSE → discard"| REC
+
+    JUDGE_F -->|"Final Image<br/>+ Original Positions"| RESET_GEN
+    RESET_GEN -->|"Reset Code<br/>+ Target Positions"| EXEC_R
+    EXEC_R -->|"Reset Initial<br/>+ Final Images"| JUDGE_R
+    JUDGE_R -->|"TRUE / FALSE"| REC
+
+    EXEC -->|"state, action<br/>images @ 30fps"| REC
+    EXEC_R -->|"state, action<br/>images @ 30fps"| REC
+
+    REC -->|"LeRobot v3.0<br/>Dataset"| OUT_DS["Forward Dataset<br/>+ Reset Dataset"]:::output
+
+    %% Styles
+    classDef input fill:#2a1a0a,stroke:#d29922,color:#e6edf3,stroke-width:2px
+    classDef output fill:#1a2a1a,stroke:#3fb950,color:#e6edf3,stroke-width:2px
+    classDef mod_green fill:#132a13,stroke:#3fb950,color:#e6edf3
+    classDef mod_blue fill:#0d2137,stroke:#58a6ff,color:#e6edf3
+    classDef mod_orange fill:#2a1a0a,stroke:#d29922,color:#e6edf3
+    classDef mod_purple fill:#1f0f2e,stroke:#bc8cff,color:#e6edf3
+    classDef mod_cyan fill:#0a2a2a,stroke:#39d2c0,color:#e6edf3
+  </pre>
+</div>
+
+<!-- ====== 2. Multi-Turn VLM 내부 ====== -->
+<div class="diagram">
+  <h2>Multi-Turn VLM Code Generation</h2>
+  <pre class="mermaid">
+%%{init: {'theme': 'dark', 'themeVariables': {'fontSize': '14px'}}}%%
+flowchart LR
+    IMG["Overhead Image<br/>+ Instruction"]:::input
+
+    T0["Turn 0<br/>Scene Understanding"]:::mod
+    T1["Turn 1<br/>BBox Detection"]:::mod
+    T2["Turn 2<br/>Grasp Point Detection"]:::mod
+    T3["Turn 3<br/>Code Generation"]:::mod_code
+
+    IMG --> T0
+    T0 -->|"Scene<br/>Description"| T1
+    T1 -->|"Per-object<br/>Bounding Boxes"| T2
+    T2 -->|"Grasp Points<br/>[y, x] per object"| T3
+    T3 --> OUT["Python Code<br/>+ Object Positions"]:::output
+
+    classDef input fill:#2a1a0a,stroke:#d29922,color:#e6edf3,stroke-width:2px
+    classDef output fill:#1a2a1a,stroke:#3fb950,color:#e6edf3,stroke-width:2px
+    classDef mod fill:#1f0f2e,stroke:#bc8cff,color:#e6edf3
+    classDef mod_code fill:#132a13,stroke:#3fb950,color:#e6edf3
+  </pre>
+</div>
+
+<!-- ====== 3. Multi-Episode Batch ====== -->
+<div class="diagram">
+  <h2>Multi-Episode Batch System (N episodes / K seeds)</h2>
+  <pre class="mermaid">
+%%{init: {'theme': 'dark', 'themeVariables': {'fontSize': '13px'}}}%%
+flowchart TB
+    subgraph BATCH1["Batch 1 — seed_01 (initial positions)"]
+        direction LR
+        E1["Episode 1~2:<br/>Forward → Judge → Reset"]
+    end
+
+    subgraph BATCH2["Batch 2 — seed_02 (random positions)"]
+        direction LR
+        E2["Episode 3~4:<br/>Forward → Judge → Reset"]
+    end
+
+    subgraph BATCHN["Batch K — seed_K (random positions)"]
+        direction LR
+        EN["Episode N-1~N:<br/>Forward → Judge → Reset"]
+    end
+
+    BATCH1 -->|"Reset generates<br/>seed_02 positions"| BATCH2
+    BATCH2 -->|"Reset generates<br/>seed_03 positions"| BATCHN
+
+    CACHE["Code Cache<br/><small>First success → reuse<br/>(skip T3, detect only)</small>"]:::note
+    FILTER["Quality Filter<br/><small>Judge=TRUE → save<br/>Judge=FALSE → discard</small>"]:::note
+
+    BATCH1 ~~~ CACHE
+    BATCHN ~~~ FILTER
+
+    classDef note fill:#1a1a2a,stroke:#8b949e,color:#8b949e,stroke-dasharray: 5 5
+
+    style BATCH1 fill:#132a13,stroke:#3fb950,color:#e6edf3
+    style BATCH2 fill:#2a1a0a,stroke:#d29922,color:#e6edf3
+    style BATCHN fill:#2a1a0a,stroke:#d29922,color:#e6edf3
+  </pre>
+</div>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'dark',
+    themeVariables: {
+      darkMode: true, background: '#161b22',
+      primaryColor: '#1a3a5c', primaryTextColor: '#e6edf3',
+      primaryBorderColor: '#58a6ff', lineColor: '#8b949e',
+      fontSize: '13px',
+    },
+    flowchart: { htmlLabels: true, curve: 'basis', rankSpacing: 50, nodeSpacing: 25 },
+  });
+</script>
+</body>
+</html>

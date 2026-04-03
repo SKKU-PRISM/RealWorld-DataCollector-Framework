@@ -16,7 +16,7 @@ vLLM 서버 추론 모드:
 
 클라우드 서버 추론 모드:
 - 환경변수 USE_CLOUD_SERVER=1 설정
-- 환경변수 CLOUD_SERVER_URL로 서버 주소 설정 (예: http://115.71.36.55/deployment/xxx)
+- 환경변수 CLOUD_SERVER_URL로 서버 주소 설정 (예: http://<YOUR_SERVER_IP>/deployment/xxx)
 """
 
 import os
