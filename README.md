@@ -221,7 +221,11 @@ Once inside the container:
 
 ```bash
 # (Required) Fix flash attention compatibility for GROOT training
-sed -i 's/flash_attention_2/eager/g' /opt/conda/lib/python3.10/site-packages/lerobot/policies/groot/eagle2_hg_model/{modeling_eagle2_5_vl.py,configuration_eagle2_5_vl.py} && rm -f /opt/conda/lib/python3.10/site-packages/lerobot/policies/groot/eagle2_hg_model/__pycache__/*.pyc
+sed -i 's/flash_attention_2/eager/g' \
+    /opt/conda/lib/python3.10/site-packages/lerobot/policies/groot/eagle2_hg_model/{modeling_eagle2_5_vl.py,configuration_eagle2_5_vl.py}
+rm -rf /opt/conda/lib/python3.10/site-packages/lerobot/policies/groot/eagle2_hg_model/__pycache__ \
+       /root/.cache/huggingface/modules/transformers_modules/eagle2hg* \
+       /root/.cache/huggingface/lerobot/lerobot/eagle2hg*
 
 # Run full pipeline (collect → train)
 ./run_agent.sh
@@ -408,7 +412,11 @@ cd LIBERO && pip install -e . && cd ..
 
 ```bash
 # Step 1: Fix flash attention compatibility
-sed -i 's/flash_attention_2/eager/g' /opt/conda/lib/python3.10/site-packages/lerobot/policies/groot/eagle2_hg_model/{modeling_eagle2_5_vl.py,configuration_eagle2_5_vl.py} && rm -f /opt/conda/lib/python3.10/site-packages/lerobot/policies/groot/eagle2_hg_model/__pycache__/*.pyc
+sed -i 's/flash_attention_2/eager/g' \
+    /opt/conda/lib/python3.10/site-packages/lerobot/policies/groot/eagle2_hg_model/{modeling_eagle2_5_vl.py,configuration_eagle2_5_vl.py}
+rm -rf /opt/conda/lib/python3.10/site-packages/lerobot/policies/groot/eagle2_hg_model/__pycache__ \
+       /root/.cache/huggingface/modules/transformers_modules/eagle2hg* \
+       /root/.cache/huggingface/lerobot/lerobot/eagle2hg*
 
 # Step 2: Download example data from HuggingFace
 python -c "from huggingface_hub import snapshot_download; snapshot_download('skkuprism/acs-example-data', repo_type='dataset', local_dir='examples/demo_data')"
