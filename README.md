@@ -164,9 +164,12 @@ demo_models/
 pip install mujoco==3.3.1
 
 # robosuite + RoboCasa
-pip install robosuite
+pip install robosuite lxml
 git clone https://github.com/robocasa/robocasa.git
 pip install --no-deps -e robocasa/
+
+# Patch version checks (Docker has different numpy/lerobot versions)
+sed -i '/assert numpy.__version__/,/Please install this version/d' robocasa/robocasa/__init__.py
 
 # Download RoboCasa kitchen assets
 python -m robocasa.scripts.download_kitchen_assets
@@ -430,9 +433,12 @@ To run simulation-based evaluation, RoboCasa and LIBERO must be installed separa
 pip install mujoco==3.3.1
 
 # robosuite + RoboCasa
-pip install robosuite
+pip install robosuite lxml
 git clone https://github.com/robocasa/robocasa.git
 pip install --no-deps -e robocasa/
+
+# Patch version checks (Docker has different numpy/lerobot versions)
+sed -i '/assert numpy.__version__/,/Please install this version/d' robocasa/robocasa/__init__.py
 
 # Download RoboCasa kitchen assets
 python -m robocasa.scripts.download_kitchen_assets
