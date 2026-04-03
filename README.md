@@ -163,13 +163,9 @@ demo_models/
 # MuJoCo (required)
 pip install mujoco==3.3.1
 
-# robosuite (RoboCasa-compatible fork)
-git clone https://github.com/robocasa/robosuite.git
-cd robosuite && pip install -e . && cd ..
-
-# RoboCasa
+# RoboCasa (includes robosuite)
 git clone https://github.com/robocasa/robocasa.git
-cd robocasa && pip install -e . && cd ..
+pip install --no-deps -e robocasa/
 
 # Download RoboCasa kitchen assets
 python -m robocasa.scripts.download_kitchen_assets
@@ -432,13 +428,9 @@ To run simulation-based evaluation, RoboCasa and LIBERO must be installed separa
 # MuJoCo (required)
 pip install mujoco==3.3.1
 
-# robosuite (RoboCasa-compatible fork)
-git clone https://github.com/robocasa/robosuite.git
-cd robosuite && pip install -e . && cd ..
-
-# RoboCasa
+# RoboCasa (includes robosuite)
 git clone https://github.com/robocasa/robocasa.git
-cd robocasa && pip install -e . && cd ..
+pip install --no-deps -e robocasa/
 
 # Download RoboCasa kitchen assets
 python -m robocasa.scripts.download_kitchen_assets
