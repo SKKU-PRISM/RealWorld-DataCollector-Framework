@@ -351,22 +351,16 @@ RealWorld-DataCollector-Framework/
 
 ## Quick Demo: Training + Evaluation
 
-The `examples/` directory includes real RoboCasa CloseDrawer demonstration data (~13MB), allowing you to test the full training and evaluation pipeline immediately after cloning.
+Run a quick training + evaluation demo using real RoboCasa CloseDrawer data (~13MB, auto-downloaded from HuggingFace if not present).
 
 ### 1. Run Training + Evaluation
 
 ```bash
-# Activate environment
-conda activate robobridge
+# Inside the Docker container (see Step 5 above):
+./examples/train_eval_demo.sh              # Train (20 steps) + evaluation
 
-# Train (20 steps) + RoboCasa evaluation
-./examples/train_eval_demo.sh
-
-# Training only
-./examples/train_eval_demo.sh --train
-
-# Evaluation only (requires trained adapter)
-./examples/train_eval_demo.sh --eval
+./examples/train_eval_demo.sh --train      # Training only
+./examples/train_eval_demo.sh --eval       # Evaluation only (requires trained adapter)
 ```
 
 ### 2. Demo Data Structure
