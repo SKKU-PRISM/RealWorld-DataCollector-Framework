@@ -1,0 +1,66 @@
+# LeRobot CaP Distillation - Conda Environment
+#
+# Create environment:
+#   conda env create -f environment.yaml
+#
+# Activate:
+#   conda activate lerobot_cap
+#
+# Install package in dev mode:
+#   pip install -e ".[all]"
+
+name: lerobot_cap
+
+channels:
+  - conda-forge
+  - defaults
+
+dependencies:
+  # Python
+  - python=3.10
+
+  # Core Scientific
+  - numpy>=1.24.0
+  - scipy>=1.11.0
+
+  # Kinematics (Pinocchio - from conda-forge)
+  - pinocchio>=2.6.0
+  - hpp-fcl>=2.3.0           # Collision detection (used by Pinocchio)
+
+  # Motion Planning (OMPL - optional, from conda-forge)
+  # - ompl>=1.6.0            # Uncomment if needed
+
+  # Visualization
+  - meshcat-python>=0.3.0    # 3D visualization
+
+  # Utilities
+  - pyyaml>=6.0
+  - tqdm>=4.65.0
+
+  # Development
+  - pip
+
+  # Pip packages (installed after conda)
+  - pip:
+      # Hardware Control
+      - feetech-servo-sdk>=1.0.0
+      - dynamixel-sdk>=3.7.0
+      - opencv-python>=4.8.0
+      - pyrealsense2>=2.50.0
+
+      # Kinematics (alternative to conda pinocchio)
+      # - pin>=2.6.0
+
+      # Planning
+      - trimesh>=4.0.0
+
+      # Learning
+      - torch>=2.0.0
+      - torchvision>=0.15.0
+      - huggingface-hub>=0.20.0
+      - safetensors>=0.4.0
+
+      # Development
+      - pytest>=7.0.0
+      - black>=23.0.0
+      - ruff>=0.1.0

@@ -1,0 +1,14 @@
+model:
+  backend: "smolvla"
+  name: "lerobot/smolvla_base"
+  action_dim: 7
+  image_size: 512
+  chunk_size: 50
+  chunk_stride: 10
+
+lora:
+  target_modules: []
+
+training:
+  learning_rate: 1.0e-5
+  gradient_checkpointing: false

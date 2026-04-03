@@ -1,0 +1,48 @@
+# OpenVLA Move adapter - full config
+
+adapter:
+  name: "move"
+  loss_weights: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.1]
+
+model:
+  backend: "openvla"
+  name: "openvla/openvla-7b"
+  action_dim: 7
+  image_size: 224
+  chunk_size: 50
+  chunk_stride: 10
+
+lora:
+  rank: 64
+  alpha: 128
+  dropout: 0.1
+  target_modules: ["q_proj", "v_proj", "k_proj", "o_proj"]
+  bias: "none"
+  task_type: "CAUSAL_LM"
+
+quantization:
+  enabled: false
+
+training:
+  batch_size: 32
+  gradient_accumulation_steps: 1
+  learning_rate: 1.0e-4
+  weight_decay: 0.0
+  warmup_ratio: 0.05
+  num_epochs: 19
+  scheduler_type: "cosine"
+  max_steps: -1
+  optimizer: "adamw"
+  gradient_checkpointing: true
+  bf16: true
+  logging_steps: 10
+  save_steps: 1000
+  max_val_batches: 50
+  early_stopping_patience: 10
+  dataloader_num_workers: 4
+
+data:
+  use_primitive_instructions: true
+
+output:
+  base_dir: "outputs"

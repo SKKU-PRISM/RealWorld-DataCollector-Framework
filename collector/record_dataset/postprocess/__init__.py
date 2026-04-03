@@ -1,0 +1,1 @@
+from .skill_labeler import generate_skill_labels

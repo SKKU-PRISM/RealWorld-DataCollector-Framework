@@ -1,0 +1,6 @@
+# Move adapter training config.
+# Emphasizes arm action dimensions (0-5), de-emphasizes gripper (6).
+
+adapter:
+  name: "move"
+  loss_weights: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.1]

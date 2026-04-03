@@ -1,0 +1,23 @@
+# Object Detection & Localization Configuration
+
+# Camera Settings
+camera:
+  width: 640
+  height: 480
+  fps: 30
+  # D435 depth range (meters)
+  min_depth: 0.1
+  max_depth: 2.0
+
+# Detection Settings
+detection:
+  # Grounding DINO 설정
+  model: "IDEA-Research/grounding-dino-base"
+  box_threshold: 0.25
+  text_threshold: 0.25
+  device: "cuda"  # or "cpu"
+
+# Coordinate System
+coordinate:
+  # 로봇 좌표계 단위
+  unit: "cm"  # cm or mm

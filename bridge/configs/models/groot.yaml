@@ -1,0 +1,11 @@
+model:
+  backend: "groot_n1.5"
+  name: "nvidia/GR00T-N1.5-3B"
+  action_dim: 12
+  image_size: 224
+  chunk_size: 16
+  chunk_stride: 8
+
+training:
+  learning_rate: 1.0e-4
+  gradient_checkpointing: false

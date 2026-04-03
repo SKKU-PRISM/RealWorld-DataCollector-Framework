@@ -1,0 +1,45 @@
+# Multi-task GROOT N1.5 training config (HDF5 raw data)
+
+adapter:
+  name: "lora"
+  loss_weights: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+
+model:
+  backend: "groot_n1.5"
+  name: "nvidia/GR00T-N1.5-3B"
+  action_dim: 12
+  image_size: 224
+  chunk_size: 16
+  chunk_stride: 8
+
+lora:
+  rank: 64
+  alpha: 128
+  dropout: 0.1
+
+quantization:
+  enabled: false
+
+training:
+  batch_size: 32
+  gradient_accumulation_steps: 1
+  learning_rate: 1.0e-4
+  weight_decay: 0.0
+  warmup_ratio: 0.05
+  adam_beta1: 0.95
+  adam_beta2: 0.999
+  scheduler_type: "cosine"
+  num_epochs: 19
+  optimizer: "adamw"
+  gradient_checkpointing: false
+  bf16: true
+  logging_steps: 10
+  save_steps: 1000
+  max_val_batches: 50
+  early_stopping_patience: 10
+
+data:
+  hdf5_dir: "/data/craf/robocasa_data/v0.1/single_stage"
+
+output:
+  base_dir: "/data/craf/vla_adapters/groot"

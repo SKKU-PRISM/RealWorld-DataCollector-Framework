@@ -1,0 +1,33 @@
+# GROOT N1.5 표준 fine-tuning — SO101 9D state (joints 6D + goal_xyz 3D)
+# Vision+Projector+DiT 학습, LLM freeze, LoRA 없음
+
+adapter:
+  name: "move"
+  loss_weights: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+
+model:
+  backend: "groot_n1.5"
+  name: "nvidia/GR00T-N1.5-3B"
+  action_dim: 6
+  image_size: 224
+  chunk_size: 16
+  chunk_stride: 8
+
+training:
+  batch_size: 32
+  learning_rate: 5.0e-5
+  warmup_ratio: 0.05
+  num_epochs: 500
+  scheduler_type: "cosine"
+  optimizer: "adamw"
+  bf16: true
+  logging_steps: 10
+  save_steps: 4000
+  save_every_epochs: 50
+  dataloader_num_workers: 16
+
+data:
+  use_wrist: true
+
+output:
+  base_dir: "outputs/groot_so101_joint"

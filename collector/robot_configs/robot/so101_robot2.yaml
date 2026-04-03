@@ -1,0 +1,64 @@
+# SO-101 Robot Configuration
+# 6-DOF robot arm with Feetech STS3215 motors
+
+robot_type: so101
+motor_type: feetech
+
+# Serial connection
+port: /dev/ttyACM1
+baudrate: 1000000
+
+# Motor configuration (6 joints)
+motors:
+  motor_1:
+    id: 1
+    model: sts3215
+    joint_name: shoulder_pan
+  motor_2:
+    id: 2
+    model: sts3215
+    joint_name: shoulder_lift
+  motor_3:
+    id: 3
+    model: sts3215
+    joint_name: elbow_flex
+  motor_4:
+    id: 4
+    model: sts3215
+    joint_name: wrist_flex
+  motor_5:
+    id: 5
+    model: sts3215
+    joint_name: wrist_roll
+  motor_6:
+    id: 6
+    model: sts3215
+    joint_name: gripper
+
+# Joint names (URDF compatible)
+joint_names:
+  - shoulder_pan
+  - shoulder_lift
+  - elbow_flex
+  - wrist_flex
+  - wrist_roll
+  - gripper
+
+# Kinematics configuration
+kinematics:
+  urdf_path: /home/lerobot/AutoDataCollector/assets/urdf/so101_robot2.urdf
+  end_effector_frame: gripper_frame_link
+
+# Calibration file (absolute path)
+calibration_file: /home/lerobot/AutoDataCollector/robot_configs/motor_calibration/so101/robot2_calibration.json
+
+# Compensation file (robot-specific compensation parameters)
+compensation_file: /home/lerobot/AutoDataCollector/robot_configs/motor_calibration/so101/robot2_compensation.json
+
+# Safety limits (normalized -100 to +100)
+safety:
+  position_limits:
+    min: -100.0
+    max: 100.0
+  max_velocity: 50.0      # normalized units per second
+  max_acceleration: 100.0 # normalized units per second^2

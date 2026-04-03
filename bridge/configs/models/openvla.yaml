@@ -1,0 +1,11 @@
+model:
+  backend: "openvla"
+  name: "openvla/openvla-7b"
+  action_dim: 7
+  image_size: 224
+  chunk_size: 50
+  chunk_stride: 10
+
+training:
+  learning_rate: 1.0e-4
+  gradient_checkpointing: true

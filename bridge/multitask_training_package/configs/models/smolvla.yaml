@@ -1,0 +1,38 @@
+model:
+  backend: "smolvla"
+  name: "lerobot/smolvla_base"
+  action_dim: 7
+  image_size: 512
+  chunk_size: 50
+  chunk_stride: 10                # 524K -> ~52K chunks (remove 90% overlap)
+
+lora:
+  rank: 32
+  alpha: 32
+  dropout: 0.0
+  target_modules: []  # Uses model's _get_default_peft_targets()
+
+quantization:
+  enabled: false
+
+training:
+  batch_size: 8
+  gradient_accumulation_steps: 4  # effective batch=32 (1GPU)
+  learning_rate: 5.0e-4
+  weight_decay: 0.0
+  warmup_ratio: 0.1
+  scheduler_type: "cosine"
+  max_steps: 2500
+  optimizer: "adamw"
+  gradient_checkpointing: false
+  bf16: true
+  logging_steps: 1
+  save_steps: 500
+  max_val_batches: 50
+  early_stopping_patience: 10
+
+data:
+  processed_dir: "/data/robobridge/robocasa_repo/datasets/v0.1_processed"
+
+output:
+  base_dir: "/data/robobridge/vla_adapters"

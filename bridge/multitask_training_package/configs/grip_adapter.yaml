@@ -1,0 +1,6 @@
+# Grip adapter training config.
+# Emphasizes gripper dimension (6), still learns arm position hold (0-5).
+
+adapter:
+  name: "grip"
+  loss_weights: [0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 3.0]

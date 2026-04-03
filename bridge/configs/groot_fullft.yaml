@@ -1,0 +1,51 @@
+# GROOT N1.5 Full Fine-Tuning config
+# Paper hyperparams: lr=1e-4, AdamW(beta1=0.95, beta2=0.999, eps=1e-8), wd=1e-5
+# Effective batch = batch_size * grad_accum = 128 * 8 = 1024
+# Single GPU per task, 4 tasks in parallel
+
+adapter:
+  name: "fullft"
+  loss_weights: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+
+model:
+  backend: "groot_n1.5"
+  name: "nvidia/GR00T-N1.5-3B"
+  action_dim: 12
+  image_size: 224
+  chunk_size: 16
+  chunk_stride: 4
+  full_ft: true
+
+lora:
+  rank: 0
+  alpha: 0
+  dropout: 0.0
+
+quantization:
+  enabled: false
+
+training:
+  batch_size: 128
+  gradient_accumulation_steps: 8
+  learning_rate: 1.0e-4
+  weight_decay: 1.0e-5
+  warmup_ratio: 0.05
+  num_epochs: 9999
+  max_steps: 2500
+  scheduler_type: "cosine"
+  optimizer: "adamw"
+  adamw_betas: [0.95, 0.999]
+  adamw_eps: 1.0e-8
+  gradient_checkpointing: true
+  bf16: true
+  logging_steps: 10
+  save_steps: 500
+  max_val_batches: 50
+  early_stopping_patience: 0
+  dataloader_num_workers: 2
+
+data:
+  use_primitive_instructions: true
+
+output:
+  base_dir: "outputs"

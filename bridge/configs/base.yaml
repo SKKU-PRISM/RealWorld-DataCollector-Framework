@@ -1,0 +1,54 @@
+model:
+  backend: "openvla"
+  name: "openvla/openvla-7b"
+  action_dim: 7
+  image_size: 224
+  chunk_stride: 1
+
+lora:
+  rank: 16
+  alpha: 32
+  dropout: 0.05
+  target_modules: ["q_proj", "v_proj", "k_proj", "o_proj"]
+  bias: "none"
+  task_type: "CAUSAL_LM"
+
+quantization:
+  enabled: false
+  bits: 4
+  quant_type: "nf4"
+  compute_dtype: "bfloat16"
+
+data:
+  processed_dir: "/data/craf/processed"
+  cameras: ["robot0_agentview_left_image"]
+  max_samples: null
+  task: null
+  use_primitive_instructions: false
+
+training:
+  batch_size: 8
+  gradient_accumulation_steps: 4
+  learning_rate: 5.0e-5
+  weight_decay: 0.01
+  warmup_ratio: 0.03
+  num_epochs: 5
+  scheduler_type: "onecycle"
+  max_steps: -1
+  gradient_checkpointing: false
+  compile: false
+  optimizer: "adamw"
+  bf16: true
+  fp16: false
+  logging_steps: 1
+  save_steps: 500
+  eval_steps: 100
+  max_val_batches: -1
+  dataloader_num_workers: 4
+
+adapter:
+  name: "move"
+  loss_weights: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.1]
+
+output:
+  base_dir: "/data/craf/vla_adapters"

@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "acs"
+version = "0.1.0"
+description = "ACS: AutoDataCollector + RoboBridge 통합 파이프라인"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.24.0",
+    "pandas>=2.0.0",
+    "pyarrow>=14.0.0",
+    "scipy>=1.11.0",
+    "av>=11.0.0",
+    "opencv-python>=4.8.0",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+train = [
+    "torch>=2.0",
+    "transformers>=4.40",
+    "peft>=0.10",
+    "accelerate>=0.30",
+]
+
+[tool.setuptools.packages.find]
+include = ["pipeline*"]

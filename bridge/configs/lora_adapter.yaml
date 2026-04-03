@@ -1,0 +1,26 @@
+adapter:
+  name: "lora"
+  loss_weights: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+
+lora:
+  rank: 64
+  alpha: 128
+  dropout: 0.1
+
+quantization:
+  enabled: false
+
+training:
+  batch_size: 32
+  gradient_accumulation_steps: 1
+  weight_decay: 0.0
+  warmup_ratio: 0.05
+  num_epochs: 19
+  scheduler_type: "cosine"
+  max_steps: -1
+  optimizer: "adamw"
+  bf16: true
+  logging_steps: 10
+  save_steps: 1000
+  max_val_batches: 50
+  early_stopping_patience: 10

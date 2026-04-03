@@ -1,0 +1,19 @@
+# A6000 (48GB VRAM) GPU profile.
+# Uses QLoRA 4-bit quantization to fit 7B models.
+
+quantization:
+  enabled: true
+  bits: 4
+  quant_type: "nf4"
+  compute_dtype: "bfloat16"
+
+lora:
+  rank: 16
+  alpha: 32
+
+training:
+  batch_size: 8
+  gradient_accumulation_steps: 4
+  dataloader_num_workers: 2
+  # Effective batch size: 32
+  # Note: num_workers=2 for Docker environments with small /dev/shm (64MB)

@@ -1,0 +1,9 @@
+.git
+collector/.git
+bridge/.git
+__pycache__
+*.pyc
+*.egg-info
+.env
+.vscode
+.idea

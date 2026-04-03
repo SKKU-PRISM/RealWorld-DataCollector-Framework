@@ -1,0 +1,56 @@
+{
+  "arrange_YRGblocks_top2bottom": {
+    "direction": [
+      0.045899998396635056,
+      -0.7865999937057495,
+      0.17649999260902405
+    ],
+    "n_demos": 30,
+    "instruction": "move"
+  },
+  "distribute_chocolate_pies": {
+    "direction": [
+      0.2515000104904175,
+      -0.7559999823570251,
+      0.5472999811172485
+    ],
+    "n_demos": 15,
+    "instruction": "move"
+  },
+  "distribute_chocolatepies": {
+    "direction": [
+      0.42750000953674316,
+      -0.7196000218391418,
+      0.3806999921798706
+    ],
+    "n_demos": 30,
+    "instruction": "move"
+  },
+  "pick_redblock_place_bluedish": {
+    "direction": [
+      0.2475000023841858,
+      -0.8517000079154968,
+      0.2321999967098236
+    ],
+    "n_demos": 30,
+    "instruction": "move"
+  },
+  "place_yellowblock_between_chocolatepies": {
+    "direction": [
+      0.4449000060558319,
+      0.45910000801086426,
+      0.3472000062465668
+    ],
+    "n_demos": 20,
+    "instruction": "move"
+  },
+  "stack_yellow_redblock": {
+    "direction": [
+      0.065700002014637,
+      0.04129999876022339,
+      0.20190000534057617
+    ],
+    "n_demos": 30,
+    "instruction": "move"
+  }
+}

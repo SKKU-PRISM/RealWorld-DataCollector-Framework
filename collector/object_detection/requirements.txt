@@ -1,0 +1,22 @@
+# Object Detection & Localization System Requirements
+
+# Camera
+pyrealsense2>=2.50.0
+
+# Deep Learning
+torch>=2.0.0
+torchvision>=0.15.0
+transformers>=4.35.0
+
+# Computer Vision
+opencv-python>=4.8.0
+numpy>=1.24.0
+
+# Image Processing
+Pillow>=10.0.0
+
+# Configuration
+PyYAML>=6.0
+
+# Optional: For faster inference
+# accelerate>=0.24.0

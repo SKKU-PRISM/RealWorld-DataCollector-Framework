@@ -1,0 +1,65 @@
+# Base training configuration for VLA LoRA adapters.
+# Override with move_adapter.yaml or grip_adapter.yaml for adapter-specific settings.
+# Override with gpu_profiles/a6000.yaml or gpu_profiles/a100.yaml for GPU-specific settings.
+
+# VLA model
+model:
+  backend: "openvla"              # openvla, smolvla, pi05, groot_n1.5, hf_vlm
+  name: "openvla/openvla-7b"     # HuggingFace model ID or path
+  action_dim: 7                   # rel_pos(3) + rel_rot(3) + gripper(1)
+  image_size: 224
+  chunk_stride: 1                 # Stride for ActionChunkDataset (>1 reduces overlapping chunks)
+
+# LoRA configuration
+lora:
+  rank: 16
+  alpha: 32
+  dropout: 0.05
+  target_modules: ["q_proj", "v_proj", "k_proj", "o_proj"]
+  bias: "none"
+  task_type: "CAUSAL_LM"
+
+# Quantization (overridden by GPU profile)
+quantization:
+  enabled: true
+  bits: 4
+  quant_type: "nf4"
+  compute_dtype: "bfloat16"
+
+# Data
+data:
+  processed_dir: "/data/robobridge/robocasa_repo/datasets/v0.1_processed"
+  cameras: ["robot0_agentview_left_image"]
+  max_samples: null               # null = use all data
+  task: null                      # null = all tasks, or specific task name
+
+# Training
+training:
+  batch_size: 8
+  gradient_accumulation_steps: 4
+  learning_rate: 5.0e-5
+  weight_decay: 0.01
+  warmup_ratio: 0.03
+  num_epochs: 5
+  scheduler_type: "onecycle"      # onecycle, constant, cosine
+  max_steps: -1                   # -1 = use num_epochs, >0 = stop at N optimizer steps
+  gradient_checkpointing: false   # Trades compute for memory; enables larger micro-batch
+  compile: false                  # torch.compile for kernel fusion
+  optimizer: "adamw"              # adamw or adamw_8bit (bitsandbytes, saves memory)
+  bf16: true
+  fp16: false
+  logging_steps: 1
+  save_steps: 500
+  eval_steps: 100
+  max_val_batches: -1             # -1 = full validation, >0 = limit validation batches
+  dataloader_num_workers: 4
+
+# Adapter-specific (overridden by move/grip adapter configs)
+adapter:
+  name: "move"
+  loss_weights: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.1]
+  # Dimensions: [rel_pos_x, rel_pos_y, rel_pos_z, rel_rot_x, rel_rot_y, rel_rot_z, gripper]
+
+# Output
+output:
+  base_dir: "/data/robobridge/vla_adapters"

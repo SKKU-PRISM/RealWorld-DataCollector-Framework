@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  hscho:
+    image: hscho:12.8.1-cudnn-devel-ubuntu22.04
+    container_name: hscho
+    stdin_open: true    # -i (interactive)
+    tty: true           # -t (tty)
+    shm_size: '32G'     # --shm-size=32G
+    ports:
+      - "8888:8888"
+      - "8001:8001"     # CodeGen LLM Server
+      - "8002:8002"     # Judge VLM Server
+    volumes:
+      - /home/guest/snap/snapd-desktop-integration/hscho/workspace:/workspace
+    command: /bin/bash
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all              # --gpus all
+              capabilities: [gpu]

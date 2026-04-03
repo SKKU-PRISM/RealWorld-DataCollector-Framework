@@ -1,0 +1,65 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+ENV/
+env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Results
+results/
+!docs/static/images/results/
+outputs/
+# Local config (머신별 설정 — git pull 시 보존됨)
+.env
+openai_api_key.json
+google_aistudio_key.json
+
+# Legacy folders (DO NOT MODIFY)
+code_gen/
+
+# Claude Code local config
+CLAUDE.md
+claude_document/branch_guidelines.md
+
+# Cloud inference (local development)
+cloud_inference2/
+lerobot/
+
+# Model checkpoints and artifacts
+models/checkpoints/
+models/**/*.pt
+models/**/*.pth

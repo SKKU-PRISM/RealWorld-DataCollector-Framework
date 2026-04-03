@@ -1,0 +1,26 @@
+# Free API Configuration (vLLM Server)
+# 자체 호스팅 vLLM 서버 사용 시 설정
+# USE_SERVER=true 일 때 사용됨
+
+# ===========================================
+# Code Gen LLM 서버 (텍스트 생성)
+# ===========================================
+codegen:
+  server_host: "115.145.175.11"
+  server_port: 8001
+  ssh_port: 22           # SSH 접속 포트 (기본: 22, 다르면 SSH 터널 사용)
+  ssh_user: "hscho"      # SSH 사용자
+  model_name: "Qwen/Qwen2.5-Coder-7B-Instruct"
+
+# ===========================================
+# Judge VLM 서버 (이미지 평가)
+# ===========================================
+judge:
+  server_host: "115.145.173.248"
+  server_port: 8002
+  ssh_port: 10001        # SSH 접속 포트 (기본: 22, 다르면 SSH 터널 사용)
+  ssh_user: "guest"      # SSH 사용자
+  model_name: "nvidia/Cosmos-Reason1-7B"
+
+# Judge UI 타임아웃 (초)
+judge_timeout: 0.5

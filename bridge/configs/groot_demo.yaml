@@ -1,0 +1,47 @@
+# GROOT N1.5 LoRA adapter for data_demo (UR robot drawer close)
+# 8D state: tcp_position(3) + tcp_quaternion(4) + gripper_pos(1)
+# 7D actions: pos(3) + rot(3) + gripper(1)
+
+adapter:
+  name: "move"
+  loss_weights: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+
+model:
+  backend: "groot_n1.5"
+  name: "nvidia/GR00T-N1.5-3B"
+  action_dim: 7
+  image_size: 224
+  chunk_size: 16
+  chunk_stride: 4
+
+lora:
+  rank: 128
+  alpha: 256
+  dropout: 0.1
+
+quantization:
+  enabled: false
+
+training:
+  batch_size: 64
+  gradient_accumulation_steps: 1
+  learning_rate: 5.0e-5
+  weight_decay: 0.0
+  warmup_ratio: 0.05
+  num_epochs: 500
+  scheduler_type: "cosine"
+  max_steps: -1
+  optimizer: "adamw"
+  gradient_checkpointing: false
+  bf16: true
+  logging_steps: 10
+  save_steps: 1000
+  max_val_batches: 50
+  early_stopping_patience: 0
+  dataloader_num_workers: 2
+
+data:
+  use_primitive_instructions: true
+
+output:
+  base_dir: "outputs/groot_demo"

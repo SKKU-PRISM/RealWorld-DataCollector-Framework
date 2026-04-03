@@ -1,0 +1,10 @@
+numpy>=1.24
+h5py>=3.10
+PyYAML>=6.0
+torch>=2.0
+transformers>=4.40
+peft>=0.10
+bitsandbytes>=0.43
+accelerate>=0.30
+Pillow>=9.0
+tqdm>=4.65

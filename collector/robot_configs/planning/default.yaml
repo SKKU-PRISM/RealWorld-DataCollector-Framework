@@ -1,0 +1,52 @@
+# Motion Planning Configuration
+
+# Trajectory interpolation
+trajectory:
+  # Interpolation method: linear, cubic, quintic
+  interpolation: cubic
+
+  # Default duration for movements (seconds)
+  default_duration: 2.0
+
+  # Control frequency (Hz)
+  frequency: 30.0
+
+  # Maximum joint velocity (rad/s)
+  max_velocity: 1.0
+
+  # Maximum joint acceleration (rad/s^2)
+  max_acceleration: 2.0
+
+# IK solver settings
+ik:
+  # Maximum iterations for IK solver
+  max_iterations: 100
+
+  # Position tolerance (meters)
+  position_tolerance: 0.001
+
+  # Orientation tolerance (radians)
+  orientation_tolerance: 0.01
+
+  # Damping factor for DLS
+  damping: 0.1
+
+# Motion planner settings (for OMPL)
+planner:
+  # Planner type: rrt, rrt_connect, prm
+  type: rrt_connect
+
+  # Planning time limit (seconds)
+  planning_time: 5.0
+
+  # Goal bias for RRT
+  goal_bias: 0.05
+
+  # Range for RRT
+  range: 0.0
+
+# Workspace bounds (DEPRECATED - use BaseWorkspace from src/lerobot_cap/workspace.py)
+# Actual workspace is now computed from URDF kinematics (reach limits)
+# See: src/lerobot_cap/workspace.py (BaseWorkspace)
+#      code_gen_lerobot/forward_execution/workspace.py (ForwardWorkspace)
+#      code_gen_lerobot/reset_execution/workspace.py (ResetWorkspace)

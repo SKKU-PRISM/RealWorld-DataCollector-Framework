@@ -1,0 +1,47 @@
+# PI0.5 End-to-End adapter for LIBERO-Object
+# 15D state: eef_pos(3) + eef_quat(4) + gripper(2) + object_pos(3) + basket_pos(3)
+
+adapter:
+  name: "move"
+  loss_weights: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+
+model:
+  backend: "pi05"
+  name: "lerobot/pi05_base"
+  action_dim: 15
+  image_size: 224
+  chunk_size: 50
+  chunk_stride: 10
+
+lora:
+  rank: 64
+  alpha: 128
+  dropout: 0.1
+  target_modules: []
+
+quantization:
+  enabled: false
+
+training:
+  batch_size: 8
+  gradient_accumulation_steps: 4
+  learning_rate: 1.0e-5
+  weight_decay: 0.0
+  warmup_ratio: 0.05
+  num_epochs: 50
+  scheduler_type: "cosine"
+  max_steps: -1
+  optimizer: "adamw"
+  gradient_checkpointing: true
+  bf16: true
+  logging_steps: 10
+  save_steps: 1000
+  max_val_batches: 50
+  early_stopping_patience: 0
+  dataloader_num_workers: 2
+
+data:
+  use_primitive_instructions: true
+
+output:
+  base_dir: "outputs/pi05_libero_e2e"

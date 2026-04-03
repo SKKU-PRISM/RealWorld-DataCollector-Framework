@@ -1,0 +1,49 @@
+# Model checkpoints
+outputs/
+vla_adapters/
+vla_adapters_movegrip/
+checkpoint-*/
+*.safetensors
+*.pt
+*.pth
+*.ckpt
+
+# Data
+data_*/
+robocasa_data/
+processed/
+*.hdf5
+*.h5
+
+# Eval outputs
+eval_results/
+eval_video_output/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# Logs
+MUJOCO_LOG.TXT
+logs/
+*.log
+
+# Tools & IDE
+.omc/
+.cache/
+.codex
+.claude/
+.idea/
+.vscode/
+.sisyphus/
+
+# System
+.DS_Store
+Thumbs.db
+
+# Sensitive
+*.pdf

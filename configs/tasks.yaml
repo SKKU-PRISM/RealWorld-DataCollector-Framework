@@ -1,0 +1,26 @@
+# ACS 태스크 설정: AutoDataCollector -> RoboBridge 변환 대상 정의
+#
+# lerobot_root: AutoDataCollector가 저장한 LeRobot 데이터셋 루트
+# output_root: 변환된 NPZ 파일 출력 루트 (bridge 학습에 사용)
+#
+# 사용법:
+#   python -m pipeline.convert --config configs/tasks.yaml
+
+lerobot_root: ~/.cache/huggingface/lerobot/local
+output_root: data
+
+tasks:
+  - name: pick_redblock_place_bluedish
+    dataset: user/pick_redblock_place_bluedish
+    instruction: "pick red block and place on blue dish"
+
+  - name: stack_yellow_redblock
+    dataset: user/stack_yellow_redblock
+    instruction: "stack yellow block on red block"
+
+  # 새 태스크 추가 예시:
+  # - name: my_new_task
+  #   dataset: user/my_new_task_dataset
+  #   instruction: "pick up the cup and place it on the shelf"
+  #   top_camera: observation.images.realsense    # (선택) 기본값
+  #   wrist_camera: observation.images.innomaker   # (선택) 기본값

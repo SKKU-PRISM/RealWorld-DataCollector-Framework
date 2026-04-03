@@ -1,0 +1,48 @@
+# GROOT N1.5 Move adapter — Multi-task LIBERO-Object (template/direction mode)
+# 12D state: eef_base(3) + eef_quat(4) + gripper(2) + direction(3)
+# 10 tasks combined: 500 demos, 74507 samples
+
+adapter:
+  name: "move"
+  loss_weights: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.1]
+
+model:
+  backend: "groot_n1.5"
+  name: "nvidia/GR00T-N1.5-3B"
+  action_dim: 12
+  image_size: 224
+  chunk_size: 16
+  chunk_stride: 8
+
+lora:
+  rank: 64
+  alpha: 128
+  dropout: 0.1
+
+quantization:
+  enabled: false
+
+training:
+  batch_size: 32
+  gradient_accumulation_steps: 1
+  learning_rate: 5.0e-5
+  weight_decay: 0.0
+  warmup_ratio: 0.05
+  num_epochs: 500
+  scheduler_type: "cosine"
+  max_steps: -1
+  optimizer: "adamw"
+  gradient_checkpointing: false
+  bf16: true
+  logging_steps: 10
+  save_steps: 999999
+  save_every_epochs: 100
+  max_val_batches: 50
+  early_stopping_patience: 0
+  dataloader_num_workers: 2
+
+data:
+  use_primitive_instructions: true
+
+output:
+  base_dir: "outputs/multitask_groot_template"

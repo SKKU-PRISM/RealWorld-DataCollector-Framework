@@ -1,0 +1,34 @@
+# GROOT N1.5 — SO101 6D state, 15Hz subsampled
+adapter:
+  name: "move"
+  loss_weights: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+
+model:
+  backend: "groot_n1.5"
+  name: "nvidia/GR00T-N1.5-3B"
+  action_dim: 6
+  image_size: 224
+  chunk_size: 16
+  chunk_stride: 8
+
+training:
+  batch_size: 32
+  learning_rate: 5.0e-5
+  warmup_ratio: 0.05
+  num_epochs: 500
+  scheduler_type: "cosine"
+  optimizer: "adamw"
+  bf16: true
+  logging_steps: 10
+  save_steps: 999999
+  save_every_epochs: 0
+  dataloader_num_workers: 16
+  precompute_eagle: true
+  disable_validation: true
+
+data:
+  use_wrist: true
+  state_dims: 6
+
+output:
+  base_dir: "outputs/groot_so101_6d_15hz"

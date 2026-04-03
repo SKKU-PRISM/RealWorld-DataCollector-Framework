@@ -1,0 +1,84 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lerobot-cap"
+version = "0.1.0"
+description = "LeRobot CaP Distillation - Unified robot control with IK, motion planning, and learning"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.10"
+authors = [
+    {name = "CSI Lab"}
+]
+
+dependencies = [
+    # Hardware Control (from lerobot_ros2)
+    "feetech-servo-sdk>=1.0.0",
+    "dynamixel-sdk>=3.7.0",
+    "opencv-python>=4.8.0",
+    "pyrealsense2>=2.50.0",
+
+    # Kinematics (from LeRobot)
+    "pin>=2.6.0",                # Pinocchio
+
+    # Planning
+    "scipy>=1.11.0",             # Optimization, interpolation
+    "trimesh>=4.0.0",            # Mesh processing
+
+    # Learning (from LeRobot)
+    "torch>=2.0.0",
+    "torchvision>=0.15.0",
+    "huggingface-hub>=0.20.0",
+    "safetensors>=0.4.0",
+
+    # Utilities
+    "numpy>=1.24.0",
+    "pyyaml>=6.0",
+    "tqdm>=4.65.0",
+]
+
+[project.optional-dependencies]
+placo = [
+    "placo>=0.8.0",              # Pinocchio wrapper (alternative)
+]
+ompl = [
+    # OMPL requires manual installation from source or conda
+    # conda install -c conda-forge ompl
+]
+ros2 = [
+    # ROS2 packages installed via apt/rosdep
+]
+phone = [
+    "teleop>=0.1.0",             # Android WebXR
+]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+]
+all = [
+    "lerobot-cap[placo,dev]",
+]
+
+[project.scripts]
+lerobot-cap-calibrate = "lerobot_cap.scripts.calibrate:main"
+lerobot-cap-teleop = "lerobot_cap.scripts.teleop:main"
+lerobot-cap-move = "lerobot_cap.scripts.move_to_pose:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"*" = ["*.yaml", "*.urdf", "*.json"]
+
+[tool.black]
+line-length = 100
+target-version = ["py310"]
+
+[tool.ruff]
+line-length = 100
+select = ["E", "F", "W", "I"]
+ignore = ["E501"]

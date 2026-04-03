@@ -1,0 +1,3 @@
+adapter:
+  name: "lora"
+  loss_weights: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]

@@ -1,0 +1,14 @@
+# A100 (96GB VRAM) GPU profile.
+# Full bf16 precision with larger LoRA rank and batch size.
+
+quantization:
+  enabled: false
+
+lora:
+  rank: 32
+  alpha: 64
+
+training:
+  batch_size: 32
+  gradient_accumulation_steps: 2
+  # Effective batch size: 64

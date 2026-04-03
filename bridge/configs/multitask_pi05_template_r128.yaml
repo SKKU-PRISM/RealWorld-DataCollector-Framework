@@ -1,0 +1,50 @@
+# PI0.5 Move adapter — Multi-task LIBERO-Object (template mode, rank=128)
+# 12D state: eef_base(3) + eef_quat(4) + gripper(2) + direction(3)
+
+adapter:
+  name: "move"
+  loss_weights: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.1]
+
+model:
+  backend: "pi05"
+  name: "lerobot/pi05_base"
+  action_dim: 7
+  image_size: 224
+  chunk_size: 50
+  chunk_stride: 10
+
+lora:
+  rank: 128
+  alpha: 256
+  dropout: 0.1
+  target_modules: []
+
+quantization:
+  enabled: false
+
+training:
+  batch_size: 32
+  gradient_accumulation_steps: 1
+  learning_rate: 5.0e-5
+  weight_decay: 0.0
+  warmup_ratio: 0.05
+  num_epochs: 500
+  scheduler_type: "cosine"
+  max_steps: -1
+  optimizer: "adamw"
+  gradient_checkpointing: true
+  bf16: true
+  logging_steps: 10
+  save_steps: 999999
+  save_every_epochs: 100
+  max_val_batches: 50
+  early_stopping_patience: 0
+  dataloader_num_workers: 2
+  vision_cache: false
+  compile: false
+
+data:
+  use_primitive_instructions: true
+
+output:
+  base_dir: "outputs/multitask_pi05_template_r128"

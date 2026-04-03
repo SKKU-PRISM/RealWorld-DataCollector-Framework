@@ -1,0 +1,51 @@
+# =============================================================================
+# ACS 통합 의존성 (collector + bridge + pipeline)
+# PyTorch는 Dockerfile에서 별도 설치 (CUDA 버전 매칭)
+# =============================================================================
+
+# --- 데이터 처리 (pipeline/convert.py) ---
+numpy>=1.24.0
+pandas>=2.0.0
+pyarrow>=14.0.0
+scipy>=1.11.0
+av>=11.0.0
+opencv-python>=4.8.0
+Pillow>=10.0.0
+PyYAML>=6.0
+h5py>=3.10
+
+# --- RoboBridge: LLM/VLM 프로바이더 ---
+pydantic>=2.0
+langchain>=0.1.0
+langchain-core>=0.1.0
+langchain-openai
+langchain-anthropic
+langchain-google-genai
+langchain-ollama
+langchain-huggingface
+
+# --- RoboBridge: VLA 학습 ---
+transformers>=4.40
+peft>=0.10
+bitsandbytes>=0.43
+accelerate>=0.30
+datasets>=2.19
+lerobot>=0.4.0
+dm-tree>=0.1.8
+
+# --- AutoDataCollector: 하드웨어 제어 ---
+feetech-servo-sdk>=1.0.0
+dynamixel-sdk>=3.7.0
+pyrealsense2>=2.50.0
+
+# --- AutoDataCollector: 데이터셋 ---
+huggingface-hub>=0.20.0
+safetensors>=0.4.0
+tqdm>=4.65.0
+
+# --- AutoDataCollector: 메시/시각화 ---
+trimesh>=4.0.0
+
+# --- 개발/테스트 ---
+pytest>=7.0.0
+ruff>=0.1.0

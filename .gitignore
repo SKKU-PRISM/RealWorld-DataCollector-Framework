@@ -1,0 +1,27 @@
+# Data (대용량)
+data/
+demo_data/
+demo_models/
+*.npz
+*.mp4
+*.hdf5
+
+# Python
+__pycache__/
+*.pyc
+*.egg-info/
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+
+# Env
+.env
+*.env
+
+# Subproject git (각 서브프로젝트의 .git은 유지)
