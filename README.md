@@ -227,6 +227,15 @@ rm -rf /opt/conda/lib/python3.10/site-packages/lerobot/policies/groot/eagle2_hg_
        /root/.cache/huggingface/modules/transformers_modules/eagle2hg* \
        /root/.cache/huggingface/lerobot/lerobot/eagle2hg*
 
+# Warm up cache (creates config.json from HF Hub), then patch it
+python -c "
+from lerobot.policies.groot.modeling_groot import GrootPolicy
+try: GrootPolicy.from_pretrained('nvidia/GR00T-N1.5-3B')
+except: pass
+" 2>/dev/null || true
+find /root/.cache/huggingface -name "config.json" -exec grep -l flash_attention_2 {} \; | \
+    xargs sed -i 's/flash_attention_2/eager/g' 2>/dev/null || true
+
 # Run full pipeline (collect → train)
 ./run_agent.sh
 
@@ -411,12 +420,21 @@ cd LIBERO && pip install -e . && cd ..
 ### 2. Run Training + Evaluation
 
 ```bash
-# Step 1: Fix flash attention compatibility
+# Step 1: Fix flash attention compatibility (source + cached config)
 sed -i 's/flash_attention_2/eager/g' \
     /opt/conda/lib/python3.10/site-packages/lerobot/policies/groot/eagle2_hg_model/{modeling_eagle2_5_vl.py,configuration_eagle2_5_vl.py}
 rm -rf /opt/conda/lib/python3.10/site-packages/lerobot/policies/groot/eagle2_hg_model/__pycache__ \
        /root/.cache/huggingface/modules/transformers_modules/eagle2hg* \
        /root/.cache/huggingface/lerobot/lerobot/eagle2hg*
+
+# Warm up cache (creates config.json from HF Hub), then patch it
+python -c "
+from lerobot.policies.groot.modeling_groot import GrootPolicy
+try: GrootPolicy.from_pretrained('nvidia/GR00T-N1.5-3B')
+except: pass
+" 2>/dev/null || true
+find /root/.cache/huggingface -name "config.json" -exec grep -l flash_attention_2 {} \; | \
+    xargs sed -i 's/flash_attention_2/eager/g' 2>/dev/null || true
 
 # Step 2: Download example data from HuggingFace
 python -c "from huggingface_hub import snapshot_download; snapshot_download('skkuprism/acs-example-data', repo_type='dataset', local_dir='examples/demo_data')"
