@@ -379,10 +379,13 @@ Run a quick training + evaluation demo using real RoboCasa CloseDrawer data (~13
 ### 1. Run Training + Evaluation (Inside Docker Container)
 
 ```bash
-# Step 1: Download example data from HuggingFace
+# Step 1: Fix flash attention compatibility
+sed -i 's/flash_attention_2/eager/g' /opt/conda/lib/python3.10/site-packages/lerobot/policies/groot/eagle2_hg_model/{modeling_eagle2_5_vl.py,configuration_eagle2_5_vl.py} && rm -f /opt/conda/lib/python3.10/site-packages/lerobot/policies/groot/eagle2_hg_model/__pycache__/*.pyc
+
+# Step 2: Download example data from HuggingFace
 python -c "from huggingface_hub import snapshot_download; snapshot_download('skkuprism/acs-example-data', repo_type='dataset', local_dir='examples/demo_data')"
 
-# Step 2: Train GROOT LoRA (20 steps, ~2 min)
+# Step 3: Train GROOT LoRA (20 steps, ~2 min)
 cd bridge/scripts/train
 python train_lora_movegrip.py \
     --config configs/models/groot.yaml \
@@ -392,7 +395,7 @@ python train_lora_movegrip.py \
     --lr 1e-4 --epochs 1 --task CloseDrawer
 cd /app
 
-# Step 3: Evaluate (RoboCasa simulation, requires robocasa installed)
+# Step 4: Evaluate (RoboCasa simulation, requires robocasa installed)
 python bridge/scripts/eval/eval_vla_robocasa.py \
     --model groot \
     --move-adapter examples/demo_output/adapters/CloseDrawer/move_adapter/checkpoint-best \
