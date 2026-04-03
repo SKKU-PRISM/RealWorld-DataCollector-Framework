@@ -167,11 +167,11 @@ export MUJOCO_GL=osmesa
 
 # robosuite + RoboCasa
 pip install robosuite lxml
-git clone https://github.com/robocasa/robocasa.git
-pip install --no-deps -e robocasa/
+git clone https://github.com/robocasa/robocasa.git /opt/robocasa
+pip install --no-deps -e /opt/robocasa/
 
 # Patch version checks (Docker has different numpy/lerobot versions)
-sed -i '/assert numpy.__version__/,/Please install this version/d' robocasa/robocasa/__init__.py
+sed -i '/assert numpy.__version__/,/Please install this version/d' /opt/robocasa/robocasa/__init__.py
 
 # Download RoboCasa kitchen assets
 python -m robocasa.scripts.download_kitchen_assets
@@ -390,11 +390,11 @@ export MUJOCO_GL=osmesa
 
 # robosuite + RoboCasa
 pip install robosuite lxml
-git clone https://github.com/robocasa/robocasa.git
-pip install --no-deps -e robocasa/
+git clone https://github.com/robocasa/robocasa.git /opt/robocasa
+pip install --no-deps -e /opt/robocasa/
 
 # Patch version checks (Docker has different numpy/lerobot versions)
-sed -i '/assert numpy.__version__/,/Please install this version/d' robocasa/robocasa/__init__.py
+sed -i '/assert numpy.__version__/,/Please install this version/d' /opt/robocasa/robocasa/__init__.py
 
 # Download RoboCasa kitchen assets
 python -m robocasa.scripts.download_kitchen_assets
