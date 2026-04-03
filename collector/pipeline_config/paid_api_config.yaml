@@ -4,14 +4,14 @@
 
 # 코드 생성용 LLM 모델 (Session 1: scene understanding, detection, waypoints)
 # 예: gpt-4o-mini, gpt-4o, gemini-1.5-flash, deepseek-chat
-codegen_llm_model: "gemini-3.1-flash-lite-preview"
+codegen_llm_model: "gemini-2.5-pro"
 
 # Code Generation Session 2 모델 (context handoff 후 코드 생성 전용)
 # Session 1의 누적 컨텍스트 없이 요약 + API doc만으로 코드 생성
-codegen_session2_model: "gemini-3.1-flash-lite-preview"
+codegen_session2_model: "gemini-2.5-pro"
 
 # detect_objects 스킬용 VLM 모델 (코드 실행 중 객체 재검출)
-detect_objects_model: "gemini-3.1-flash-lite-preview"
+detect_objects_model: "gemini-2.5-pro"
 
 # Judge VLM 모델
 # 예: gpt-4o, gpt-4o-mini

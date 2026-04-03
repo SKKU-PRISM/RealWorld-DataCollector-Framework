@@ -104,7 +104,7 @@ class LeRobotSkills:
         pick_offset: float = 0.015,  # Pick/place offset from object top (meters, 1.5cm)
         recording_callback: callable = None,  # LeRobot dataset recording callback
         camera=None,  # Shared camera instance for object detection (RealSenseD435)
-        detect_model: str = "gemini-3.1-flash-lite-preview",  # VLM model for detect_objects
+        detect_model: str = "gemini-2.5-pro",  # VLM model for detect_objects
     ):
         self.robot_config_path = Path(robot_config)
         self.frame = frame

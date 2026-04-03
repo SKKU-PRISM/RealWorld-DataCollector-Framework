@@ -173,7 +173,7 @@ load_paid_api_config() {
         echo "[Config] Loaded: paid_api_config.yaml"
     else
         echo "[Config] Warning: paid_api_config.yaml not found, using defaults"
-        CODEGEN_LLM_MODEL="gemini-3.1-flash-lite-preview"
+        CODEGEN_LLM_MODEL="gemini-2.5-pro"
         JUDGE_VLM_MODEL="gemini-2.5-flash"
         JUDGE_TIMEOUT=5.0
     fi

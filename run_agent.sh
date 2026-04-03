@@ -133,7 +133,7 @@ if [[ "$STAGES" == *"collect"* ]]; then
             JUDGE_MODEL=$(grep 'judge_vlm_model:' "$CONFIG_FILE" | head -1 | sed 's/.*: *"\?\([^"]*\)"\?.*/\1/')
             JUDGE_TIMEOUT=$(grep 'judge_timeout:' "$CONFIG_FILE" | head -1 | sed 's/.*: *"\?\([^"]*\)"\?.*/\1/')
         fi
-        LLM_MODEL="${LLM_MODEL:-gemini-3.1-flash-lite-preview}"
+        LLM_MODEL="${LLM_MODEL:-gemini-2.5-pro}"
         JUDGE_MODEL="${JUDGE_MODEL:-gemini-2.5-flash}"
         JUDGE_TIMEOUT="${JUDGE_TIMEOUT:-0.5}"
     else

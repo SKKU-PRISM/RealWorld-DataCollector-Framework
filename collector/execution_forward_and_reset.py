@@ -127,7 +127,7 @@ class ForwardAndResetPipeline(BasePipeline):
     def __init__(
         self,
         robot_id: int = 3,
-        llm_model: str = "gemini-3.1-flash-lite-preview",
+        llm_model: str = "gemini-2.5-pro",
         judge_model: str = "gemini-2.5-flash",
         judge_timeout_ms: int = 5000,
         num_random_seeds: int = 1,
@@ -3289,8 +3289,8 @@ def main():
     parser.add_argument(
         "--llm",
         type=str,
-        default="gemini-3.1-flash-lite-preview",
-        help="LLM model for code generation (default: gemini-3.1-flash-lite-preview)"
+        default="gemini-2.5-pro",
+        help="LLM model for code generation (default: gemini-2.5-pro)"
     )
 
     parser.add_argument(
@@ -3435,7 +3435,7 @@ def main():
         "--detect-model",
         type=str,
         default=None,
-        help="VLM model for detect_objects skill (default: uses gemini-3.1-flash-lite-preview)"
+        help="VLM model for detect_objects skill (default: uses gemini-2.5-pro)"
     )
 
     parser.add_argument(
