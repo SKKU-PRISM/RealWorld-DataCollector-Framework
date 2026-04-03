@@ -52,7 +52,7 @@ flowchart LR
 | Stage | What It Does | Key Technology |
 |---|---|---|
 | **1. Data Collection** | VLM observes workspace, generates executable Python code, robot executes manipulation, Judge evaluates success/failure, auto-reset and repeat | Gemini VLM multi-turn + Pinocchio IK + Forward-Reset loop + LeRobot recording |
-| **2. VLA Training** | Fine-tune VLA model (GR00T, SmolVLA, PI0.5, OpenVLA) on collected demonstrations via LoRA adapters | HuggingFace PEFT + LoRA + multi-task training |
+| **2. VLA Training** | Fine-tune VLA model (GR00T, SmolVLA, PI0.5) on collected demonstrations via LoRA adapters | HuggingFace PEFT + LoRA + multi-task training |
 
 ---
 
@@ -101,7 +101,7 @@ flowchart LR
           │  ┌────────────────────────┐    │
           │  │ VLA LoRA Fine-tuning   │    │
           │  │  GR00T N1.5 / SmolVLA  │    │
-          │  │  PI0.5 / OpenVLA       │    │
+          │  │  PI0.5                 │    │
           │  └───────────┬────────────┘    │
           │              │                 │
           │  ┌───────────▼────────────┐    │
@@ -188,7 +188,6 @@ docker run --rm --gpus all -it \
 | **GR00T N1.5** | `nvidia/GR00T-N1.5-3B` | ~3B | 16 | ~23h |
 | **SmolVLA** | `lerobot/smolvla_base` | ~500M | 50 | ~2.7h |
 | **PI0.5** | `lerobot/pi05_base` | ~3B | 50 | ~11h |
-| **OpenVLA** | `openvla/openvla-7b` | 7B | 1 | ~11h |
 
 ## Hardware
 
