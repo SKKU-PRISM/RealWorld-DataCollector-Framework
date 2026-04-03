@@ -34,12 +34,7 @@ if [ ! -f "$DEMO_DATA/metadata.json" ]; then
     mkdir -p "$DEMO_DATA"
 
     # Download small example data (~13MB) from acs-example-data
-    if command -v huggingface-cli &> /dev/null; then
-        huggingface-cli download skkuprism/acs-example-data \
-            --repo-type dataset \
-            --local-dir "$DEMO_DATA"
-    elif command -v python &> /dev/null; then
-        python -c "
+    python -c "
 from huggingface_hub import snapshot_download
 snapshot_download(
     'skkuprism/acs-example-data',
@@ -47,12 +42,7 @@ snapshot_download(
     local_dir='$DEMO_DATA',
 )
 print('Download complete.')
-"
-    else
-        echo "[Setup] ERROR: huggingface-cli or python required to download data."
-        echo "  pip install huggingface-hub"
-        exit 1
-    fi
+" || { echo "[Setup] ERROR: Failed to download. Install huggingface-hub: pip install huggingface-hub"; exit 1; }
 
     echo "[Setup] Example data downloaded to: $DEMO_DATA"
     echo ""
