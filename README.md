@@ -256,78 +256,17 @@ All settings in `run_agent.sh` can be overridden via environment variables. No c
 | `TRAIN_HDF5_DIR` | Path to raw HDF5 data (skips preprocessing) | - |
 | `TRAIN_OUTPUT_DIR` | Output directory for adapters | `./outputs/vla_adapters` |
 
-#### Method 1: Environment Variables (No File Modification)
-
-Prepend variables before the command. They apply only to that run.
+To override settings, prepend environment variables before the command:
 
 ```bash
-# Local
+# Example: collect 50 episodes of towel folding
 INSTRUCTION="fold the towel" NUM_EPISODES=50 ./run_agent.sh --stage collect
 
+# Example: train with custom learning rate and max steps
 TRAIN_TASK=CloseDrawer TRAIN_LR=1e-4 TRAIN_MAX_STEPS=25000 \
 TRAIN_PROCESSED_DIR=./demo_data/CloseDrawer \
 ./run_agent.sh --stage train
-
-# Docker (set variables inside the interactive shell)
-docker run --rm --privileged -it \
-    -e GOOGLE_API_KEY="your-key" \
-    -v $(pwd)/outputs:/app/outputs \
-    --entrypoint /bin/bash \
-    acs
-# Then inside the container:
-INSTRUCTION="fold the towel" NUM_EPISODES=50 ./run_agent.sh --stage collect
 ```
-
-#### Method 2: Edit YAML Config Files
-
-For fine-grained control over training, edit the YAML config files in `bridge/configs/` directly. The `TRAIN_CONFIG` variable tells `run_agent.sh` which config to use.
-
-```bash
-# Available configs
-ls bridge/configs/                    # Base configs
-ls bridge/configs/models/             # Per-model configs (groot, smolvla, pi05)
-```
-
-Key config files:
-
-| Config | Description |
-|---|---|
-| `bridge/configs/base.yaml` | Default training config (model, LoRA, training params) |
-| `bridge/configs/models/groot.yaml` | GROOT N1.5 specific settings |
-| `bridge/configs/models/smolvla.yaml` | SmolVLA specific settings |
-| `bridge/configs/models/pi05.yaml` | PI0.5 specific settings |
-
-Example: edit `bridge/configs/models/groot.yaml` to change LoRA settings:
-
-```yaml
-# bridge/configs/models/groot.yaml
-model:
-  backend: "groot_n1.5"
-  name: "nvidia/GR00T-N1.5-3B"
-  action_dim: 7
-  image_size: 224
-  chunk_size: 16
-
-lora:
-  rank: 64        # ← Change LoRA rank
-  alpha: 128      # ← Change LoRA alpha
-  dropout: 0.0
-
-training:
-  batch_size: 2
-  gradient_accumulation_steps: 16
-  learning_rate: 5.0e-4    # ← Change learning rate
-  scheduler_type: "cosine"
-  max_steps: 25000         # ← Change max steps
-```
-
-Then run with your custom config:
-
-```bash
-TRAIN_CONFIG=./bridge/configs/models/groot.yaml ./run_agent.sh --stage train
-```
-
-> **Priority:** CLI environment variables override YAML config values. So `TRAIN_LR=1e-4 TRAIN_CONFIG=./config.yaml ./run_agent.sh` will use `1e-4` regardless of what the YAML says.
 
 ---
 
