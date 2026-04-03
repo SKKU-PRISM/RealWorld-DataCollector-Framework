@@ -403,7 +403,7 @@ python bridge/scripts/eval/eval_vla_robocasa.py \
     --tasks CloseDrawer \
     --num-episodes 2 \
     --output-dir examples/demo_output/eval_results \
-    --stats-file examples/demo_data/metadata.json
+    --stats-file examples/demo_output/adapters/CloseDrawer/move_adapter/data_stats.json
 ```
 
 > **Local (without Docker):** Use `./examples/train_eval_demo.sh` which automates all steps above.
