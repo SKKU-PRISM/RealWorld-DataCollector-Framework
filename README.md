@@ -165,8 +165,12 @@ pip install mujoco==3.3.1
 apt-get update && apt-get install -y libosmesa6-dev
 export MUJOCO_GL=osmesa
 
-# robosuite + RoboCasa
-pip install robosuite lxml
+# robosuite (MUST use GitHub master, NOT PyPI)
+git clone https://github.com/ARISE-Initiative/robosuite /opt/robosuite
+pip install -e /opt/robosuite
+
+# RoboCasa
+pip install lxml
 git clone https://github.com/robocasa/robocasa.git /opt/robocasa
 pip install --no-deps -e /opt/robocasa/
 
@@ -401,8 +405,12 @@ pip install mujoco==3.3.1
 apt-get update && apt-get install -y libosmesa6-dev
 export MUJOCO_GL=osmesa
 
-# robosuite + RoboCasa
-pip install robosuite lxml
+# robosuite (MUST use GitHub master, NOT PyPI)
+git clone https://github.com/ARISE-Initiative/robosuite /opt/robosuite
+pip install -e /opt/robosuite
+
+# RoboCasa
+pip install lxml
 git clone https://github.com/robocasa/robocasa.git /opt/robocasa
 pip install --no-deps -e /opt/robocasa/
 
