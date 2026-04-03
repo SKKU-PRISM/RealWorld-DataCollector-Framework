@@ -256,6 +256,82 @@ RealWorld-DataCollector-Framework/
 
 ---
 
+## Quick Demo: Training + Evaluation
+
+`examples/` 디렉토리에 RoboCasa CloseDrawer 데모 데이터(~13MB)가 포함되어 있어, 클론 직후 바로 학습과 평가를 테스트할 수 있습니다.
+
+### 1. 학습 + 평가 한 번에 실행
+
+```bash
+# robobridge 환경 활성화
+conda activate robobridge
+
+# 학습(20 steps) + RoboCasa 평가
+./examples/train_eval_demo.sh
+
+# 학습만
+./examples/train_eval_demo.sh --train
+
+# 평가만 (학습 완료 후)
+./examples/train_eval_demo.sh --eval
+```
+
+### 2. 예시 데이터 구조
+
+```
+examples/demo_data/
+├── metadata.json               # Action 정규화 통계
+├── metadata_extended.json      # State 통계 (GROOT/SmolVLA/PI0.5용)
+├── train/
+│   ├── CloseDrawer_demo32.npz  # 이미지(128x128) + state(12D) + action(7D)
+│   ├── CloseDrawer_demo32.json # Instruction + task metadata
+│   ├── CloseDrawer_demo47.npz
+│   └── CloseDrawer_demo47.json
+└── val/
+    ├── CloseDrawer_demo20.npz
+    └── CloseDrawer_demo20.json
+```
+
+### 3. RoboCasa / LIBERO 평가 환경 설치
+
+시뮬레이션 평가를 실행하려면 RoboCasa와 LIBERO를 별도 설치해야 합니다.
+
+```bash
+# MuJoCo (필수)
+pip install mujoco==3.3.1
+
+# robosuite (robocasa 호환 버전)
+git clone https://github.com/robocasa/robosuite.git
+cd robosuite && pip install -e . && cd ..
+
+# RoboCasa
+git clone https://github.com/robocasa/robocasa.git
+cd robocasa && pip install -e . && cd ..
+
+# RoboCasa 에셋 다운로드
+python -m robocasa.scripts.download_kitchen_assets
+
+# (선택) LIBERO
+git clone https://github.com/Lifelong-Robot-Learning/LIBERO.git
+cd LIBERO && pip install -e . && cd ..
+```
+
+### 4. 커스텀 데이터로 학습
+
+자체 데이터로 학습하려면 동일한 NPZ 형식을 준비하세요:
+
+```bash
+# 환경변수로 학습 설정 변경
+TRAIN_MODEL_BACKEND=groot_n1.5 \
+TRAIN_EPOCHS=500 \
+TRAIN_LORA_RANK=64 \
+TRAIN_BATCH_SIZE=2 \
+TRAIN_GRAD_ACCUM=16 \
+./run_agent.sh --stage train
+```
+
+---
+
 ## Documentation
 
 | Document | Description |

@@ -165,7 +165,7 @@ if [[ "$STAGES" == *"train"* ]]; then
     echo " STAGE 2: VLA LoRA 학습 (RoboBridge)"
     echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
-    TRAIN_SCRIPT="$SCRIPT_DIR/bridge/multitask_training_package/train_lora.py"
+    TRAIN_SCRIPT="$SCRIPT_DIR/bridge/scripts/train/train_lora_movegrip.py"
     TRAIN_ARGS=""
 
     # 설정 파일 결정
@@ -212,7 +212,7 @@ if [[ "$STAGES" == *"train"* ]]; then
     echo ""
 
     echo "[Train] Starting VLA LoRA training..."
-    cd "$SCRIPT_DIR/bridge/multitask_training_package"
+    cd "$SCRIPT_DIR/bridge/scripts/train"
 
     python "$TRAIN_SCRIPT" $TRAIN_ARGS \
     || { echo "[Train] ERROR: Training failed!"; exit 1; }

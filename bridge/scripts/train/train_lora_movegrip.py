@@ -1415,6 +1415,16 @@ def setup_model_and_lora(config: Dict, local_rank: int = 0):
             modules_to_save=peft_targets.get("modules_to_save", []),
             bias="none",
         )
+        # Patch: PEFT >=0.15 treats model.config as dict-like (calls .get(),
+        # uses `in` operator). GrootConfig is not dict-like, so we patch
+        # the CLASS (not instance) — Python looks up __contains__ on type.
+        if hasattr(policy, 'config'):
+            cfg_cls = type(policy.config)
+            if not hasattr(cfg_cls, 'get'):
+                cfg_cls.get = lambda self, key, default=None: getattr(self, key, default)
+            if not hasattr(cfg_cls, '__contains__'):
+                cfg_cls.__contains__ = lambda self, key: hasattr(self, key)
+
         model = get_peft_model(policy, lora_config)
         processor = None
 
