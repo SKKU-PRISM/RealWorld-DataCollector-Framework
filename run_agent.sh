@@ -15,6 +15,10 @@
 #   OPENAI_API_KEY    (선택) OpenAI API 키
 #   DEEPSEEK_API_KEY  (선택) DeepSeek API 키
 #
+# 환경변수 (모델 오버라이드 — paid_api_config.yaml보다 우선):
+#   CODEGEN_MODEL     (선택) 코드 생성 LLM (예: gemini-2.5-pro)
+#   JUDGE_MODEL_ENV   (선택) Judge VLM (예: gemini-2.5-flash)
+#
 # 실행 예시:
 #   docker run --gpus all --rm \
 #       -e GOOGLE_API_KEY="your-key" \
@@ -56,6 +60,9 @@ COLLECT_USE_SERVER="${COLLECT_USE_SERVER:-false}"
 RECORD_DATASET="${RECORD_DATASET:-true}"
 MULTI_TURN="${MULTI_TURN:-true}"
 SKIP_TURN_TEST="${SKIP_TURN_TEST:-true}"
+CODEGEN_MODEL="${CODEGEN_MODEL:-}"
+JUDGE_MODEL_ENV="${JUDGE_MODEL_ENV:-}"
+DETECT_MODEL="${DETECT_MODEL:-}"
 
 # =============================================================================
 # VLA 학습 설정 (bridge — train_lora.py)
@@ -102,6 +109,8 @@ if [[ "$STAGES" == *"collect"* ]]; then
     echo "  Robot IDs   : $ROBOT_IDS"
     echo "  Episodes    : $NUM_EPISODES"
     echo "  Multi-turn  : $MULTI_TURN"
+    echo "  Codegen LLM : ${CODEGEN_MODEL:-<from config>}"
+    echo "  Judge VLM   : ${JUDGE_MODEL_ENV:-<from config>}"
     echo ""
 
     # API 키 검증
@@ -142,6 +151,10 @@ if [[ "$STAGES" == *"collect"* ]]; then
         JUDGE_MODEL="${JUDGE_MODEL_NAME:-nvidia/Cosmos-Reason1-7B}"
         JUDGE_TIMEOUT="${JUDGE_TIMEOUT:-0.5}"
     fi
+
+    # 환경변수 오버라이드 (설정 파일보다 우선)
+    [ -n "$CODEGEN_MODEL" ]   && LLM_MODEL="$CODEGEN_MODEL"
+    [ -n "$JUDGE_MODEL_ENV" ] && JUDGE_MODEL="$JUDGE_MODEL_ENV"
 
     echo "[Collect] Starting..."
     eval python execution_forward_and_reset.py \

@@ -244,6 +244,8 @@ All settings in `run_agent.sh` can be overridden via environment variables. No c
 | `COLLECT_USE_SERVER` | Use self-hosted vLLM server | `false` |
 | `RECORD_DATASET` | Record LeRobot dataset | `true` |
 | `SKIP_TURN_TEST` | Skip waypoint trajectory test | `true` |
+| `CODEGEN_MODEL` | Code generation LLM (overrides config) | from `paid_api_config.yaml` |
+| `JUDGE_MODEL_ENV` | Judge VLM model (overrides config) | from `paid_api_config.yaml` |
 
 #### VLA Training
 
@@ -268,6 +270,10 @@ To override settings, prepend environment variables before the command:
 ```bash
 # Example: collect 50 episodes of towel folding
 INSTRUCTION="fold the towel" NUM_EPISODES=50 ./run_agent.sh --stage collect
+
+# Example: use a specific codegen model
+CODEGEN_MODEL="gemini-2.5-pro" JUDGE_MODEL_ENV="gemini-2.5-flash" \
+INSTRUCTION="fold the towel" ./run_agent.sh --stage collect
 
 # Example: train with custom learning rate and max steps
 TRAIN_TASK=CloseDrawer TRAIN_LR=1e-4 TRAIN_MAX_STEPS=25000 \
