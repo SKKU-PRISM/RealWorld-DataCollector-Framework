@@ -25,6 +25,41 @@ BATCH_SIZE=1
 GRAD_ACCUM=1
 LORA_RANK=8
 
+# =============================================================================
+# Auto-download example data from HuggingFace if not present
+# =============================================================================
+
+if [ ! -f "$DEMO_DATA/metadata.json" ]; then
+    echo "[Setup] Example data not found. Downloading from HuggingFace..."
+    mkdir -p "$DEMO_DATA"
+
+    # Download only CloseDrawer subset from acs-demo-data
+    if command -v huggingface-cli &> /dev/null; then
+        huggingface-cli download skkuprism/acs-demo-data \
+            --repo-type dataset \
+            --include "CloseDrawer/**" \
+            --local-dir "$DEMO_DATA"
+    elif command -v python &> /dev/null; then
+        python -c "
+from huggingface_hub import snapshot_download
+snapshot_download(
+    'skkuprism/acs-demo-data',
+    repo_type='dataset',
+    allow_patterns='CloseDrawer/**',
+    local_dir='$DEMO_DATA',
+)
+print('Download complete.')
+"
+    else
+        echo "[Setup] ERROR: huggingface-cli or python required to download data."
+        echo "  pip install huggingface-hub"
+        exit 1
+    fi
+
+    echo "[Setup] Example data downloaded to: $DEMO_DATA"
+    echo ""
+fi
+
 echo "╔══════════════════════════════════════════════════════════╗"
 echo "║  ACS Demo: CloseDrawer 학습 + 평가                       ║"
 echo "╠══════════════════════════════════════════════════════════╣"
