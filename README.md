@@ -494,15 +494,17 @@ python bridge/scripts/eval/eval_vla_robocasa.py \
     --vla-model nvidia/GR00T-N1.5-3B \
     --move-adapter /app/demo_models/groot_direction_CloseDrawer/move_adapter/checkpoint-best \
     --tasks CloseDrawer \
-    --num-episodes 2 \
+    --num-episodes 5 \
+    --max-horizon 1000 \
     --planner-provider openai \
-    --planner-model gpt-5.4 \
+    --planner-model gpt-5.2 \
     --monitor-provider openai \
-    --monitor-model gpt-5.4 \
+    --monitor-model gpt-5.2 \
     --api-key "YOUR_OPENAI_API_KEY" \
     --perception-mode robocasa_gt \
     --action-stats /app/demo_models/groot_direction_CloseDrawer/move_adapter/data_stats.json \
-    --output-dir examples/demo_output/eval_results
+    --output-dir examples/demo_output/eval_results \
+    --save-video
 ```
 
 > **Local (without Docker):** Use `./examples/train_eval_demo.sh` which automates all steps above.
