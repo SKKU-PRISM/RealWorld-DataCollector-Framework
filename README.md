@@ -217,6 +217,19 @@ except: pass
 find /root/.cache/huggingface -name "config.json" -exec grep -l flash_attention_2 {} \; | \
     xargs sed -i 's/flash_attention_2/eager/g' 2>/dev/null || true
 
+# (Required) Fix transformers/huggingface-hub version compatibility
+pip install "transformers>=4.52" "huggingface-hub>=0.30,<1.0"
+
+# Download demo data and pretrained models
+pip install --upgrade huggingface-hub
+pip uninstall brotli brotlicffi -y 2>/dev/null  # Prevents download decoding errors
+
+# Download demo data (~718MB)
+python -c "from huggingface_hub import snapshot_download; snapshot_download('skkuprism/acs-demo-data', repo_type='dataset', local_dir='demo_data')"
+
+# Download pretrained models (~18GB)
+python -c "from huggingface_hub import snapshot_download; snapshot_download('skkuprism/acs-demo-models', local_dir='demo_models')"
+
 # Run full pipeline (collect → train)
 ./run_agent.sh
 
@@ -449,10 +462,23 @@ except: pass
 find /root/.cache/huggingface -name "config.json" -exec grep -l flash_attention_2 {} \; | \
     xargs sed -i 's/flash_attention_2/eager/g' 2>/dev/null || true
 
-# Step 2: Download example data from HuggingFace
+# Step 2: Fix transformers/huggingface-hub version compatibility
+pip install "transformers>=4.52" "huggingface-hub>=0.30,<1.0"
+
+# Step 3: Download demo data and pretrained models
+pip install --upgrade huggingface-hub
+pip uninstall brotli brotlicffi -y 2>/dev/null  # Prevents download decoding errors
+
+# Download demo data (~718MB)
+python -c "from huggingface_hub import snapshot_download; snapshot_download('skkuprism/acs-demo-data', repo_type='dataset', local_dir='demo_data')"
+
+# Download pretrained models (~18GB)
+python -c "from huggingface_hub import snapshot_download; snapshot_download('skkuprism/acs-demo-models', local_dir='demo_models')"
+
+# Download example data for quick demo (~13MB)
 python -c "from huggingface_hub import snapshot_download; snapshot_download('skkuprism/acs-example-data', repo_type='dataset', local_dir='examples/demo_data')"
 
-# Step 3: Train GROOT LoRA (20 steps, ~2 min)
+# Step 4: Train GROOT LoRA (20 steps, ~2 min)
 cd bridge/scripts/train
 python train_lora_movegrip.py \
     --config configs/models/groot.yaml \
@@ -462,15 +488,21 @@ python train_lora_movegrip.py \
     --lr 1e-4 --epochs 1 --task CloseDrawer
 cd /app
 
-# Step 4: Evaluate (RoboCasa simulation)
+# Step 5: Evaluate (RoboCasa simulation, pipeline mode with LLM planner)
 python bridge/scripts/eval/eval_vla_robocasa.py \
-    --model groot \
-    --adapter-dir examples/demo_output/adapters/CloseDrawer/move_adapter \
-    --checkpoint best \
+    --mode pipeline \
+    --vla-model nvidia/GR00T-N1.5-3B \
+    --move-adapter /app/demo_models/groot_direction_CloseDrawer/move_adapter/checkpoint-best \
     --tasks CloseDrawer \
     --num-episodes 2 \
-    --output-dir examples/demo_output/eval_results \
-    --stats-file examples/demo_output/adapters/CloseDrawer/move_adapter/data_stats.json
+    --planner-provider openai \
+    --planner-model gpt-5.4 \
+    --monitor-provider openai \
+    --monitor-model gpt-5.4 \
+    --api-key "YOUR_OPENAI_API_KEY" \
+    --perception-mode robocasa_gt \
+    --action-stats /app/demo_models/groot_direction_CloseDrawer/move_adapter/data_stats.json \
+    --output-dir examples/demo_output/eval_results
 ```
 
 > **Local (without Docker):** Use `./examples/train_eval_demo.sh` which automates all steps above.
