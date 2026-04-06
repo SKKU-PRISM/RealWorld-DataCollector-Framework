@@ -2354,7 +2354,7 @@ def train(config: Dict) -> None:
                     log_history.append({"epoch": epoch + (batch_idx + 1) / len(train_loader), "step": global_step, "loss": step_loss, "learning_rate": lr})
 
                 if global_step % train_cfg["save_steps"] == 0:
-                    _save_checkpoint(model, output_dir, global_step)
+                    _save_checkpoint(model, output_dir, global_step, lora_config=config.get("lora"))
 
                 if max_steps > 0 and global_step >= max_steps:
                     break
@@ -2388,7 +2388,7 @@ def train(config: Dict) -> None:
             best_val_loss = val_loss
             no_improve_count = 0
             best_model_checkpoint = os.path.join(output_dir, "checkpoint-best")
-            _save_checkpoint(model, output_dir, "best")
+            _save_checkpoint(model, output_dir, "best", lora_config=config.get("lora"))
             logger.info(f"  New best model saved (val_loss={val_loss:.4f})")
         elif do_val:
             no_improve_count += 1
@@ -2400,13 +2400,13 @@ def train(config: Dict) -> None:
         # Epoch-based periodic checkpoint saving
         save_every = train_cfg.get("save_every_epochs", 0)
         if save_every > 0 and (epoch + 1) % save_every == 0:
-            _save_checkpoint(model, output_dir, f"epoch-{epoch+1}")
+            _save_checkpoint(model, output_dir, f"epoch-{epoch+1}", lora_config=config.get("lora"))
             logger.info(f"  Periodic checkpoint saved: epoch-{epoch+1}")
 
         if max_steps > 0 and global_step >= max_steps:
             break
 
-    _save_checkpoint(model, output_dir, "final")
+    _save_checkpoint(model, output_dir, "final", lora_config=config.get("lora"))
 
     train_end_time = time.time()
     if rank == 0:
@@ -2467,7 +2467,7 @@ def _validate(model, processor, val_loader, loss_fn, device, train_cfg, backend)
     return total_loss / max(n_batches, 1)
 
 
-def _save_checkpoint(model, output_dir: str, step) -> None:
+def _save_checkpoint(model, output_dir: str, step, lora_config: Optional[Dict] = None) -> None:
     rank = int(os.environ.get("RANK", 0))
     if rank != 0:
         return
@@ -2477,11 +2477,24 @@ def _save_checkpoint(model, output_dir: str, step) -> None:
 
     save_model = model.module if hasattr(model, "module") else model
     import torch
+    from safetensors.torch import save_file
     # Save only trainable (LoRA/adapter) parameters, not the full model
     trainable_keys = {n for n, p in save_model.named_parameters() if p.requires_grad}
     state = {k: v for k, v in save_model.state_dict().items() if k in trainable_keys}
+    # Save in both formats for compatibility
+    save_file(state, os.path.join(save_dir, "model_diff.safetensors"))
     torch.save(state, os.path.join(save_dir, "adapter_model.pt"))
     logger.info(f"  Saved {len(state)} trainable params ({sum(v.numel() for v in state.values()):,} elements)")
+
+    # Save LoRA config for evaluation script compatibility
+    if lora_config:
+        import json
+        config_data = {
+            "lora_rank": lora_config.get("rank", 64),
+            "lora_alpha": lora_config.get("alpha", 128),
+        }
+        with open(os.path.join(save_dir, "config.json"), "w") as f:
+            json.dump(config_data, f, indent=2)
 
     logger.info(f"Checkpoint saved: {save_dir}")
 

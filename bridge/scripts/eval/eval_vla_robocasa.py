@@ -474,11 +474,21 @@ def print_results_table(results, tasks):
 
 def _find_weights_file(adapter_path: str) -> Optional[str]:
     """Find weights file in adapter directory."""
-    for filename in ["model_diff.safetensors", "model.safetensors"]:
+    for filename in ["model_diff.safetensors", "model.safetensors", "adapter_model.pt"]:
         path = os.path.join(adapter_path, filename)
         if os.path.exists(path):
             return path
     return None
+
+
+def _load_weights_file(weights_path: str) -> dict:
+    """Load weights from safetensors or pt file."""
+    if weights_path.endswith(".pt"):
+        import torch
+        return torch.load(weights_path, map_location="cpu", weights_only=True)
+    else:
+        from safetensors.torch import load_file
+        return load_file(weights_path)
 
 
 def _read_lora_config(adapter_path: str) -> Tuple[int, int]:
@@ -537,7 +547,6 @@ def load_groot(
     Returns: (model, eagle_processor, adapter_weights_dict)
     """
     from lerobot.policies.groot.modeling_groot import GrootPolicy
-    from safetensors.torch import load_file
 
     lora_rank, lora_alpha = 64, 128
     for path in [move_adapter, grip_adapter, adapter_path]:
@@ -576,7 +585,7 @@ def load_groot(
         for name, path in [("move", move_adapter), ("grip", grip_adapter)]:
             weights_path = _find_weights_file(path)
             if weights_path:
-                adapter_weights[name] = load_file(weights_path)
+                adapter_weights[name] = _load_weights_file(weights_path)
                 logger.info(f"Loaded {name} adapter: {len(adapter_weights[name])} keys from {weights_path}")
             else:
                 logger.warning(f"No weights found for {name} adapter at {path}")
@@ -588,7 +597,7 @@ def load_groot(
     elif adapter_path:
         weights_path = _find_weights_file(adapter_path)
         if weights_path:
-            weights = load_file(weights_path)
+            weights = _load_weights_file(weights_path)
             missing, unexpected = policy.load_state_dict(weights, strict=False)
             logger.info(f"Loaded adapter: {len(weights)} tensors, {len(missing)} missing, {len(unexpected)} unexpected")
         else:
