@@ -462,10 +462,7 @@ except: pass
 find /root/.cache/huggingface -name "config.json" -exec grep -l flash_attention_2 {} \; | \
     xargs sed -i 's/flash_attention_2/eager/g' 2>/dev/null || true
 
-# Step 2: Fix transformers/huggingface-hub version compatibility
-pip install "transformers>=4.52" "huggingface-hub>=0.30,<1.0"
-
-# Step 3: Download demo data and pretrained models
+# Step 2: Download demo data and pretrained models
 pip install --upgrade huggingface-hub
 pip uninstall brotli brotlicffi -y 2>/dev/null  # Prevents download decoding errors
 
@@ -477,6 +474,9 @@ python -c "from huggingface_hub import snapshot_download; snapshot_download('skk
 
 # Download example data for quick demo (~13MB)
 python -c "from huggingface_hub import snapshot_download; snapshot_download('skkuprism/acs-example-data', repo_type='dataset', local_dir='examples/demo_data')"
+
+# Step 3: Fix transformers/huggingface-hub version compatibility
+pip install "transformers>=4.52" "huggingface-hub>=0.30,<1.0"
 
 # Step 4: Train GROOT LoRA (20 steps, ~2 min)
 cd bridge/scripts/train
