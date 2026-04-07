@@ -484,7 +484,7 @@ python train_lora_movegrip.py \
     --config configs/models/groot.yaml \
     --processed-dir /app/examples/demo_data \
     --output-base-dir /app/examples/demo_output/adapters \
-    --max-steps 20 --batch-size 1 --grad-accum 1 --lora-rank 8 \
+    --batch-size 1 --grad-accum 1 --lora-rank 8 \
     --lr 1e-4 --epochs 1 --task CloseDrawer
 cd /app
 
